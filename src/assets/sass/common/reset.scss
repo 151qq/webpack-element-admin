@@ -1,0 +1,84 @@
+html, body {
+  border: 0;
+  font-family:  -apple-system,"Helvetica Neue",Arial,"PingFang SC","Hiragino Sans GB",STHeiti,"Microsoft YaHei","Microsoft JhengHei","Source Han Sans SC","Noto Sans CJK SC","Source Han Sans CN","Noto Sans SC","Source Han Sans TC","Noto Sans CJK TC","WenQuanYi Micro Hei",SimSun,sans-serif;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+div, span, object, iframe, img, table, caption, thead, tbody,
+tfoot, tr, tr, td, article, aside, canvas, details, figure, hgroup, menu,
+nav, footer, header, section, summary, mark, audio, video {
+    border: 0;
+    margin: 0;
+    padding: 0;
+}
+
+h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, address, cit, code,
+del, dfn, em, ins, q, samp, small, strong, sub, sup, b, i, hr,
+ol, ul, li, fieldset, legend, dl, dt, label {
+    border: 0;
+    font-size: 100%;
+    vertical-align: baseline;
+    margin: 0;
+    padding: 0;
+}
+
+article, aside, canvas, figure, figure img, figcaption, hgroup,
+footer, header, nav, section, audio, video {
+    display: block;
+}
+
+table {
+    border-collapse: separate;
+    border-spacing: 0;
+    caption, th, td {
+        text-align: left;
+        vertical-align: middle;
+    }
+}
+li{
+    list-style: none;
+}
+a{
+    text-decoration: none;
+}
+a img {
+    border: 0;
+}
+
+:focus {
+    outline: 0;
+}
+*{
+    -webkit-box-sizing: border-box;
+}
+textarea{
+    resize: none;
+    -webkit-appearance: none;
+}
+input{
+    -webkit-appearance: none;
+}
+select {
+    background-color: #fff;
+}
+i {
+    font-style: normal;
+}
+body, html {
+    overflow-x: hidden;
+}
+
+// title
+.menuTitle {
+  border-bottom: 1px solid #EFF2F7;
+  color: #666;
+  font-size: 20px;
+  color: #475669;
+}
+
+// 防止父级样式影响 
+.el-form-item__content .el-switch__label {
+  top: 8px;
+}

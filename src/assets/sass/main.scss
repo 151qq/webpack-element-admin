@@ -1,0 +1,116 @@
+@import "common/reset.scss";
+.cell {
+  i {
+    cursor: pointer;
+  }
+}
+.remark {
+  font-size: 12px;
+  color: red;
+}
+// main table
+.member-contont {
+  padding: 20px 20px 0 20px;
+  .topDistance {
+    margin-top: 20px;
+  }
+  .line {
+    text-align: center;
+  }
+  .tablePage {
+    text-align: right;
+    margin-top: 20px;
+  }
+  .el-table td .cell {
+    padding: 10px;
+    min-height: 40px;
+    line-height: 1.2;
+    display: flex;
+    align-items: center;
+    align-content: center;
+  }
+  .el-table th>div {
+    padding-left: 10px;
+    padding-right: 0;
+  }
+  .handleOne {
+    color: #20A0FF;
+    &:hover {
+      cursor: pointer;
+      font-size: 16px;
+    }
+  }
+  .handleTwo {
+    color: #13CE66;
+    &:hover {
+      cursor: pointer;
+      font-size: 16px;
+    }
+  }
+  .handleThree {
+    color: #F7BA2A;
+    &:hover {
+      cursor: pointer;
+      font-size: 16px;
+    }
+  }
+  .handleFour {
+    color: #FF4949;
+    &:hover {
+      cursor: pointer;
+      font-size: 16px;
+    }
+  }
+  .handleFive {
+    color: #1F2D3D;
+    &:hover {
+      cursor: pointer;
+      font-size: 16px;
+    }
+  }
+
+  // Tab切换
+  .tableCard {
+    width: 100%;
+  }
+  .el-tabs--border-card .el-tabs__item.is-active, .el-tabs--border-card .el-tabs__item {
+    font-size: 16px;
+  }
+
+  .detailTitle {
+    width: 100%;
+  }
+  .infoTable {
+    width: 100%;
+    border-top:1px solid #e0e6ed;
+    border-left:1px solid #e0e6ed;
+    td {
+      border-bottom:1px solid #e0e6ed;
+      border-right:1px solid #e0e6ed;
+      text-align: center;
+      padding:10px;
+      &:first-child {
+        background: #F9FAFC;
+      }
+    }
+    .el-table td {
+      padding: 0;
+    }
+  }
+}
+
+//  弹框宽度
+.el-dialog--small {
+  width: 25%;
+}
+.thumbnail {
+  max-width: 200px;
+  max-height: 100px;
+}
+.middle-dialog {
+  width: 500px !important;
+}
+
+.middle-big-dialog {
+  width: 1000px !important;
+}
