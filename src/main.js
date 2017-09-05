@@ -5,7 +5,7 @@ import store from './vuex/user'
 // 引入Element UI
 import Element from 'element-ui'
 import 'element-ui/lib/theme-default/index.css'
-import Cookies from 'js-cookie'
+// import Cookies from 'js-cookie'
 
 Vue.use(VueRouter)
 Vue.use(Element)
@@ -39,10 +39,10 @@ const router = new VueRouter({
 
 // 验证登录
 router.beforeEach((to, from, next) => {
-  if (!Cookies.get('uid') && to.name !== 'login') {
-    next({ path: '/login' })
-    return false
-  }
+  // if (!Cookies.get('uid') && to.name !== 'login') {
+  //   next({ path: '/login' })
+  //   return false
+  // }
   next()
 })
 

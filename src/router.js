@@ -10,77 +10,78 @@ const routers = [
     meta: { requiresAuth: true },
     children: [
       {
-        path: '',
+        path: 'index/:type',
         name: 'index',
         component (resolve) {
-          require.ensure(['./views/member/manager.vue'], () => {
-            resolve(require('./views/member/manager.vue'))
+          require.ensure(['./views/property/house.vue'], () => {
+            resolve(require('./views/property/house.vue'))
           })
         }
       }, {
-        // 会员详情
-        path: 'member/detail/:id',
-        name: 'member-detail',
+        // 地图检索
+        path: 'map',
+        name: 'map',
         component (resolve) {
-          require.ensure(['./views/member/detail.vue'], () => {
-            resolve(require('./views/member/detail.vue'))
+          require.ensure(['./views/property/map.vue'], () => {
+            resolve(require('./views/property/map.vue'))
           })
         }
       }, {
-        // 内容管理-分类管理
-        path: 'content/category',
-        name: 'category',
+        // 楼盘信息
+        path: 'info/:id',
+        name: 'info',
         component (resolve) {
-          require.ensure(['./views/content/category.vue'], () => {
-            resolve(require('./views/content/category.vue'))
+          require.ensure(['./views/property/info.vue'], () => {
+            resolve(require('./views/property/info.vue'))
           })
         }
       }, {
-        // 内容管理-话题管理
-        path: 'content/topic',
-        name: 'topic',
+        // 评估楼价
+        path: 'evaluate',
+        name: 'evaluate',
         component (resolve) {
-          require.ensure(['./views/content/topic.vue'], () => {
-            resolve(require('./views/content/topic.vue'))
+          require.ensure(['./views/property/evaluate.vue'], () => {
+            resolve(require('./views/property/evaluate.vue'))
           })
         }
       }, {
-        // 内容管理-问答管理
-        path: 'content/question',
-        name: 'question',
+        // 对标楼盘
+        path: 'benchmark',
+        name: 'benchmark',
         component (resolve) {
-          require.ensure(['./views/content/question.vue'], () => {
-            resolve(require('./views/content/question.vue'))
+          require.ensure(['./views/property/benchmark.vue'], () => {
+            resolve(require('./views/property/benchmark.vue'))
           })
         }
       }, {
-        // 数据灌入--列表
-        path: 'article/list',
-        name: 'article-list',
+        // 我的报告
+        path: 'report',
+        name: 'report',
         component (resolve) {
-          require.ensure(['./views/article/list.vue'], () => {
-            resolve(require('./views/article/list.vue'))
+          require.ensure(['./views/report/report.vue'], () => {
+            resolve(require('./views/report/report.vue'))
           })
         }
       }, {
-        // 数据灌入--详情
-        path: 'article/list/:id',
-        name: 'article-detail',
+        // 我的报告
+        path: 'detail',
+        name: 'detail',
         component (resolve) {
-          require.ensure(['./views/article/content-edit.vue'], () => {
-            resolve(require('./views/article/content-edit.vue'))
+          require.ensure(['./views/report/report-detail.vue'], () => {
+            resolve(require('./views/report/report-detail.vue'))
+          })
+        }
+      }, {
+        // 我的消息
+        path: 'notice',
+        name: 'notice',
+        component (resolve) {
+          require.ensure(['./views/notice/notice-detail.vue'], () => {
+            resolve(require('./views/notice/notice-detail.vue'))
           })
         }
       }
     ]
-  }, {
-    path: '/login',
-    name: 'login',
-    component (resolve) {
-      require.ensure(['./views/login.vue'], () => {
-        resolve(require('./views/login.vue'))
-      })
-    }
   }
 ]
 
