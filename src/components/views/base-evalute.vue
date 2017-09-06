@@ -57,15 +57,15 @@
         </div>
         <div class="right">
             <p>对标楼盘</p>
-            <router-link class="bench" :to="{name: 'benchmark'}">
+            <router-link class="bench" :to="{name: 'benchmark', params: { type: type }}">
                 <img src="../../assets/images/bench1.png">
                 <span>康乐大厦</span>
             </router-link>
-            <router-link class="bench" :to="{name: 'benchmark'}">
+            <router-link class="bench" :to="{name: 'benchmark', params: { type: type }}">
                 <img src="../../assets/images/bench1.png">
                 <span>康乐大厦</span>
             </router-link>
-            <router-link class="bench" :to="{name: 'benchmark'}">
+            <router-link class="bench" :to="{name: 'benchmark', params: { type: type }}">
                 <img src="../../assets/images/bench1.png">
                 <span>康乐大厦</span>
             </router-link>
@@ -82,8 +82,16 @@ export default {
     return {
       dialogFormVisible: {
         visibleE: false
-      }
+      },
+      type: ''
     }
+  },
+  beforeRouteUpdate (to, from, next) {
+    this.type = this.$route.params.type
+    next()
+  },
+  created () {
+    this.type = this.$route.params.type
   },
   methods: {
     showModel () {

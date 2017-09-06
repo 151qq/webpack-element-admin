@@ -18,7 +18,7 @@
         <el-button class="search-btn" type="primary" icon="search" @click="getArticles(keyValue)">
           搜索
         </el-button>
-        <router-link class="map-btn" :to="{ name: 'map'}">
+        <router-link class="map-btn" :to="{ name: 'map', params: { type: type }}">
           <img src="../../assets/images/map-icon.png">
           地图
         </router-link>
@@ -38,7 +38,7 @@
                 :class="index % 4 == 0 ? 'card-b clearM' : 'card-b'"
                 :span="6"
                 v-for="(o, index) in dataCity[citys.indexOf(item)].articles">
-              <router-link class="linkA" :to="{ name: 'info', params: { id: o.id || 0 }}">
+              <router-link class="linkA" :to="{ name: 'info', params: { type: type, id: o.id || 0 }}">
                 <el-card :body-style="{ padding: '0px' }">
                   <img src="../../assets/images/house1.png" class="image">
                   <div style="padding: 14px;">
@@ -177,10 +177,20 @@ export default {
       dialogFormVisible: {
         visibleA: false
       },
-      isShow: false
+      isShow: false,
+      type: ''
     }
   },
+  beforeRouteEnter (to, from, next) {
+    next()
+  },
+  beforeRouteUpdate (to, from, next) {
+    this.type = this.$route.params.type
+    next()
+  },
   created () {
+    this.type = this.$route.params.type
+    console.log(this.type, 'c')
     // 初始tab
     this.activeName = this.selectedCity[0]
   },

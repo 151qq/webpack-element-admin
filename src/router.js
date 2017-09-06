@@ -19,7 +19,7 @@ const routers = [
         }
       }, {
         // 地图检索
-        path: 'map',
+        path: 'index/:type/map',
         name: 'map',
         component (resolve) {
           require.ensure(['./views/property/map.vue'], () => {
@@ -28,7 +28,7 @@ const routers = [
         }
       }, {
         // 楼盘信息
-        path: 'info/:id',
+        path: 'index/:type/info/:id',
         name: 'info',
         component (resolve) {
           require.ensure(['./views/property/info.vue'], () => {
@@ -37,7 +37,7 @@ const routers = [
         }
       }, {
         // 评估楼价
-        path: 'evaluate',
+        path: 'index/:type/evaluate',
         name: 'evaluate',
         component (resolve) {
           require.ensure(['./views/property/evaluate.vue'], () => {
@@ -46,7 +46,7 @@ const routers = [
         }
       }, {
         // 对标楼盘
-        path: 'benchmark',
+        path: 'index/:type/benchmark',
         name: 'benchmark',
         component (resolve) {
           require.ensure(['./views/property/benchmark.vue'], () => {
@@ -64,7 +64,7 @@ const routers = [
         }
       }, {
         // 我的报告
-        path: 'detail',
+        path: 'report/detail',
         name: 'detail',
         component (resolve) {
           require.ensure(['./views/report/report-detail.vue'], () => {

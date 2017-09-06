@@ -3,7 +3,7 @@
     <banner-info></banner-info>
 
     <div class="mid-box">
-      <router-link class="eval-btn" :to="{name: 'evaluate'}">
+      <router-link class="eval-btn" :to="{name: 'evaluate', params: { type: type }}">
         <img src="../../assets/images/eval-icon.png">
         自评估工具
       </router-link>
@@ -30,8 +30,16 @@ import baseImg from '../../components/views/base-img.vue'
 export default {
   data () {
     return {
-      activeName: '基本信息'
+      activeName: '基本信息',
+      type: ''
     }
+  },
+  beforeRouteUpdate (to, from, next) {
+    this.type = this.$route.params.type
+    next()
+  },
+  created () {
+    this.type = this.$route.params.type
   },
   components: {
     bannerInfo,
