@@ -1,12 +1,59 @@
 <template>
   <div class="banner-box">
     <img class="img-box" src="../../assets/images/banner-bg.png">
+    <section class="banner-f">
+      <div class="left" id="container1"></div>
+      <div class="right">
+        <echarts-tar :id-name="'echar1'"></echarts-tar>
+      </div>
+    </section>
   </div>
 </template>
 <script>
+import echartsTar from '../common/echart-tar.vue'
+import WindowOverlay from '../../utils/common/mapOverlay.js'
+
 export default {
   data () {
-    return {}
+    return {
+    }
+  },
+  mounted () {
+    this.$nextTick(() => {
+      // map
+      var map = new window.BMap.Map('container1')
+      var point = new window.BMap.Point(116.409, 39.918)
+      map.centerAndZoom(point, 15)
+      // var marker = new window.BMap.Marker(point)
+      // map.addOverlay(marker)
+
+      var opts = {
+        width: 100,
+        height: 36,
+        color: '#0053FF',
+        template: this.createTemplate('唤云高花园小区')
+      }
+
+      var windowInfo = new WindowOverlay(point, opts)
+
+      map.addOverlay(windowInfo)
+    })
+  },
+  methods: {
+    createTemplate (title) {
+      var p = document.createElement('p')
+      p.style.color = '#ffffff'
+      p.style.lineHeight = '32px'
+      p.style.height = '32px'
+      p.style.fontSize = '14px'
+      p.style.padding = '4px 14px'
+      p.innerHTML = title
+      console.log(p)
+      return p
+    }
+  },
+  components: {
+    echartsTar
   }
 }
 </script>
@@ -24,6 +71,27 @@ export default {
       display: block;
       width: 1440px;
       height: 450px;
+    }
+
+    .banner-f {
+      position: absolute;
+      width: 1160px;
+      height: 370px;
+      left: 50%;
+      top: 50%;
+      margin: -185px 0 0 -580px;
+      overflow: hidden;
+      background: #ffffff;
+
+      .left {
+        float: left;
+        width: 360px;
+        height: 370px;
+      }
+
+      .right {
+        float: right;
+      }
     }
   }
 </style>

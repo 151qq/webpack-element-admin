@@ -27,15 +27,40 @@
         <img @click="showImg" src="../../assets/images/img1.png">
       </div>
     </section>
+
+    <swiper-img :is-show="isShow" :index="index"></swiper-img>
   </div>
 </template>
 <script>
+import swiperImg from '../../components/common/swiper-img.vue'
+
 export default {
   data () {
-    return {}
+    return {
+      notNextTick: true,
+      swiperOption: {
+        // swiper optionss 所有的配置同swiper官方api配置
+        direction: 'horizontal',
+        prevButton: '.swiper-button-prev',
+        nextButton: '.swiper-button-next',
+        mousewheelControl: true,
+        onTransitionStart (swiper) {
+          console.log(swiper)
+        }
+      },
+      isShow: {
+        value: false
+      },
+      index: 2
+    }
   },
-  mounted () {
-    // console.log(Swiper, 0)
+  methods: {
+    showImg () {
+      this.isShow.value = true
+    }
+  },
+  components: {
+    swiperImg
   }
 }
 </script>

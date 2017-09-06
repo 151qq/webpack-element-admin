@@ -83,6 +83,8 @@
     </section>
 </template>
 <script>
+import WindowOverlay from '../../utils/common/mapOverlay.js'
+
 export default {
   data () {
     return {
@@ -99,15 +101,83 @@ export default {
   },
   mounted () {
     this.$nextTick(() => {
-      console.log('p')
       var map = new window.BMap.Map('container')
       var point = new window.BMap.Point(116.409, 39.918)
       map.centerAndZoom(point, 15)
+
+      var opts = {
+        width: 140,
+        height: 100,
+        template: this.createTemplate('href', '唤云高花园小区', 12.3, 13.2)
+      }
+
+      var windowInfo = new WindowOverlay(point, opts)
+
+      map.addOverlay(windowInfo)
     })
   },
   methods: {
     searSlide () {
       this.isShow = !this.isShow
+    },
+    createP (title, price) {
+      var p1 = document.createElement('p')
+      p1.style.height = '30px'
+      p1.style.fontSize = '13px'
+      p1.style.lineHeight = '30px'
+
+      var span2 = document.createElement('span')
+      span2.style.float = 'left'
+      span2.style.width = '30px'
+      span2.style.color = '#99A9BF'
+      span2.innerHTML = title
+
+      var span3 = document.createElement('span')
+      span3.style.float = 'left'
+      span3.style.width = '30px'
+      span3.style.textAlign = 'right'
+      span3.style.color = '#FF4949'
+      span3.innerHTML = price
+
+      var span4 = document.createElement('span')
+      span4.style.float = 'right'
+      span4.style.width = '47px'
+      span4.style.textAlign = 'right'
+      span4.style.color = '#99A9BF'
+      span4.innerHTML = '元 ㎡/天'
+      p1.appendChild(span2)
+      p1.appendChild(span3)
+      p1.appendChild(span4)
+
+      return p1
+    },
+    createTemplate (href, title, price1, price2) {
+      var a = document.createElement('a')
+      a.style.display = 'block'
+      a.style.background = '#0053FF'
+      a.style.color = '#ffffff'
+      a.style.lineHeight = '36px'
+      a.style.height = '36px'
+      a.style.fontSize = '14px'
+      a.style.padding = '0 14px'
+      a.setAttribute('href', href)
+      a.innerHTML = title
+
+      var span1 = document.createElement('span')
+      span1.style.float = 'right'
+      span1.innerHTML = '>'
+      a.appendChild(span1)
+
+      var div = document.createElement('div')
+      div.style.padding = '4px 14px'
+
+      div.appendChild(this.createP('租金', price1))
+      div.appendChild(this.createP('估值', price2))
+
+      var outDiv = document.createElement('div')
+      outDiv.appendChild(a)
+      outDiv.appendChild(div)
+      return outDiv
     }
   }
 }

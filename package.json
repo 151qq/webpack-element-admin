@@ -13,6 +13,7 @@
     "echarts": "^3.7.1",
     "element-ui": "^1.0.0-rc.9",
     "vue": "^2.0.1",
+    "vue-awesome-swiper": "^2.6.2",
     "vue-router": "^2.0.1",
     "vuex": "^2.0.0"
   },
@@ -31,7 +32,6 @@
     "clipboard": "^1.5.15",
     "connect-history-api-fallback": "^1.1.0",
     "css-loader": "^0.25.0",
-    "echarts": "^3.2.3",
     "eslint": "^3.7.1",
     "eslint-config-standard": "^6.1.0",
     "eslint-friendly-formatter": "^2.0.5",

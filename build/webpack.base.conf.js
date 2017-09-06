@@ -29,6 +29,9 @@ module.exports = {
       'components': path.resolve(__dirname, '../src/components')
     }
   },
+  externals: {
+   "echarts": "echarts"
+  }, 
   resolveLoader: {
     fallback: [path.join(__dirname, '../node_modules')]
   },
