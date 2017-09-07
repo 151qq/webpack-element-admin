@@ -3,7 +3,7 @@
     <banner-info></banner-info>
 
     <div class="mid-box">
-      <router-link class="eval-btn" :to="{name: 'evaluate', params: { type: type }}">
+      <router-link class="eval-btn" target="_blank" :to="{name: 'evaluate', params: { type: type }}">
         <img src="../../assets/images/eval-icon.png">
         自评估工具
       </router-link>

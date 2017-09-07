@@ -80,7 +80,7 @@ export default {
       origin: window._SettingOrigin,
       userInfo: {
         name: '顾乐乐',
-        memberImg: '../../assets/images/head-icon.png'
+        memberImg: ''
       },
       dialogFormVisible: {
         visibleF: false,

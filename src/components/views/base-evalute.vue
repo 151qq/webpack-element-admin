@@ -57,15 +57,15 @@
         </div>
         <div class="right">
             <p>对标楼盘</p>
-            <router-link class="bench" :to="{name: 'benchmark', params: { type: type }}">
+            <router-link class="bench" target="_blank" :to="{name: 'benchmark', params: { type: type }}">
                 <img src="../../assets/images/bench1.png">
                 <span>康乐大厦</span>
             </router-link>
-            <router-link class="bench" :to="{name: 'benchmark', params: { type: type }}">
+            <router-link class="bench" target="_blank" :to="{name: 'benchmark', params: { type: type }}">
                 <img src="../../assets/images/bench1.png">
                 <span>康乐大厦</span>
             </router-link>
-            <router-link class="bench" :to="{name: 'benchmark', params: { type: type }}">
+            <router-link class="bench" target="_blank" :to="{name: 'benchmark', params: { type: type }}">
                 <img src="../../assets/images/bench1.png">
                 <span>康乐大厦</span>
             </router-link>

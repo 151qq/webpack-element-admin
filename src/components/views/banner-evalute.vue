@@ -1,6 +1,6 @@
 <template>
   <div class="banner-box">
-    <img class="img-box" src="../../assets/images/banner-bg.png">
+    <img class="img-box" src="../../assets/images/banner-bg.jpg">
     <section class="banner-f">
       <div class="left">
         <ul>

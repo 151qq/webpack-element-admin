@@ -39,7 +39,6 @@ const router = new VueRouter({
 
 // 验证登录
 router.beforeEach((to, from, next) => {
-  console.log(to)
   if (to.name === 'home') {
     next({ path: '/index/business' })
   } else {

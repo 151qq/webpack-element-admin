@@ -1,15 +1,7 @@
 <template>
     <section class="map-box">
         <div class="input-box">
-            <el-input 
-              placeholder="请输入需查询的楼盘地址"
-              v-model="keyValue"
-              style="width: 600px;"
-              >
-            </el-input>
-            <el-button class="search-btn" type="primary" icon="search" @click="getAddres(keyValue)">
-              搜索
-            </el-button>
+            <search-box :active-name="activeName" :type="type"></search-box>
 
             <span class="dropdown-link" @click="searSlide">
                 高级检索<i class="el-icon-caret-bottom el-icon--right"></i>
@@ -84,6 +76,7 @@
 </template>
 <script>
 import WindowOverlay from '../../utils/common/mapOverlay.js'
+import searchBox from '../../components/common/search-box.vue'
 
 export default {
   data () {
@@ -96,8 +89,16 @@ export default {
       ischeckD: false,
       ischeckZ: false,
       ischeckC: false,
-      ischeckM: false
+      ischeckM: false,
+      type: ''
     }
+  },
+  beforeRouteUpdate (to, from, next) {
+    this.type = this.$route.params.type
+    next()
+  },
+  created () {
+    this.type = this.$route.params.type
   },
   mounted () {
     this.$nextTick(() => {
@@ -105,10 +106,18 @@ export default {
       var point = new window.BMap.Point(116.409, 39.918)
       map.centerAndZoom(point, 15)
 
+      var href = {
+        name: 'info',
+        params: {
+          type: this.type,
+          id: 0
+        }
+      }
+
       var opts = {
         width: 140,
         height: 100,
-        template: this.createTemplate('href', '唤云高花园小区', 12.3, 13.2)
+        template: this.createTemplate(href, '唤云高花园小区', 12.3, 13.2)
       }
 
       var windowInfo = new WindowOverlay(point, opts)
@@ -160,8 +169,11 @@ export default {
       a.style.height = '36px'
       a.style.fontSize = '14px'
       a.style.padding = '0 14px'
-      a.setAttribute('href', href)
       a.innerHTML = title
+      a.onclick = () => {
+        console.log(href)
+        this.$router.push(href)
+      }
 
       var span1 = document.createElement('span')
       span1.style.float = 'right'
@@ -179,6 +191,9 @@ export default {
       outDiv.appendChild(div)
       return outDiv
     }
+  },
+  components: {
+    searchBox
   }
 }
 </script>
@@ -199,18 +214,6 @@ export default {
         display: block;
         width: 1160px;
         margin: 10px auto 0;
-
-        .el-input {
-          display: inline-block;
-        }
-
-        .search-btn {
-          position: relative;
-          display: inline-block;
-          margin-left: -10px;
-          border-top-left-radius: 0;
-          border-bottom-left-radius: 0;
-        }
 
         .dropdown-link {
             float: right;

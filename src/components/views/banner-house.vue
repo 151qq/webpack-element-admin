@@ -1,6 +1,6 @@
 <template>
   <div class="banner-box">
-  	<img class="img-box" src="../../assets/images/banner-bg.png">
+  	<img class="img-box" src="../../assets/images/banner-bg.jpg">
     <section class="banner-f">
       <div class="left">
         <echarts-tar :id-name="'echar1'"></echarts-tar>
@@ -56,6 +56,12 @@
             <span class="l3">㎡ / 天</span>
             <span class="l4 down-i"></span>
           </li>
+          </li>
+          <li>
+            <span class="l1">三环新城</span>
+            <span class="l2">50</span>
+            <span class="l3">㎡ / 天</span>
+            <span class="l4 down-i"></span>
           </li>
           <li>
             <span class="l1">三环新城</span>
@@ -128,7 +134,7 @@ export default {
 
         ul {
           li {
-            height: 32px;
+            height: 29px;
             border-bottom: 1px solid #EFF2F7;
 
             &:last-child {
@@ -137,9 +143,9 @@ export default {
 
             span {
               float: left;
-              font-size: 16px;
+              font-size: 15px;
               color: #475669;
-              line-height: 32px;
+              line-height: 29px;
             }
 
             .l1 {
@@ -161,7 +167,7 @@ export default {
 
             .l4 {
               width: 14px;
-              height: 32px;
+              height: 29px;
               margin-left: 10px;
             }
 

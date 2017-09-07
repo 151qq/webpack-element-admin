@@ -13,8 +13,14 @@
 <script>
 export default {
   props: {
-    citys: [],
-    checkList: [],
+    citys: {
+      type: Array,
+      default: []
+    },
+    checkList: {
+      type: Array,
+      default: []
+    },
     dialogFormVisible: {
       type: Object,
       default: {}

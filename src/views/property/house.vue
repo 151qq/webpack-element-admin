@@ -9,22 +9,13 @@
       </el-button>
 
       <div class="input-box">
-        <el-input 
-          placeholder="请输入需查询的楼盘地址，多个楼盘请以“，”隔开，最多可输入20个"
-          v-model="keyValue"
-          style="width: 600px;"
-          @change="getMess">
-        </el-input>
-        <el-button class="search-btn" type="primary" icon="search" @click="getArticles(keyValue)">
-          搜索
-        </el-button>
+
+        <search-box :active-name="activeName" :type="type"></search-box>
+        
         <router-link class="map-btn" :to="{ name: 'map', params: { type: type }}">
           <img src="../../assets/images/map-icon.png">
           地图
         </router-link>
-        <div class="mess-box" v-if="messDate.length !== 0 && isShow">
-          <p v-for="item in messDate" @click="getArticles(item)">{{ item }}</p>
-        </div>
       </div>
 
       <el-tabs class="card-box" v-model="activeName">
@@ -38,7 +29,7 @@
                 :class="index % 4 == 0 ? 'card-b clearM' : 'card-b'"
                 :span="6"
                 v-for="(o, index) in dataCity[citys.indexOf(item)].articles">
-              <router-link class="linkA" :to="{ name: 'info', params: { type: type, id: o.id || 0 }}">
+              <router-link class="linkA" target="_blank" :to="{ name: 'detail'}">
                 <el-card :body-style="{ padding: '0px' }">
                   <img src="../../assets/images/house1.png" class="image">
                   <div style="padding: 14px;">
@@ -66,6 +57,7 @@
 </template>
 <script>
 import bannerHouse from '../../components/views/banner-house.vue'
+import searchBox from '../../components/common/search-box.vue'
 import addressForm from '../../components/views/address.vue'
 
 export default {
@@ -168,16 +160,9 @@ export default {
         }
       ],
       restaurants: [],
-      keyValue: '',
-      messDate: [
-        '第一个提示',
-        '第一个提示',
-        '第一个提示'
-      ],
       dialogFormVisible: {
         visibleA: false
       },
-      isShow: false,
       type: ''
     }
   },
@@ -200,11 +185,24 @@ export default {
     },
     getMess () {
       // getMess
+      let _self = this
       this.isShow = true
+      var options = {
+        onSearchComplete (results) {
+          // 判断状态是否正确
+          _self.messDate = results.vr
+          console.log(results, 'out')
+        }
+      }
+      var local = new window.BMap.LocalSearch(this.activeName, options)
+      local.search(this.keyValue)
     },
-    getArticles (item) {
+    getArticles () {
       // getarticles
       this.isShow = false
+    },
+    goMap (item) {
+
     },
     hideMess () {
       setTimeout(() => {
@@ -217,7 +215,8 @@ export default {
   },
   components: {
     bannerHouse,
-    addressForm
+    addressForm,
+    searchBox
   }
 }
 </script>
@@ -235,42 +234,6 @@ export default {
     top: 72px;
     text-align: center;
     z-index: 100;
-
-    .mess-box {
-      position: absolute;
-      left: 243px;
-      top: 36px;
-      width: 596px;
-      box-sizing: border-box;
-      padding: 15px 0;
-      border: 1px solid #C0CCDA;
-      text-align: left;
-      background: #ffffff;
-      
-      p {
-        padding: 0 15px;
-        font-size: 14px;
-        line-height: 30px;
-        color: #333333;
-        cursor: pointer;
-
-        &:hover {
-          background: #C0CCDA;
-        }
-      }
-    }
-
-    .el-input {
-      display: inline-block;
-    }
-
-    .search-btn {
-      position: relative;
-      display: inline-block;
-      margin-left: -10px;
-      border-top-left-radius: 0;
-      border-bottom-left-radius: 0;
-    }
 
     .map-btn {
       position: absolute;
