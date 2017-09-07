@@ -33,17 +33,22 @@ Vue.prototype.$notify = function (opotions) {
 
 // 实例化VueRouter
 const router = new VueRouter({
-  mode: 'history',
+  // mode: 'history',
   routes
 })
 
 // 验证登录
 router.beforeEach((to, from, next) => {
+  console.log(to)
+  if (to.name === 'home') {
+    next({ path: '/index/business' })
+  } else {
+    next()
+  }
   // if (!Cookies.get('uid') && to.name !== 'login') {
   //   next({ path: '/login' })
   //   return false
   // }
-  next()
 })
 
 new Vue({
