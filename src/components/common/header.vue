@@ -1,6 +1,6 @@
 <template>
   <section class="header">
-    <router-link class="logo-box" to="/business"><img src="../../assets/images/logo.png"></router-link>
+    <router-link class="logo-box" to="index/business"><img src="../../assets/images/logo.png"></router-link>
 
     <div class="nav-box">
       <router-link :to="{ name: 'index', params: { type: 'business' }}">商业地产</router-link>
