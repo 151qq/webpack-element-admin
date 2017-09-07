@@ -47,11 +47,11 @@ export default {
             show: false
           }
         },
-        dataZoom: [
-          {
-            type: 'inside'
-          }
-        ],
+        // dataZoom: [
+        //   {
+        //     type: 'inside'
+        //   }
+        // ],
         series: [
           {
             name: '置空率',
