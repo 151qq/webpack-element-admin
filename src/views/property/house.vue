@@ -12,7 +12,7 @@
 
         <search-box :active-name="activeName" :type="type"></search-box>
         
-        <router-link class="map-btn" :to="{ name: 'map', params: { type: type }}">
+        <router-link class="map-btn" :to="{ name: 'map', params: { type: type }, query: {city: activeName}}">
           <img src="../../assets/images/map-icon.png">
           地图
         </router-link>
@@ -59,6 +59,7 @@
 import bannerHouse from '../../components/views/banner-house.vue'
 import searchBox from '../../components/common/search-box.vue'
 import addressForm from '../../components/views/address.vue'
+import Tools from '../../utils/tools.js'
 
 export default {
   data () {
@@ -163,52 +164,51 @@ export default {
       dialogFormVisible: {
         visibleA: false
       },
-      type: ''
+      type: '',
+      formData: {}
     }
   },
   beforeRouteEnter (to, from, next) {
     next()
   },
   beforeRouteUpdate (to, from, next) {
-    this.type = this.$route.params.type
+    this.setData()
     next()
   },
   created () {
-    this.type = this.$route.params.type
-    console.log(this.type, 'c')
+    this.setData()
     // 初始tab
     this.activeName = this.selectedCity[0]
   },
   methods: {
+    // 页面初始数据设置
+    setData () {
+      this.type = this.$route.params.type
+      this.formData = {
+        type: this.type,
+        city: this.activeName
+      }
+
+      window._type = this.type
+      window._city = this.city
+    },
+    // 获取banner楼盘数据
+    getPMess () {
+      Tools.getJson('url', this.formData, (datas) => {
+
+      })
+    },
+    // 获取城市及报告数据
+    getCitys () {
+      Tools.getJson('url', this.formData, (datas) => {
+
+      })
+    },
+    // 设置城市弹窗
     showModel () {
       this.dialogFormVisible.visibleA = true
     },
-    getMess () {
-      // getMess
-      let _self = this
-      this.isShow = true
-      var options = {
-        onSearchComplete (results) {
-          // 判断状态是否正确
-          _self.messDate = results.vr
-          console.log(results, 'out')
-        }
-      }
-      var local = new window.BMap.LocalSearch(this.activeName, options)
-      local.search(this.keyValue)
-    },
-    getArticles () {
-      // getarticles
-      this.isShow = false
-    },
-    goMap (item) {
-
-    },
-    hideMess () {
-      setTimeout(() => {
-        this.isShow = false
-      }, 0)
-    },
+    // 改变城市子组件数据传回
     changeD (data) {
       this.selectedCity = data
     }

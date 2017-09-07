@@ -3,6 +3,7 @@
 </template>
 <script>
 import echarts from 'echarts'
+import Tools from '../../utils/tools.js'
 
 export default {
   props: ['idName'],
@@ -94,6 +95,13 @@ export default {
       }
     }
   },
+  beforeRouteUpdate (to, from, next) {
+    this.getEcharts()
+    next()
+  },
+  created () {
+    this.getEcharts()
+  },
   mounted () {
     this.$nextTick(() => {
       // 基于准备好的dom，初始化echarts实例
@@ -101,6 +109,21 @@ export default {
       // 使用刚指定的配置项和数据显示图表。
       myChart.setOption(this.option)
     })
+  },
+  methods: {
+    // 获取echarts数据
+    getEcharts () {
+      var formData = {
+        type: window._type,
+        city: window._city
+      }
+
+      Tools.getJson('echarts', formData, (datas) => {
+        console.log(datas, 'echart')
+      }, () => {
+        console.log('fail')
+      })
+    }
   }
 }
 </script>

@@ -90,15 +90,16 @@ export default {
       ischeckZ: false,
       ischeckC: false,
       ischeckM: false,
-      type: ''
+      type: '',
+      city: ''
     }
   },
   beforeRouteUpdate (to, from, next) {
-    this.type = this.$route.params.type
+    this.setData()
     next()
   },
   created () {
-    this.type = this.$route.params.type
+    this.setData()
   },
   mounted () {
     this.$nextTick(() => {
@@ -126,6 +127,11 @@ export default {
     })
   },
   methods: {
+    // 页面初始数据设置
+    setData () {
+      this.type = this.$route.params.type
+      this.city = this.$route.query.city
+    },
     searSlide () {
       this.isShow = !this.isShow
     },
