@@ -5,31 +5,31 @@ Vue.use(Vuex)
 
 const userStore = new Vuex.Store({
   state: {
-    userInfo: {},
+    mapInfo: [],
     pageInfo: {
       type: '',
       city: ''
     }
   },
   getters: {
-    getUserInfo (state) {
-      return state.userInfo
+    getMapInfo (state) {
+      return state.mapInfo
     },
     getPageInfo (state) {
       return state.pageInfo
     }
   },
   mutations: {
-    setUserInfo (state, userInfo) {
-      state.userInfo = userInfo
+    setMapInfo (state, mapInfo) {
+      state.mapInfo = mapInfo
     },
     setPageInfo (state, pageInfo) {
       state.pageInfo = pageInfo
     }
   },
   actions: {
-    setUserInfo ({ commit }, user) {
-      commit('setUserInfo', user)
+    setMapInfo ({ commit }, map) {
+      commit('setMapInfo', map)
     },
     setPageInfo ({ commit }, page) {
       commit('setPageInfo', page)

@@ -10,7 +10,7 @@
 
       <div class="input-box">
 
-        <search-box :active-name="activeName" :type="type"></search-box>
+        <search-box></search-box>
         
         <router-link class="map-btn" :to="{ name: 'map', params: { type: type }, query: {city: activeName}}">
           <img src="../../assets/images/map-icon.png">

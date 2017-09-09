@@ -1,7 +1,7 @@
 <template>
     <section class="map-box">
         <div class="input-box">
-            <search-box :active-name="activeName" :type="type"></search-box>
+            <search-box :is-page="true" @mapChange="drawMap"></search-box>
 
             <span class="dropdown-link" @click="searSlide">
                 高级检索<i class="el-icon-caret-bottom el-icon--right"></i>
@@ -12,61 +12,59 @@
                 <label class="t-n">区域:</label>
                 <div class="s-c">
                     <p class="area-t">
-                        <a>全部</a>
-                        <a>海淀</a>
-                        <a>朝阳</a>
+                        <a @click="nowIndex = 'all'" :class="nowIndex === 'all' ? 'active' : ''">全部</a>
+                        <a v-for="item in typeData.area" @click="tabChange(item.city)"
+                            :class="item.city === nowIndex ? 'active' : ''">{{item.city}}</a>
                     </p>
-                    <p class="area-b">
-                        <a>全部</a>
-                        <a>海淀</a>
-                        <a>朝阳</a>
+                    <p v-for="item in typeData.area" class="area-b" v-if="item.city === nowIndex">
+                        <a @click="countyIndex = 'all'" :class="countyIndex === 'all' ? 'active' : ''">全部</a>
+                        <a v-for="o in item.county"
+                            :class="o === countyIndex ? 'active' : ''"
+                            @click="countyIndex = o">{{o}}</a>
                     </p>
                 </div>
             </section>
             <section class="sec">
                 <label class="t-n">等级:</label>
                 <div class="s-c">
-                    <el-checkbox class="all-c" label="全部" v-model="ischeckD"></el-checkbox>
-                    <el-checkbox-group v-model="checkD">
-                        <el-checkbox label="超甲"></el-checkbox>
-                        <el-checkbox label="甲级"></el-checkbox>
-                        <el-checkbox label="乙级"></el-checkbox>
-                        <el-checkbox label="丙级及以下"></el-checkbox>
+                    <span @click="levelAll('D', 'level')">
+                      <el-checkbox class="all-c" label="全部" v-model="ischeckD"></el-checkbox>
+                    </span>
+                    <el-checkbox-group v-model="checkD" @change="levelChange('D', 'level')">
+                        <el-checkbox v-for="item in typeData.level" :label="item"></el-checkbox>
                     </el-checkbox-group>
                 </div>
             </section>
             <section class="sec">
                 <label class="t-n">租金:</label>
                 <div class="s-c">
-                    <el-checkbox class="all-c" label="全部" v-model="ischeckZ"></el-checkbox>
-                    <el-checkbox-group v-model="checkZ">
-                        <el-checkbox label=">20"></el-checkbox>
-                        <el-checkbox label="20~15"></el-checkbox>
-                        <el-checkbox label="15~10"></el-checkbox>
-                        <el-checkbox label="10~5"></el-checkbox>
-                        <el-checkbox label="5以下"></el-checkbox>
+                    <span @click="levelAll('Z', 'rent')">
+                      <el-checkbox class="all-c" label="全部" v-model="ischeckZ"></el-checkbox>
+                    </span>
+                    <el-checkbox-group v-model="checkZ" @change="levelChange('Z', 'rent')">
+                        <el-checkbox v-for="item in typeData.rent" :label="item"></el-checkbox>
                     </el-checkbox-group>
                 </div>
             </section>
             <section class="sec">
                 <label class="t-n">持有:</label>
                 <div class="s-c">
-                    <el-checkbox class="all-c" label="全部" v-model="ischeckC"></el-checkbox>
-                    <el-checkbox-group v-model="checkC">
-                        <el-checkbox label="整体持有"></el-checkbox>
-                        <el-checkbox label="散售"></el-checkbox>
+                    <span @click="levelAll('C', 'hold')">
+                      <el-checkbox class="all-c" label="全部" v-model="ischeckC"></el-checkbox>
+                    </span>
+                    <el-checkbox-group v-model="checkC" @change="levelChange('C', 'hold')">
+                        <el-checkbox v-for="item in typeData.hold" :label="item"></el-checkbox>
                     </el-checkbox-group>
                 </div>
             </section>
             <section class="sec">
                 <label class="t-n">面积:</label>
                 <div class="s-c">
-                    <el-checkbox class="all-c" label="全部" v-model="ischeckM"></el-checkbox>
-                    <el-checkbox-group v-model="checkM">
-                        <el-checkbox label=">10万平方米"></el-checkbox>
-                        <el-checkbox label="8~10万平方米"></el-checkbox>
-                        <el-checkbox label="5~8万平方米"></el-checkbox>
-                        <el-checkbox label="<3万平方米"></el-checkbox>
+                    <span @click="levelAll('M', 'measure')">
+                      <el-checkbox class="all-c" label="全部" v-model="ischeckM"></el-checkbox>
+                    </span>
+                    <el-checkbox-group v-model="checkM" @change="levelChange('M', 'measure')">
+                        <el-checkbox v-for="item in typeData.measure" :label="item"></el-checkbox>
                     </el-checkbox-group>
                 </div>
             </section>
@@ -77,6 +75,7 @@
 <script>
 import WindowOverlay from '../../utils/common/mapOverlay.js'
 import searchBox from '../../components/common/search-box.vue'
+import Tools from '../../utils/tools.js'
 
 export default {
   data () {
@@ -90,47 +89,138 @@ export default {
       ischeckZ: false,
       ischeckC: false,
       ischeckM: false,
-      type: '',
-      city: ''
+      pageInfo: {},
+      typeData: {},
+      nowIndex: 'all',
+      countyIndex: 'all',
+      formData: {
+        areaCity: 'all',
+        areaCounty: 'all',
+        level: 'all',
+        rent: 'all',
+        hold: 'all',
+        measure: 'all'
+      },
+      count: 0
     }
-  },
-  beforeRouteUpdate (to, from, next) {
-    this.setData()
-    next()
   },
   created () {
     this.setData()
+    this.getTypes()
   },
   mounted () {
     this.$nextTick(() => {
       var map = new window.BMap.Map('container')
+      this.map = map
       var point = new window.BMap.Point(116.409, 39.918)
       map.centerAndZoom(point, 15)
-
-      var href = {
-        name: 'info',
-        params: {
-          type: this.type,
-          id: 0
-        }
-      }
-
-      var opts = {
-        width: 140,
-        height: 100,
-        template: this.createTemplate(href, '唤云高花园小区', 12.3, 13.2)
-      }
-
-      var windowInfo = new WindowOverlay(point, opts)
-
-      map.addOverlay(windowInfo)
+      map.addControl(new window.BMap.NavigationControl())
+      this.drawMap()
     })
   },
+  watch: {
+    nowIndex (value) {
+      this.formData.areaCity = value
+      this.getMap()
+      this.count++
+    },
+    countyIndex (value) {
+      this.formData.areaCounty = value
+      this.getMap()
+      this.count++
+    }
+  },
   methods: {
+    getTypes () {
+      let formData = {
+        type: this.pageInfo.type,
+        city: this.pageInfo.city
+      }
+
+      Tools.getJson('typeMap', formData, (res) => {
+        if (res.statusCode === 0) {
+          this.typeData = res.datas
+        } else {
+          this.$message.error(res.mess)
+        }
+      })
+    },
+    getMap () {
+      var count = this.count
+      this.formData.vr = this.$store.getters.getMapInfo
+
+      Tools.getJson('searchMap', this.formData, (res) => {
+        if (res.statusCode === 0) {
+          if (count !== this.count) {
+            return false
+          }
+          this.$store.dispatch('setMapInfo', res.datas)
+          this.drawMap()
+        } else {
+          this.$message.error(res.mess)
+        }
+      })
+    },
+    tabChange (index) {
+      this.nowIndex = index
+      this.countyIndex = 'all'
+    },
+    levelAll (q, h) {
+      if (this['ischeck' + q]) {
+        this.formData[h] = 'all'
+        this['check' + q] = [].concat(this.typeData[h])
+      } else {
+        this.formData[h] = 'all'
+        this['check' + q] = []
+      }
+      this.count++
+      this.getMap()
+    },
+    levelChange (q, h) {
+      if (this['check' + q].lenght === 0) {
+        this.formData[h] = 'all'
+        this['ischeck' + q] = false
+      } else if (this['check' + q].length === this.typeData[h].length) {
+        this.formData[h] = 'all'
+        this['ischeck' + q] = true
+      } else {
+        this.formData[h] = this['check' + q].join(',')
+        this['ischeck' + q] = false
+      }
+      this.count++
+      this.getMap()
+    },
+    drawMap () {
+      this.map.clearOverlays()
+      this.drawOverlay(this.map, this.$store.getters.getMapInfo)
+    },
+    drawOverlay (map, datas) {
+      var type = this.pageInfo.type
+      datas.forEach((item) => {
+        var href = {
+          name: 'info',
+          params: {
+            type: type,
+            id: item.id
+          }
+        }
+
+        var opts = {
+          width: 140,
+          height: 100,
+          template: this.createTemplate(href, item.title, item.price1, item.price2)
+        }
+
+        var point = new window.BMap.Point(item.point.lng, item.point.lat)
+        map.panTo(point)
+        var windowInfo = new WindowOverlay(point, opts)
+
+        map.addOverlay(windowInfo)
+      })
+    },
     // 页面初始数据设置
     setData () {
-      this.type = this.$route.params.type
-      this.city = this.$route.query.city
+      this.pageInfo = this.$store.getters.getPageInfo
     },
     searSlide () {
       this.isShow = !this.isShow
@@ -175,7 +265,7 @@ export default {
       a.style.height = '36px'
       a.style.fontSize = '14px'
       a.style.padding = '0 14px'
-      a.innerHTML = title
+      a.innerHTML = title.length > 6 ? title.substring(0, 6) + '...' : title
       a.onclick = () => {
         console.log(href)
         this.$router.push(href)
@@ -279,6 +369,11 @@ export default {
                 color: #475669;
                 line-height: 30px;
                 margin-right: 40px;
+                cursor: pointer;
+              }
+
+              .active {
+                color: #20a0ff;
               }
             }
 
@@ -292,6 +387,11 @@ export default {
                 color: #475669;
                 line-height: 30px;
                 margin-right: 40px;
+                cursor: pointer;
+              }
+
+              .active {
+                color: #20a0ff;
               }
             }
         }

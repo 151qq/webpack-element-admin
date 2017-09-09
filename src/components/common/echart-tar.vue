@@ -84,7 +84,9 @@ export default {
     }
   },
   created () {
-    this.setEcharts()
+    setTimeout(() => {
+      this.setEcharts()
+    }, 0)
   },
   watch: {
     echartsDate () {

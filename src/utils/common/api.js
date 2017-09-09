@@ -20,5 +20,7 @@ export default {
   searchReport: '/static/api/report/reportList.json',
   reportDetail: '/static/api/report/reportDetail.json',
   adList: '/static/api/report/adList.json',
-  sendMail: '/static/api/report/sendMail.json'
+  sendMail: '/static/api/report/sendMail.json',
+  searchMap: '/static/api/report/searchMap.json',
+  typeMap: '/static/api/property/typeMap.json'
 }
