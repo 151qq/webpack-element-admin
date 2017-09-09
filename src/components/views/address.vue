@@ -33,7 +33,9 @@ export default {
     }
   },
   mounted () {
-    this.checkL = this.checkList.concat([])
+    setTimeout(() => {
+      this.checkL = this.checkList.concat([])
+    }, 0)
   },
   methods: {
     closeWindow () {

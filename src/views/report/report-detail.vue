@@ -3,93 +3,105 @@
     <div class="left">
       <section class="one">
         <p class="title">
-          什么什么楼盘2017年第二季度评估报告
+          {{detail.title}}
         </p>
         <div class="time">
           <p class="btns">
-            <a>
-              <img src="../../assets/images/download-gray.png">
-            </a>
-            <a>
-              <img src="../../assets/images/wx-gray.png">
-            </a>
-            <a>
-              <img src="../../assets/images/mail-gray.png">
-            </a>
-            <a>
-              <img src="../../assets/images/print-gray.png">
-            </a>
+            <share :down-url="detail.download" :file-name="detail.fileName" :id-type="detail.id"></share>
           </p>
-          2017-06-20 20：00
+          {{detail.date}}
         </div>
         <img class="info-big" src="../../assets/images/info-big.png">
         <p class="info-con">
-          佳程广场总占地面积17690平方米，总建筑面积141075平方米，楼体高度：103.8米。紧临东三环，交通方便。由两栋甲级写字楼、裙楼配套商业(现建为俱乐部)及大型地下停车库组成，为国际建筑师公司——巴马丹拿(P&T GROUP)的灵感代表之作。外墙采用高级反光玻璃幕墙配置铝板及石材的组合表现出建筑的现代感，汲取中国古代建筑美学之灵感，造就中西融汇的独特性格。佳程广场总体布局气势磅礴，双塔凌云耸立，以"掌开而合"的形态，表达对世界的拥抱。6000平方米入口广场上设有巨型水景园林，形成辉耀北京东区的新地标。佳程广场占据北京三元桥东侧显要地段，紧临首都机场高速路，交通网络密集，快速通达各商务主站，真正快捷商务之所。佳程广场与临近的亮马河商务区共同拥抱第三使馆区，形成北京商务活动密集的综合商务区。佳程广场市场定位佳程广场市场定位为国际一流品质纯写字楼，市场细分为特别针对产业国际性的行业领先企业及机构，为其度身定造区域总部新址战略。该项目将于2005年初全面落成，届时，3F新概念的“佳程广场”将提供给客户全面升级的新办公空间，实现效率性(Efficiency)+灵活性( Flexibility)+沟通性(Connectivity)+愉悦性(Enjoyment)四维的新层次需求体验。
+          {{detail.des}}
         </p>
         <div class="author">
           <section class="a-left">
-            <img src="../../assets/images/info-t.png">
+            <img :src="detail.author.img">
             <p>
-              <span class="au-t">James Macdonald</span>
-              <span>Director, China</span>
-              <span>+8621 6391 6688 james.macdonald@savills.com.cn</span>
+              <span class="au-t">{{detail.author.name}}</span>
+              <span>{{detail.author.city}}</span>
+              <span>{{detail.author.tel + detail.author.email}}</span>
             </p>
           </section>
           <section class="a-right">
-              <img src="../../assets/images/ewm.png">
+              <img :src="detail.author.ewm">
               <p>请用微信扫码联系作者</p>
           </section>
         </div>
       </section>
       <section class="two">
-        <router-link class="card-b" :to="{ name: 'detail' }">
-          <img class="i-t" src="../../assets/images/report1.png">
-          <div class="card">
-            <p class="title">标题标题标题</p>
-            <p class="cont">
-              佳程广场总占地面积17690平方米，总建筑面积141075平方米，楼体高度：103.8米。紧临东三环，交通方便。由两栋甲级写字楼、裙楼配套商业(现建为俱乐部)及大型地下停车库组成，为国际建筑师公司——巴马丹拿(P&T GROUP)的灵感代表之作。外墙采用高级反光玻璃幕墙配置铝板及石材的组合表现出建筑的现代感，汲取中国古代建筑美学之灵感，造就中西融汇的独特性格。佳程广场总体布局气势磅礴，双塔凌云耸立，以"掌开而合"的形态，表达对世界的拥抱。6000平方米入口广场上设有巨型水景园林，形成辉耀北京东区的新地标。
-            </p>
-            <p class="btns">
-              <a>
-                <img src="../../assets/images/download.png">
-              </a>
-              <a>
-                <img src="../../assets/images/wx.png">
-              </a>
-              <a>
-                <img src="../../assets/images/mail.png">
-              </a>
-              <a>
-                <img src="../../assets/images/print.png">
-              </a>
-            </p>
-          </div>
-        </router-link>
+        <template v-for="item in list">
+          <router-link class="card-b" :to="{ name: 'detail' ,params: {id: item.id}}">
+            <img class="i-t" :src="item.imgUrl">
+            <div class="card">
+              <p class="title">{{item.title}}</p>
+              <p class="cont">
+                {{item.des}}
+              </p>
+            </div>
+          </router-link>
+          <p class="btns">
+            <share :down-url="item.download" :file-name="item.fileName" :id-type="item.id"></share>
+          </p>
+        </template>
       </section>
-  </div>
-  <div class="right">
-    <router-link class="bench" :to="{name: 'benchmark'}">
-      <img src="../../assets/images/detial1.png">
-      <span>康乐大厦</span>
-    </router-link>
-    <router-link class="bench" :to="{name: 'benchmark'}">
-      <img src="../../assets/images/detial1.png">
-      <span>康乐大厦</span>
-    </router-link>
-    <router-link class="bench" :to="{name: 'benchmark'}">
-      <img src="../../assets/images/detial1.png">
-      <span>康乐大厦</span>
-    </router-link>
+    </div>
+    <div class="right">
+      <a v-for="item in adList" class="bench" target="_blank" :href="item.href">
+        <img :src="item.imgUrl">
+        <span>{{item.title}}</span>
+      </a>
     </div>
   </div>
 </template>
 <script>
+import share from '../../components/common/share.vue'
+import Tools from '../../utils/tools.js'
+
 export default {
   data () {
     return {
+      detail: {},
+      list: [],
+      adList: []
     }
   },
+  created () {
+    this.getReport()
+    this.getAds()
+  },
   methods: {
+    // 获取报告数据
+    getReport () {
+      var formData = {
+        id: this.$route.params.id
+      }
+      Tools.getJson('reportDetail', formData, (res) => {
+        if (res.statusCode === 0) {
+          this.detail = res.datas.detail
+          this.list = res.datas.list
+        } else {
+          this.$message.error(res.mess)
+        }
+      })
+    },
+    // 获取广告数据
+    getAds () {
+      var formData = {
+        id: this.$route.params.id
+      }
+      Tools.getJson('adList', formData, (res) => {
+        if (res.statusCode === 0) {
+          this.adList = res.datas
+        } else {
+          this.$message.error(res.mess)
+        }
+      })
+    }
+  },
+  components: {
+    share
   }
 }
 </script>
@@ -230,6 +242,12 @@ export default {
         .two {
           margin-top: 40px;
 
+          .btns {
+            text-align: right;
+            position: relative;
+            top: -70px;
+          }
+
           .card-b {
             display: block;
             overflow: hidden;
@@ -259,33 +277,6 @@ export default {
                 color: #475669;
                 height: 180px;
                 overflow: hidden;
-              }
-
-              .btns {
-                text-align: right;
-
-                a {
-                  height: 16px;
-                  display: inline-block;
-                  padding-left: 10px;
-                  border-left: 1px solid #C0CCDA;
-                  margin-left: 10px;
-
-                  &:first-child {
-                    border: none;
-                  }
-
-                  img {
-                    position: relative;
-                    top: -2px;
-                    transition: all 0.3s;
-                    cursor: pointer;
-
-                    &:hover {
-                      opacity: 0.8;
-                    }
-                  }
-                }
               }
             }
           }

@@ -9,13 +9,13 @@
       </router-link>
       <el-tabs class="card-box" v-model="activeName">
         <el-tab-pane class="card-outer" label="基本信息" name="基本信息">
-          <base-content></base-content>
+          <base-content :base="base"></base-content>
         </el-tab-pane>
         <el-tab-pane class="card-outer" label="楼盘评述" name="楼盘评述">
-          <base-evalute></base-evalute>
+          <base-evalute :evaluate="evaluate"></base-evalute>
         </el-tab-pane>
         <el-tab-pane class="card-outer" label="楼盘照片" name="楼盘照片">
-          <base-img></base-img>
+          <base-img :imgs="imgs" :big-imgs="bigImgs"></base-img>
         </el-tab-pane>
       </el-tabs>
     </div>
@@ -26,20 +26,41 @@ import bannerInfo from '../../components/views/banner-info.vue'
 import baseContent from '../../components/views/base-content.vue'
 import baseEvalute from '../../components/views/base-evalute.vue'
 import baseImg from '../../components/views/base-img.vue'
+import Tools from '../../utils/tools.js'
 
 export default {
   data () {
     return {
       activeName: '基本信息',
+      base: {},
+      evaluate: {},
+      imgs: [],
+      bigImgs: [],
       type: ''
     }
   },
-  beforeRouteUpdate (to, from, next) {
-    this.type = this.$route.params.type
-    next()
-  },
   created () {
     this.type = this.$route.params.type
+    this.getDatas()
+  },
+  methods: {
+    getDatas () {
+      let formData = {
+        type: this.type,
+        id: this.$route.params.id
+      }
+
+      Tools.getJson('info', formData, (res) => {
+        if (res.statusCode === 0) {
+          this.base = res.datas.base
+          this.evaluate = res.datas.evaluate
+          this.imgs = res.datas.imgs
+          this.bigImgs = res.datas.bigImgs
+        } else {
+          this.$message.error(res.mess)
+        }
+      })
+    }
   },
   components: {
     bannerInfo,

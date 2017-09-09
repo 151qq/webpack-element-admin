@@ -1,42 +1,31 @@
 <template>
   <div class="notice-detail">
     <section class="one">
-      <p class="title">
-        什么什么楼盘2017年第二季度评估报告
+      <p class="title-e">
+        {{detail.title}}
       </p>
       <div class="time">
         <p class="btns">
-          <a>
-            <img src="../../assets/images/download-gray.png">
-          </a>
-          <a>
-            <img src="../../assets/images/wx-gray.png">
-          </a>
-          <a>
-            <img src="../../assets/images/mail-gray.png">
-          </a>
-          <a>
-            <img src="../../assets/images/print-gray.png">
-          </a>
+          <share :down-url="detail.download" :file-name="detail.fileName" :id-type="detail.id"></share>
         </p>
       </div>
       
       <div class="table-o">
         <p>
           <span>任务开始时间</span>
-          <span>2017-06-20 20：00</span>
+          <span>{{detail.dateS}}</span>
         </p>
         <p>
           <span>任务结束时间</span>
-          <span>2017-06-20 20：00</span>
+          <span>{{detail.dateE}}</span>
         </p>
         <p>
           <span>文章数量</span>
-          <span>30</span>
+          <span>{{detail.artNum}}</span>
         </p>
         <p>
           <span>提交（天/1篇）</span>
-          <span>3</span>
+          <span>{{detail.subDay}}</span>
         </p>
       </div>
 
@@ -48,26 +37,26 @@
         <div class="one">
           <p>
             <span>任务开始时间</span>
-            <span>2017-06-20 20：00</span>
+            <span>{{detail.dateS}}</span>
           </p>
           <p>
             <span>任务结束时间</span>
-            <span>2017-06-20 20：00</span>
+            <span>{{detail.dateE}}</span>
           </p>
         </div>
 
         <p class="title">活动推广主题</p>
 
         <p class="cont">
-          佳程广场总占地面积17690平方米，总建筑面积141075平方米，楼体高度：103.8米。紧临东三环，交通方便。由两栋甲级写字楼、裙楼配套商业(现建为俱乐部)及大型地下停车库组成，为国际建筑师公司——巴马丹拿(P&T GROUP)的灵感代表之作。外墙采用高级反光玻璃幕墙配置铝板及石材的组合表现出建筑的现代感，汲取中国古代建筑美学之灵感，造就中西融汇的独特性格。佳程广场总体布局气势磅礴，双塔凌云耸立，以"掌开而合"的形态，表达对世界的拥抱。6000平方米入口广场上设有巨型水景园林，形成辉耀北京东区的新地标。佳程广场占据北京三元桥东侧显要地段，紧临首都机场高速路，交通网络密集，快速通达各商务主站，真正快捷商务之所。佳程广场与临近的亮马河商务区共同拥抱第三使馆区，形成北京商务活动密集的综合商务区。佳程广场市场定位佳程广场市场定位为国际一流品质纯写字楼，市场细分为特别针对产业国际性的行业领先企业及机构，为其度身定造区域总部新址战略。该项目将于2005年初全面落成，届时，3F新概念的“佳程广场”将提供给客户全面升级的新办公空间，实现效率性(Efficiency)+灵活性( Flexibility)+沟通性(Connectivity)+愉悦性(Enjoyment)四维的新层次需求体验。
+          {{detail.des}}
         </p>
 
         <p class="title">主推产品</p>
 
-        <img class="info-mid" src="../../assets/images/info-big.png">
+        <img class="info-mid" :src="detail.proImg">
         
         <p class="cont">
-          佳程广场总占地面积17690平方米，总建筑面积141075平方米，楼体高度：103.8米。紧临东三环，交通方便。由两栋甲级写字楼、裙楼配套商业(现建为俱乐部)及大型地下停车库组成，为国际建筑师公司——巴马丹拿(P&T GROUP)的灵感代表之作。外墙采用高级反光玻璃幕墙配置铝板及石材的组合表现出建筑的现代感，汲取中国古代建筑美学之灵感，造就中西融汇的独特性格。佳程广场总体布局气势磅礴，双塔凌云耸立，以"掌开而合"的形态，表达对世界的拥抱。6000平方米入口广场上设有巨型水景园林，形成辉耀北京东区的新地标。佳程广场占据北京三元桥东侧显要地段，紧临首都机场高速路，交通网络密集，快速通达各商务主站，真正快捷商务之所。佳程广场与临近的亮马河商务区共同拥抱第三使馆区，形成北京商务活动密集的综合商务区。佳程广场市场定位佳程广场市场定位为国际一流品质纯写字楼，市场细分为特别针对产业国际性的行业领先企业及机构，为其度身定造区域总部新址战略。该项目将于2005年初全面落成，届时，3F新概念的“佳程广场”将提供给客户全面升级的新办公空间，实现效率性(Efficiency)+灵活性( Flexibility)+沟通性(Connectivity)+愉悦性(Enjoyment)四维的新层次需求体验。
+          {{detail.proDes}}
         </p>
 
         <div class="table-e">
@@ -75,25 +64,25 @@
           <div class="row">
             <p>
               <span>券生效时间</span>
-              <span>2017-06-20 20：00</span>
+              <span>{{vouchers.dateS}}</span>
             </p>
             <p>
               <span>券失效时间</span>
-              <span>2017-06-20 20：00</span>
+              <span>{{vouchers.dateE}}</span>
             </p>
             <p>
               <span>礼品</span>
-              <span>楼房一套</span>
+              <span>{{vouchers.gift}}</span>
             </p>
             <p>
               <span>券数量</span>
-              <span>3</span>
+              <span>{{vouchers.num}}</span>
             </p>
           </div>
         </div>
 
         <p class="cont">
-          佳程广场总占地面积17690平方米，总建筑面积141075平方米，楼体高度：103.8米。紧临东三环，交通方便。由两栋甲级写字楼、裙楼配套商业(现建为俱乐部)及大型地下停车库组成，为国际建筑师公司——巴马丹拿(P&T GROUP)的灵感代表之作。外墙采用高级反光玻璃幕墙配置铝板及石材的组合表现出建筑的现代感，汲取中国古代建筑美学之灵感，造就中西融汇的独特性格。佳程广场总体布局气势磅礴，双塔凌云耸立，以"掌开而合"的形态，表达对世界的拥抱。6000平方米入口广场上设有巨型水景园林，形成辉耀北京东区的新地标。佳程广场占据北京三元桥东侧显要地段，紧临首都机场高速路，交通网络密集，快速通达各商务主站，真正快捷商务之所。佳程广场与临近的亮马河商务区共同拥抱第三使馆区，形成北京商务活动密集的综合商务区。佳程广场市场定位佳程广场市场定位为国际一流品质纯写字楼，市场细分为特别针对产业国际性的行业领先企业及机构，为其度身定造区域总部新址战略。该项目将于2005年初全面落成，届时，3F新概念的“佳程广场”将提供给客户全面升级的新办公空间，实现效率性(Efficiency)+灵活性( Flexibility)+沟通性(Connectivity)+愉悦性(Enjoyment)四维的新层次需求体验。
+          {{vouchers.des}}
         </p>
 
         <div class="table-e">
@@ -101,27 +90,27 @@
           <div class="row">
             <p>
               <span>券生效时间</span>
-              <span>2017-06-20 20：00</span>
+              <span>{{gifts.dateS}}</span>
             </p>
             <p>
               <span>券失效时间</span>
-              <span>2017-06-20 20：00</span>
+              <span>{{gifts.dateE}}</span>
             </p>
             <p>
               <span>券金额</span>
-              <span>30元</span>
+              <span>{{gifts.price}}</span>
             </p>
             <p>
               <span>券数量</span>
-              <span>3</span>
+              <span>{{gifts.num}}</span>
             </p>
           </div>
         </div>
         
-        <img class="info-mid" src="../../assets/images/info-big.png">
+        <img class="info-mid" :src="gifts.img">
 
         <p class="cont">
-          佳程广场总占地面积17690平方米，总建筑面积141075平方米，楼体高度：103.8米。紧临东三环，交通方便。由两栋甲级写字楼、裙楼配套商业(现建为俱乐部)及大型地下停车库组成，为国际建筑师公司——巴马丹拿(P&T GROUP)的灵感代表之作。外墙采用高级反光玻璃幕墙配置铝板及石材的组合表现出建筑的现代感，汲取中国古代建筑美学之灵感，造就中西融汇的独特性格。佳程广场总体布局气势磅礴，双塔凌云耸立，以"掌开而合"的形态，表达对世界的拥抱。6000平方米入口广场上设有巨型水景园林，形成辉耀北京东区的新地标。佳程广场占据北京三元桥东侧显要地段，紧临首都机场高速路，交通网络密集，快速通达各商务主站，真正快捷商务之所。佳程广场与临近的亮马河商务区共同拥抱第三使馆区，形成北京商务活动密集的综合商务区。佳程广场市场定位佳程广场市场定位为国际一流品质纯写字楼，市场细分为特别针对产业国际性的行业领先企业及机构，为其度身定造区域总部新址战略。该项目将于2005年初全面落成，届时，3F新概念的“佳程广场”将提供给客户全面升级的新办公空间，实现效率性(Efficiency)+灵活性( Flexibility)+沟通性(Connectivity)+愉悦性(Enjoyment)四维的新层次需求体验。
+          {{gifts.des}}
         </p>
 
         <div class="table-e">
@@ -129,56 +118,45 @@
           <div class="row">
             <p>
               <span>券生效时间</span>
-              <span>2017-06-20 20：00</span>
+              <span>{{zhes.dateS}}</span>
             </p>
             <p>
               <span>券失效时间</span>
-              <span>2017-06-20 20：00</span>
+              <span>{{zhes.dateE}}</span>
             </p>
             <p>
               <span>折扣</span>
-              <span>五折</span>
+              <span>{{zhes.price}}</span>
             </p>
             <p>
               <span>券数量</span>
-              <span>3</span>
+              <span>{{zhes.num}}</span>
             </p>
           </div>
         </div>
 
         <p class="cont">
-          佳程广场总占地面积17690平方米，总建筑面积141075平方米，楼体高度：103.8米。紧临东三环，交通方便。由两栋甲级写字楼、裙楼配套商业(现建为俱乐部)及大型地下停车库组成，为国际建筑师公司——巴马丹拿(P&T GROUP)的灵感代表之作。外墙采用高级反光玻璃幕墙配置铝板及石材的组合表现出建筑的现代感，汲取中国古代建筑美学之灵感，造就中西融汇的独特性格。佳程广场总体布局气势磅礴，双塔凌云耸立，以"掌开而合"的形态，表达对世界的拥抱。6000平方米入口广场上设有巨型水景园林，形成辉耀北京东区的新地标。佳程广场占据北京三元桥东侧显要地段，紧临首都机场高速路，交通网络密集，快速通达各商务主站，真正快捷商务之所。佳程广场与临近的亮马河商务区共同拥抱第三使馆区，形成北京商务活动密集的综合商务区。佳程广场市场定位佳程广场市场定位为国际一流品质纯写字楼，市场细分为特别针对产业国际性的行业领先企业及机构，为其度身定造区域总部新址战略。该项目将于2005年初全面落成，届时，3F新概念的“佳程广场”将提供给客户全面升级的新办公空间，实现效率性(Efficiency)+灵活性( Flexibility)+沟通性(Connectivity)+愉悦性(Enjoyment)四维的新层次需求体验。
+          {{zhes.des}}
         </p>
 
         <div class="time">
           <p class="btns">
-            <a>
-              <img src="../../assets/images/download-gray.png">
-            </a>
-            <a>
-              <img src="../../assets/images/wx-gray.png">
-            </a>
-            <a>
-              <img src="../../assets/images/mail-gray.png">
-            </a>
-            <a>
-              <img src="../../assets/images/print-gray.png">
-            </a>
+            <share :down-url="detail.download" :file-name="detail.fileName" :id-type="detail.id"></share>
           </p>
         </div>
       </section>
 
       <div class="author">
         <section class="a-left">
-          <img src="../../assets/images/info-t.png">
+          <img :src="author.img">
           <p>
-            <span class="au-t">James Macdonald</span>
-            <span>Director, China</span>
-            <span>+8621 6391 6688 james.macdonald@savills.com.cn</span>
+            <span class="au-t">{{author.name}}</span>
+            <span>{{author.city}}</span>
+            <span>{{author.tel + author.email}}</span>
           </p>
         </section>
         <section class="a-right">
-            <img src="../../assets/images/ewm.png">
+            <img :src="author.ewm">
             <p>请用微信扫码联系作者</p>
         </section>
       </div>
@@ -186,12 +164,43 @@
   </div>
 </template>
 <script>
+import share from '../../components/common/share.vue'
+import Tools from '../../utils/tools.js'
+
 export default {
   data () {
     return {
+      detail: {},
+      vouchers: {},
+      gifts: {},
+      zhes: {},
+      author: {}
     }
   },
+  created () {
+    this.getDetail()
+  },
   methods: {
+    getDetail () {
+      var formData = {
+        id: this.$route.params.id
+      }
+      Tools.getJson('noticeDetail', formData, (res) => {
+        if (res.statusCode === 0) {
+          this.detail = res.datas.detail
+          this.vouchers = res.datas.vouchers
+          this.gifts = res.datas.gifts
+          this.zhes = res.datas.zhes
+          this.author = res.datas.author
+          console.log(this.detail)
+        } else {
+          this.$message.error(res.mess)
+        }
+      })
+    }
+  },
+  components: {
+    share
   }
 }
 </script>
@@ -204,7 +213,7 @@ export default {
   .one {
       margin-top: 10px;
 
-      .title {
+      .title-e {
           font-size: 30px;
           line-height: 32px;
           color: #000000;

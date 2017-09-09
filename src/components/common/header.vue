@@ -10,7 +10,7 @@
     </div>
 
     <div class="member-box">
-      <a class="img-box" @click="editImgUrl"><img :src="userInfo.memberImg"></a>
+      <a class="img-box" @click="editImgUrl"><img :src="userInfo.imgUrl"></a>
       <a @click="editPassword">
         您好
         <span>{{userInfo.name}}</span>
@@ -29,59 +29,43 @@
         <div class="con-box">
           <p class="title">任务</p>
           <div class="mess-list">
-            <section>
+            <section v-for="item in noticeList">
               <div class="top">
-                <img src="../../assets/images/head-icon.png">
+                <img :src="item.imgUrl">
                 <p>
-                  <span class="people">孙晶洞</span>
-                  <span>瑞信投资有限公司</span>
+                  <span class="people">{{item.name}}</span>
+                  <span>{{item.company}}</span>
                 </p>
               </div>
               <div class="mid">
-                <p>请您从2017年10月1日开始，到2017年您从2017年10月1日开始，到2017年您从2017年10月1日开始，到2017年</p>
-                <router-link :to="{ name: 'notice'}">{{ origin + '/notice'}}</router-link>
+                <p>{{item.des}}</p>
               </div>
               <div class="bottom">
-                <el-button class="edit" type="primary" icon="edit" size="small">处理</el-button>
-              </div>
-            </section>
-
-            <section>
-              <div class="top">
-                <img src="../../assets/images/head-icon.png">
-                <p>
-                  <span class="people">孙晶洞</span>
-                  <span>瑞信投资有限公司</span>
-                </p>
-              </div>
-              <div class="mid">
-                <p>请您从2017年10月1日开始，到2017年您从2017年10月1日开始，到2017年您从2017年10月1日开始，到2017年</p>
-                <router-link :to="{ name: 'notice'}">{{ origin + '/notice'}}</router-link>
-              </div>
-              <div class="bottom">
-                <el-button class="edit" type="primary" icon="edit" size="small">处理</el-button>
+                <el-button class="edit" type="primary" icon="edit" size="small" @click="goUrl(item.id)">处理</el-button>
               </div>
             </section>
           </div>
         </div>
       </el-popover>
     </div>
-    <upload-file :path="userInfo.memberImg" :dialog-form-visible="dialogFormVisible"></upload-file>
+    <upload-file :path="userInfo.imgUrl" :dialog-form-visible="dialogFormVisible" @imgChange="changeImg"></upload-file>
     <password :dialog-form-visible="dialogFormVisible"></password>
   </section>
 </template>
 <script>
 import uploadFile from './upload-file.vue'
 import password from './password.vue'
+import Tools from '../../utils/tools.js'
 
 export default {
   data () {
     return {
       origin: window._SettingOrigin,
       userInfo: {
-        name: '顾乐乐',
-        memberImg: ''
+        name: '',
+        imgUrl: ''
       },
+      noticeList: [],
       dialogFormVisible: {
         visibleF: false,
         visibleP: false
@@ -89,8 +73,34 @@ export default {
     }
   },
   created () {
+    this.getUserInfo()
+    this.getNotice()
   },
   methods: {
+    getUserInfo () {
+      Tools.getJson('userInfo', {}, (res) => {
+        if (res.statusCode === 0) {
+          this.userInfo = res.datas
+        } else {
+          this.$message.error(res.mess)
+        }
+      })
+    },
+    getNotice () {
+      Tools.getJson('notice', {}, (res) => {
+        if (res.statusCode === 0) {
+          this.noticeList = res.datas
+        } else {
+          this.$message.error(res.mess)
+        }
+      })
+    },
+    goUrl (id) {
+      this.$router.push({name: 'notice', params: {id: id}})
+    },
+    changeImg (path) {
+      this.userInfo.imgUrl = path
+    },
     editImgUrl () {
       this.dialogFormVisible.visibleF = true
     },

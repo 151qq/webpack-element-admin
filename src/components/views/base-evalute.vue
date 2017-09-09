@@ -2,31 +2,27 @@
     <div class="evalute-box">
         <div class="left">
             <section class="one">
-                <p class="title">
-                    什么什么楼盘2017年第二季度评估报告
-                </p>
-                <p class="time">2017-06-20 20：00</p>
-                <img class="info-big" src="../../assets/images/info-big.png">
-                <p class="info-con">
-                    佳程广场总占地面积17690平方米，总建筑面积141075平方米，楼体高度：103.8米。紧临东三环，交通方便。由两栋甲级写字楼、裙楼配套商业(现建为俱乐部)及大型地下停车库组成，为国际建筑师公司——巴马丹拿(P&T GROUP)的灵感代表之作。外墙采用高级反光玻璃幕墙配置铝板及石材的组合表现出建筑的现代感，汲取中国古代建筑美学之灵感，造就中西融汇的独特性格。佳程广场总体布局气势磅礴，双塔凌云耸立，以"掌开而合"的形态，表达对世界的拥抱。6000平方米入口广场上设有巨型水景园林，形成辉耀北京东区的新地标。佳程广场占据北京三元桥东侧显要地段，紧临首都机场高速路，交通网络密集，快速通达各商务主站，真正快捷商务之所。佳程广场与临近的亮马河商务区共同拥抱第三使馆区，形成北京商务活动密集的综合商务区。佳程广场市场定位佳程广场市场定位为国际一流品质纯写字楼，市场细分为特别针对产业国际性的行业领先企业及机构，为其度身定造区域总部新址战略。该项目将于2005年初全面落成，届时，3F新概念的“佳程广场”将提供给客户全面升级的新办公空间，实现效率性(Efficiency)+灵活性( Flexibility)+沟通性(Connectivity)+愉悦性(Enjoyment)四维的新层次需求体验。
-                </p>
+                <p class="title">{{evaluate.title}}</p>
+                <p class="time">{{evaluate.date}}</p>
+                <img class="info-big" :src="evaluate.img">
+                <p class="info-con">{{evaluate.des}}</p>
                 <div class="author">
                     <section class="a-left">
-                        <img src="../../assets/images/info-t.png">
+                        <img :src="evaluate.author.img">
                         <p>
-                            <span class="au-t">James Macdonald</span>
-                            <span>Director, China</span>
-                            <span>+8621 6391 6688 james.macdonald@savills.com.cn</span>
+                            <span class="au-t">{{evaluate.author.name}}</span>
+                            <span>{{evaluate.author.city}}</span>
+                            <span>{{evaluate.author.tel + evaluate.author.email}}</span>
                         </p>
                     </section>
                     <section class="a-right">
-                        <img src="../../assets/images/ewm.png">
+                        <img :src="evaluate.author.ewm">
                         <p>请用微信扫码联系作者</p>
                     </section>
                 </div>
             </section>
             <section class="two">
-                <a @click="showModel">
+                <a @click="showModel('join')">
                     <img src="../../assets/images/eva-b1.png">
                     <div>
                         物业投资报告
@@ -35,7 +31,7 @@
                         </span>
                     </div>
                 </a>
-                <a @click="showModel">
+                <a @click="showModel('manage')">
                     <img src="../../assets/images/eva-b2.png">
                     <div>
                         物业资产管理报告
@@ -44,7 +40,7 @@
                         </span>
                     </div>
                 </a>
-                <a @click="showModel">
+                <a @click="showModel('quit')">
                     <img src="../../assets/images/eva-b3.png">
                     <div>
                         物业退出报告
@@ -57,45 +53,55 @@
         </div>
         <div class="right">
             <p>对标楼盘</p>
-            <router-link class="bench" target="_blank" :to="{name: 'benchmark', params: { type: type }}">
-                <img src="../../assets/images/bench1.png">
-                <span>康乐大厦</span>
-            </router-link>
-            <router-link class="bench" target="_blank" :to="{name: 'benchmark', params: { type: type }}">
-                <img src="../../assets/images/bench1.png">
-                <span>康乐大厦</span>
-            </router-link>
-            <router-link class="bench" target="_blank" :to="{name: 'benchmark', params: { type: type }}">
-                <img src="../../assets/images/bench1.png">
-                <span>康乐大厦</span>
+            <router-link v-for="item in benchs" class="bench" target="_blank" :to="{name: 'benchmark', params: { type: type, id: id + ',' + item.id }}">
+                <img :src="item.imgUrl">
+                <span>{{item.title}}</span>
             </router-link>
         </div>
 
-        <ewm-select :dialog-form-visible="dialogFormVisible"></ewm-select>
+        <ewm-select :dialog-form-visible="dialogFormVisible" :report-type="reportType"></ewm-select>
     </div>
 </template>
 <script>
 import ewmSelect from '../../components/views/ewm-select.vue'
+import Tools from '../../utils/tools.js'
 
 export default {
+  props: ['evaluate'],
   data () {
     return {
       dialogFormVisible: {
         visibleE: false
       },
-      type: ''
+      type: '',
+      benchs: [],
+      reportType: '',
+      id: ''
     }
-  },
-  beforeRouteUpdate (to, from, next) {
-    this.type = this.$route.params.type
-    next()
   },
   created () {
     this.type = this.$route.params.type
+    this.id = this.$route.params.id
+    this.getBenchs()
   },
   methods: {
-    showModel () {
+    showModel (type) {
+      this.reportType = type
       this.dialogFormVisible.visibleE = true
+    },
+    getBenchs () {
+      let formData = {
+        type: this.type,
+        id: this.$route.params.id
+      }
+
+      Tools.getJson('benchList', formData, (res) => {
+        if (res.statusCode === 0) {
+          this.benchs = res.datas
+        } else {
+          this.$message.error(res.mess)
+        }
+      })
     }
   },
   components: {

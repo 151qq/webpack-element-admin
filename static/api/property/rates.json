@@ -1,0 +1,16 @@
+{
+  "statusCode": 0,
+  "datas": {
+    "buy": 20,
+    "quit": 30,
+    "rentO": 10,
+    "rentT": 8,
+    "rentE": 3,
+    "business": 10,
+    "house": 10,
+    "company": 5,
+    "property": 10,
+    "own": 20
+  },
+  "mess": ""
+}

@@ -4,7 +4,7 @@
     <section class="banner-f">
       <div class="left" id="container1"></div>
       <div class="right">
-        <echarts-tar :id-name="'echar1'"></echarts-tar>
+        <echarts-tar :id-name="'echar2'" :echarts-date="echartsDate"></echarts-tar>
       </div>
     </section>
   </div>
@@ -12,10 +12,13 @@
 <script>
 import echartsTar from '../common/echart-tar.vue'
 import WindowOverlay from '../../utils/common/mapOverlay.js'
+import Tools from '../../utils/tools.js'
 
 export default {
   data () {
     return {
+      echartsDate: {},
+      pageInfo: {}
     }
   },
   mounted () {
@@ -39,7 +42,14 @@ export default {
       map.addOverlay(windowInfo)
     })
   },
+  created () {
+    this.setData()
+    this.getEcharts()
+  },
   methods: {
+    setData () {
+      this.pageInfo = this.$store.getters.getPageInfo
+    },
     createTemplate (title) {
       var p = document.createElement('p')
       p.style.color = '#ffffff'
@@ -48,8 +58,22 @@ export default {
       p.style.fontSize = '14px'
       p.style.padding = '4px 14px'
       p.innerHTML = title
-      console.log(p)
       return p
+    },
+    // 获取echarts数据
+    getEcharts () {
+      var formData = {
+        type: this.$route.params.type,
+        city: this.pageInfo.city,
+        id: this.$route.params.id
+      }
+      Tools.getJson('echarts', formData, (res) => {
+        if (res.statusCode === 0) {
+          this.echartsDate = res.datas
+        } else {
+          this.$message.error(res.mess)
+        }
+      })
     }
   },
   components: {
@@ -91,6 +115,10 @@ export default {
 
       .right {
         float: right;
+        width: 800px;
+        height: 390px;
+        padding: 27px;
+        box-sizing: border-box;
       }
     }
   }

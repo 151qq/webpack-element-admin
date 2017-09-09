@@ -1,37 +1,16 @@
 <template>
   <div class="eval-b">
-    <banner-evalute></banner-evalute>
+    <banner-evalute :rates="rates" :price="price"></banner-evalute>
     
     <div class="mid-box">
-      <button class="pric-btn">RMB {{ price }} 元</button>
+      <button class="pric-btn">RMB {{ price.value }} 元</button>
 
       <section class="ewm-box">
-        <a>
-            <img class="img-t" src="../../assets/images/eva-b1.png">
-            <img class="ewm" src="../../assets/images/ewm.png">
-            <span class="title">瑞信投资物业投资报告定制服务</span>
-            <span class="money">5000~10,000 元</span>
-        </a>
-
-        <a>
-            <img class="img-t" src="../../assets/images/eva-b2.png">
-            <img class="ewm" src="../../assets/images/ewm.png">
-            <span class="title">瑞信投资物业投资报告定制服务</span>
-            <span class="money">5000~10,000 元</span>
-        </a>
-
-        <a>
-            <img class="img-t" src="../../assets/images/eva-b3.png">
-            <img class="ewm" src="../../assets/images/ewm.png">
-            <span class="title">瑞信投资物业投资报告定制服务</span>
-            <span class="money">5000~10,000 元</span>
-        </a>
-
-        <a>
-            <img class="img-t" src="../../assets/images/eva-b3.png">
-            <img class="ewm" src="../../assets/images/ewm.png">
-            <span class="title">瑞信投资物业投资报告定制服务</span>
-            <span class="money">5000~10,000 元</span>
+        <a v-for="item in reports">
+            <img class="img-t" :src="item.imgUrl">
+            <img class="ewm" :src="item.ewm">
+            <span class="title">{{item.title}}</span>
+            <span class="money">{{item.price}}</span>
         </a>
       </section>
     </div>
@@ -39,11 +18,51 @@
 </template>
 <script>
 import bannerEvalute from '../../components/views/banner-evalute.vue'
+import Tools from '../../utils/tools.js'
 
 export default {
   data () {
     return {
-      price: '2000'
+      price: {
+        value: 0
+      },
+      rates: {},
+      type: '',
+      reports: []
+    }
+  },
+  created () {
+    this.type = this.$route.params.type
+    this.getDatas()
+    this.getReports()
+  },
+  methods: {
+    getDatas () {
+      let formData = {
+        type: this.type,
+        id: this.$route.params.id
+      }
+
+      Tools.getJson('rates', formData, (res) => {
+        if (res.statusCode === 0) {
+          this.rates = res.datas
+        } else {
+          this.$message.error(res.mess)
+        }
+      })
+    },
+    getReports () {
+      let formData = {
+        type: this.$route.params.type,
+        reportType: this.reportType
+      }
+      Tools.getJson('reportStatic', formData, (res) => {
+        if (res.statusCode === 0) {
+          this.reports = res.datas
+        } else {
+          this.$message.error(res.mess)
+        }
+      })
     }
   },
   components: {

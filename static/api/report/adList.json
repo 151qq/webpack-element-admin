@@ -1,0 +1,24 @@
+{
+  "statusCode": 0,
+  "datas": [
+    {
+      "id": 0,
+      "href": "http://www.baidu.com",
+      "imgUrl": "/static/images/detial1.png",
+      "title": "瑞信投资物业投资报告定制服务"
+    },
+    {
+      "id": 1,
+      "href": "http://www.baidu.com",
+      "imgUrl": "/static/images/detial1.png",
+      "title": "瑞信投资物业投资报告定制服务"
+    },
+    {
+      "id": 2,
+      "href": "http://www.baidu.com",
+      "imgUrl": "/static/images/detial1.png",
+      "title": "瑞信投资物业投资报告定制服务"
+    }
+  ],
+  "mess": ""
+}

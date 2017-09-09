@@ -1,0 +1,21 @@
+{
+  "statusCode": 0,
+  "datas": [
+    {
+      "id": 0,
+      "imgUrl": "/static/images/bench1.png",
+      "title": "瑞信投资物业投资报告定制服务"
+    },
+    {
+      "id": 1,
+      "imgUrl": "/static/images/bench1.png",
+      "title": "瑞信投资物业投资报告定制服务"
+    },
+    {
+      "id": 2,
+      "imgUrl": "/static/images/bench1.png",
+      "title": "瑞信投资物业投资报告定制服务"
+    }
+  ],
+  "mess": ""
+}

@@ -3,38 +3,31 @@
     <section class="img-boxs">
       <p>外观</p>
       <div>
-        <img @click="showImg" src="../../assets/images/img1.png">
-        <img @click="showImg" src="../../assets/images/img1.png">
-        <img @click="showImg" src="../../assets/images/img1.png">
-        <img @click="showImg" src="../../assets/images/img1.png">
+        <img v-for="item in imgs.appearance" @click="showImg" :src="item">
       </div>
     </section>
     <section class="img-boxs">
       <p>公共区域</p>
       <div>
-        <img @click="showImg" src="../../assets/images/img1.png">
-        <img @click="showImg" src="../../assets/images/img1.png">
-        <img @click="showImg" src="../../assets/images/img1.png">
-        <img @click="showImg" src="../../assets/images/img1.png">
+        <img v-for="item in imgs.public" @click="showImg" :src="item">
       </div>
     </section>
     <section class="img-boxs">
       <p>周边环境</p>
       <div>
-        <img @click="showImg" src="../../assets/images/img1.png">
-        <img @click="showImg" src="../../assets/images/img1.png">
-        <img @click="showImg" src="../../assets/images/img1.png">
-        <img @click="showImg" src="../../assets/images/img1.png">
+        <img v-for="item in imgs.surround" @click="showImg" :src="item">
       </div>
     </section>
 
-    <swiper-img :is-show="isShow" :index="index"></swiper-img>
+    <swiper-img :is-show="isShow" :index="index" :big-imgs="bigImgs"></swiper-img>
   </div>
 </template>
 <script>
 import swiperImg from '../../components/common/swiper-img.vue'
+import $ from 'Jquery'
 
 export default {
+  props: ['imgs', 'bigImgs'],
   data () {
     return {
       notNextTick: true,
@@ -55,7 +48,8 @@ export default {
     }
   },
   methods: {
-    showImg () {
+    showImg (e) {
+      this.index = $('.img-box img').index($(e.target))
       this.isShow.value = true
     }
   },

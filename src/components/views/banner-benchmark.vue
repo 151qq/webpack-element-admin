@@ -1,6 +1,5 @@
 <template>
-  <div class="banner-box">
-    <img class="img-box" src="../../assets/images/banner-bg.jpg">
+  <div class="banner-b">
     <section class="banner-f">
       <div class="m-box" id="container2"></div>
     </section>
@@ -62,28 +61,11 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-  .banner-box {
-    position: relative;
-    width: 100%;
-    height: 450px;
-
-    .img-box {
-      position: absolute;
-      left: 50%;
-      top: 0;
-      margin-left: -50%;
-      display: block;
-      width: 1440px;
-      height: 450px;
-    }
-
+  .banner-b {
     .banner-f {
-      position: absolute;
       width: 1160px;
       height: 370px;
-      left: 50%;
-      top: 50%;
-      margin: -185px 0 0 -580px;
+      margin: auto;
       overflow: hidden;
       background: #ffffff;
 

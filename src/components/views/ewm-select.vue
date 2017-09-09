@@ -2,25 +2,11 @@
     <el-dialog class="reset-w" title="选择" v-model="dialogFormVisible.visibleE">
         
         <section class="ewm-box">
-            <a>
-                <img class="img-t" src="../../assets/images/eva-b1.png">
-                <img class="ewm" src="../../assets/images/ewm.png">
-                <span class="title">瑞信投资物业投资报告定制服务</span>
-                <span class="money">5000~10,000 元</span>
-            </a>
-
-            <a>
-                <img class="img-t" src="../../assets/images/eva-b2.png">
-                <img class="ewm" src="../../assets/images/ewm.png">
-                <span class="title">瑞信投资物业投资报告定制服务</span>
-                <span class="money">5000~10,000 元</span>
-            </a>
-
-            <a>
-                <img class="img-t" src="../../assets/images/eva-b3.png">
-                <img class="ewm" src="../../assets/images/ewm.png">
-                <span class="title">瑞信投资物业投资报告定制服务</span>
-                <span class="money">5000~10,000 元</span>
+            <a v-for="item in reports.slice(0, 3)">
+                <img class="img-t" :src="item.imgUrl">
+                <img class="ewm" :src="item.ewm">
+                <span class="title">{{item.title}}</span>
+                <span class="money">{{item.price}}</span>
             </a>
         </section>
 
@@ -30,16 +16,42 @@
     </el-dialog>
 </template>
 <script>
+import Tools from '../../utils/tools.js'
+
 export default {
   props: {
     dialogFormVisible: {
       type: Object,
       default: {}
+    },
+    reportType: String
+  },
+  data () {
+    return {
+      reports: []
+    }
+  },
+  watch: {
+    reportType () {
+      this.getReports()
     }
   },
   methods: {
     closeWindow () {
       this.dialogFormVisible.visibleE = false
+    },
+    getReports () {
+      let formData = {
+        type: this.$route.params.type,
+        reportType: this.reportType
+      }
+      Tools.getJson('reportStatic', formData, (res) => {
+        if (res.statusCode === 0) {
+          this.reports = res.datas
+        } else {
+          this.$message.error(res.mess)
+        }
+      })
     }
   }
 }
@@ -47,7 +59,7 @@ export default {
 <style lang="scss">
 .reset-w {
   .el-dialog--small {
-    width: 69%;
+    width: 883px;
   }
 }
 

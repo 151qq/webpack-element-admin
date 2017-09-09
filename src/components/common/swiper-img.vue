@@ -8,13 +8,7 @@
       :top="'10%'">
     <swiper :options="swiperOption" :not-next-tick="notNextTick" ref="mySwiper">
       <!-- slides -->
-      <swiper-slide><img src="../../assets/images/img1.png"></swiper-slide>
-      <swiper-slide><img src="../../assets/images/img1.png"></swiper-slide>
-      <swiper-slide><img src="../../assets/images/img1.png"></swiper-slide>
-      <swiper-slide><img src="../../assets/images/img1.png"></swiper-slide>
-      <swiper-slide><img src="../../assets/images/img1.png"></swiper-slide>
-      <swiper-slide><img src="../../assets/images/img1.png"></swiper-slide>
-      <swiper-slide><img src="../../assets/images/img1.png"></swiper-slide>
+      <swiper-slide v-for="item in bigImgs"><img :src="item"></swiper-slide>
       <!-- Optional controls -->
       <div class="swiper-button-prev" slot="button-prev"></div>
       <div class="swiper-button-next" slot="button-next"></div>
@@ -29,7 +23,8 @@ import { swiper, swiperSlide } from 'vue-awesome-swiper'
 export default {
   props: {
     isShow: Object,
-    index: Number
+    index: Number,
+    bigImgs: Array
   },
   data () {
     return {
@@ -47,8 +42,10 @@ export default {
       }
     }
   },
-  mounted () {
-    this.$refs.mySwiper.swiper.slideTo(this.index)
+  watch: {
+    index () {
+      this.$refs.mySwiper.swiper.slideTo(this.index)
+    }
   },
   components: {
     popup,

@@ -3,15 +3,14 @@
 </template>
 <script>
 import echarts from 'echarts'
-import Tools from '../../utils/tools.js'
 
 export default {
-  props: ['idName'],
+  props: ['idName', 'echartsDate'],
   data () {
     return {
       option: {
         title: {
-          text: '什么什么图表'
+          text: ''
         },
         tooltip: {
           trigger: 'axis',
@@ -25,16 +24,14 @@ export default {
         },
         legend: {
           right: 0,
-          data: ['租金', '置空率', 'GDP', 'GPI']
+          data: []
         },
         xAxis: {
-          data: ['三月', '四月', '五月', '六月', '七月', '八月', '九月']
+          data: []
         },
         yAxis: {
           type: 'value',
           min: 0,
-          max: 500,
-          interval: 100,
           axisLabel: {
             formatter: '{value}',
             textStyle: {
@@ -48,80 +45,80 @@ export default {
             show: false
           }
         },
-        // dataZoom: [
-        //   {
-        //     type: 'inside'
-        //   }
-        // ],
-        series: [
-          {
-            name: '置空率',
-            type: 'line',
-            itemStyle: {
-              normal: {
-                color: '#c4cddc'
-              }
-            },
-            data: [50, 75, 100, 150, 200, 250, 150]
-          },
-          {
-            name: '租金',
-            type: 'bar',
-            itemStyle: {
-              normal: {
-                color: new echarts.graphic.LinearGradient(
-                  0, 0, 0, 1,
-                  [
-                    {offset: 0, color: '#83bff6'},
-                    {offset: 0.5, color: '#188df0'},
-                    {offset: 1, color: '#188df0'}
-                  ]
-                )
-              },
-              emphasis: {
-                color: new echarts.graphic.LinearGradient(
-                  0, 0, 0, 1,
-                  [
-                    {offset: 0, color: '#2378f7'},
-                    {offset: 0.7, color: '#2378f7'},
-                    {offset: 1, color: '#83bff6'}
-                  ]
-                )
-              }
-            },
-            data: [220, 182, 191, 234, 290, 330, 310]
+        series: []
+      },
+      lineStyle: {
+        type: 'line',
+        itemStyle: {
+          normal: {
+            color: '#c4cddc'
           }
-        ]
-      }
+        }
+      },
+      barStyle: {
+        type: 'bar',
+        itemStyle: {
+          normal: {
+            color: new echarts.graphic.LinearGradient(
+              0, 0, 0, 1,
+              [
+                {offset: 0, color: '#83bff6'},
+                {offset: 0.5, color: '#188df0'},
+                {offset: 1, color: '#188df0'}
+              ]
+            )
+          },
+          emphasis: {
+            color: new echarts.graphic.LinearGradient(
+              0, 0, 0, 1,
+              [
+                {offset: 0, color: '#2378f7'},
+                {offset: 0.7, color: '#2378f7'},
+                {offset: 1, color: '#83bff6'}
+              ]
+            )
+          }
+        }
+      },
+      pageInfo: {}
     }
   },
-  beforeRouteUpdate (to, from, next) {
-    this.getEcharts()
-    next()
-  },
   created () {
-    this.getEcharts()
+    this.setEcharts()
   },
-  mounted () {
-    this.$nextTick(() => {
-      // 基于准备好的dom，初始化echarts实例
-      var myChart = echarts.init(document.getElementById(this.idName))
-      // 使用刚指定的配置项和数据显示图表。
-      myChart.setOption(this.option)
-    })
+  watch: {
+    echartsDate () {
+      this.setEcharts()
+    }
   },
   methods: {
     // 获取echarts数据
-    getEcharts () {
-      var formData = {
-        type: window._type,
-        city: window._city
-      }
+    setEcharts () {
+      let datas = this.echartsDate
+      // 设置标题
+      this.option.title.text = datas.title
+      // 设置legend
+      this.option.legend.data = datas.legend.data
+      // 设置横轴数据
+      this.option.xAxis.data = datas.xAxis.data
+      // 设置纵轴数据
+      this.option.series = [].concat(this.setStyle(datas.seriesLine, 'lineStyle'), this.setStyle(datas.seriesBar, 'barStyle'))
 
-      Tools.getJson('echarts', formData, (datas) => {
-        console.log(datas, 'echart')
-      }, () => {
-        console.log('fail')
+      this.drawEchart()
+    },
+    setStyle (arrs, type) {
+      var arrList = arrs.map((item) => {
+        return Object.assign(item, this[type])
+      })
+      return arrList
+    },
+    drawEchart () {
+      this.$nextTick(() => {
+        // 基于准备好的dom，初始化echarts实例
+        var dom = document.getElementById(this.idName)
+        var myChart = echarts.init(dom)
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(this.option)
       })
     }
   }
@@ -129,9 +126,8 @@ export default {
 </script>
 <style lang="scss">
   .echar-box {
-    width: 800px;
-    height: 390px;
-    padding: 27px;
+    width: 100%;
+    height: 350px;
     box-sizing: border-box;
   }
 </style>

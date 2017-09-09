@@ -32,7 +32,7 @@ compiler.plugin('compilation', function (compilation) {
 })
 
 // proxy api requests （https://github.com/chimurai/http-proxy-middleware）
-app.use(proxyMiddleware('/api', {target: 'http://localhost:8060/static', changeOrigin: true}))
+// app.use(proxyMiddleware('/api', {target: 'http://localhost:8001/', changeOrigin: true}))
 // handle fallback for HTML5 history API
 app.use(require('connect-history-api-fallback')())
 
@@ -52,7 +52,7 @@ module.exports = app.listen(port, function (err) {
     console.log(err)
     return
   }
-  var uri = 'http://localhost:' + port + '/business'
+  var uri = 'http://localhost:' + port
   console.log('Listening at ' + uri + '\n')
   // opn(uri)
 })

@@ -1,5 +1,5 @@
 import Cookies from 'js-cookie'
-import $ from 'webpack-zepto'
+import $ from 'Jquery'
 import apis from './common/api.js'
 
 let assemblingData = (isGet) => {
@@ -18,8 +18,8 @@ export default {
   postJson (url, data, cb, fail) {
     return $.ajax({
       url: apis[url],
-      type: 'post',
-      dataType: 'json',
+      type: 'POST',
+      dataType: 'application/json',
       data: window.JSON.stringify(data),
       headers: assemblingData(true),
       success (res) {
@@ -33,7 +33,7 @@ export default {
   getJson (url, data, cb, fail) {
     return $.ajax({
       url: apis[url] + '?timestamp=' + new Date().getTime(),
-      type: 'get',
+      type: 'GET',
       dataType: 'json',
       data: data,
       headers: assemblingData(),

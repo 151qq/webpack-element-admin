@@ -8,87 +8,32 @@
           style="width: 788px;"
           >
         </el-input>
-        <el-button class="search-btn" type="primary" icon="search" @click="getAddres(keyValue)">
+        <el-button class="search-btn" type="primary" icon="search" @click="searchReport">
           搜索
         </el-button>
       </div>
       <div class="cards-box">
-        <router-link class="card-b" :to="{ name: 'detail' }">
-          <img class="i-t" src="../../assets/images/report1.png">
-          <div class="card">
-            <p class="title">标题标题标题</p>
-            <p class="cont">
-              佳程广场总占地面积17690平方米，总建筑面积141075平方米，楼体高度：103.8米。紧临东三环，交通方便。由两栋甲级写字楼、裙楼配套商业(现建为俱乐部)及大型地下停车库组成，为国际建筑师公司——巴马丹拿(P&T GROUP)的灵感代表之作。外墙采用高级反光玻璃幕墙配置铝板及石材的组合表现出建筑的现代感，汲取中国古代建筑美学之灵感，造就中西融汇的独特性格。佳程广场总体布局气势磅礴，双塔凌云耸立，以"掌开而合"的形态，表达对世界的拥抱。6000平方米入口广场上设有巨型水景园林，形成辉耀北京东区的新地标。
-            </p>
-            <p class="btns">
-              <a>
-                <img src="../../assets/images/download.png">
-              </a>
-              <a>
-                <img src="../../assets/images/wx.png">
-              </a>
-              <a>
-                <img src="../../assets/images/mail.png">
-              </a>
-              <a>
-                <img src="../../assets/images/print.png">
-              </a>
-            </p>
-          </div>
-        </router-link>
-        <router-link class="card-b" :to="{ name: 'detail' }">
-          <img class="i-t" src="../../assets/images/report1.png">
-          <div class="card">
-            <p class="title">标题标题标题</p>
-            <p class="cont">
-              佳程广场总占地面积17690平方米，总建筑面积141075平方米，楼体高度：103.8米。紧临东三环，交通方便。由两栋甲级写字楼、裙楼配套商业(现建为俱乐部)及大型地下停车库组成，为国际建筑师公司——巴马丹拿(P&T GROUP)的灵感代表之作。外墙采用高级反光玻璃幕墙配置铝板及石材的组合表现出建筑的现代感，汲取中国古代建筑美学之灵感，造就中西融汇的独特性格。佳程广场总体布局气势磅礴，双塔凌云耸立，以"掌开而合"的形态，表达对世界的拥抱。6000平方米入口广场上设有巨型水景园林，形成辉耀北京东区的新地标。
-            </p>
-            <p class="btns">
-              <a>
-                <img src="../../assets/images/download.png">
-              </a>
-              <a>
-                <img src="../../assets/images/wx.png">
-              </a>
-              <a>
-                <img src="../../assets/images/mail.png">
-              </a>
-              <a>
-                <img src="../../assets/images/print.png">
-              </a>
-            </p>
-          </div>
-        </router-link>
-        <router-link class="card-b" :to="{ name: 'detail' }">
-          <img class="i-t" src="../../assets/images/report1.png">
-          <div class="card">
-            <p class="title">标题标题标题</p>
-            <p class="cont">
-              佳程广场总占地面积17690平方米，总建筑面积141075平方米，楼体高度：103.8米。紧临东三环，交通方便。由两栋甲级写字楼、裙楼配套商业(现建为俱乐部)及大型地下停车库组成，为国际建筑师公司——巴马丹拿(P&T GROUP)的灵感代表之作。外墙采用高级反光玻璃幕墙配置铝板及石材的组合表现出建筑的现代感，汲取中国古代建筑美学之灵感，造就中西融汇的独特性格。佳程广场总体布局气势磅礴，双塔凌云耸立，以"掌开而合"的形态，表达对世界的拥抱。6000平方米入口广场上设有巨型水景园林，形成辉耀北京东区的新地标。
-            </p>
-            <p class="btns">
-              <a>
-                <img src="../../assets/images/download.png">
-              </a>
-              <a>
-                <img src="../../assets/images/wx.png">
-              </a>
-              <a>
-                <img src="../../assets/images/mail.png">
-              </a>
-              <a>
-                <img src="../../assets/images/print.png">
-              </a>
-            </p>
-          </div>
-        </router-link>
+        <template v-for="item in reportList">
+          <router-link class="card-b" :to="{ name: 'detail' ,params: {id: item.id}}">
+            <img class="i-t" :src="item.imgUrl">
+            <div class="card">
+              <p class="title">{{item.title}}</p>
+              <p class="cont">
+                {{item.des}}
+              </p>
+            </div>
+          </router-link>
+          <p class="btns">
+            <share :down-url="item.download" :file-name="item.fileName" :id-type="item.id"></share>
+          </p>
+        </template>
       </div>
 
     </section>
     <section class="right">
         <a class="ding-y">我要订阅</a>
         <section class="two">
-          <a @click="showModel">
+          <a @click="showModel('join')">
               <img src="../../assets/images/eva-b1.png">
               <div>
                   物业投资报告
@@ -97,7 +42,7 @@
                   </span>
               </div>
           </a>
-          <a @click="showModel">
+          <a @click="showModel('manage')">
               <img src="../../assets/images/eva-b2.png">
               <div>
                   物业资产管理报告
@@ -106,7 +51,7 @@
                   </span>
               </div>
           </a>
-          <a @click="showModel">
+          <a @click="showModel('quit')">
               <img src="../../assets/images/eva-b3.png">
               <div>
                   物业退出报告
@@ -118,27 +63,60 @@
         </section>
     </section>
 
-    <ewm-select :dialog-form-visible="dialogFormVisible"></ewm-select>
+    <ewm-select :dialog-form-visible="dialogFormVisible" :report-type="reportType"></ewm-select>
   </div>
 </template>
 <script>
 import ewmSelect from '../../components/views/ewm-select.vue'
+import share from '../../components/common/share.vue'
+import Tools from '../../utils/tools.js'
 
 export default {
   data () {
     return {
       dialogFormVisible: {
         visibleE: false
-      }
+      },
+      reportList: [],
+      reportType: '',
+      keyValue: ''
     }
   },
+  created () {
+    this.getReports()
+  },
   methods: {
-    showModel () {
+    showModel (type) {
+      this.reportType = type
       this.dialogFormVisible.visibleE = true
+    },
+    // 获取报告数据
+    getReports () {
+      Tools.getJson('reportList', {}, (res) => {
+        if (res.statusCode === 0) {
+          this.reportList = res.datas
+        } else {
+          this.$message.error(res.mess)
+        }
+      })
+    },
+    // 获取报告数据
+    searchReport () {
+      var formData = {
+        key: this.keyValue
+      }
+      Tools.getJson('searchReport', formData, (res) => {
+        if (res.statusCode === 0) {
+          this.reportList = res.datas
+        } else {
+          this.$message.error(res.mess)
+        }
+      })
     }
   },
   components: {
-    ewmSelect
+    ewmSelect,
+    share
   }
 }
 </script>
@@ -171,6 +149,12 @@ export default {
     float: left;
 
     .cards-box {
+      .btns {
+        text-align: right;
+        position: relative;
+        top: -70px;
+      }
+
       .card-b {
         display: block;
         overflow: hidden;
@@ -200,33 +184,6 @@ export default {
             color: #475669;
             height: 180px;
             overflow: hidden;
-          }
-
-          .btns {
-            text-align: right;
-
-            a {
-              height: 16px;
-              display: inline-block;
-              padding-left: 10px;
-              border-left: 1px solid #C0CCDA;
-              margin-left: 10px;
-
-              &:first-child {
-                border: none;
-              }
-
-              img {
-                position: relative;
-                top: -2px;
-                transition: all 0.3s;
-                cursor: pointer;
-
-                &:hover {
-                  opacity: 0.8;
-                }
-              }
-            }
           }
         }
       }

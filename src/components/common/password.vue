@@ -2,10 +2,10 @@
 	<el-dialog title="修改密码" v-model="dialogFormVisible.visibleP" size="tiny">
 	  	<el-form :model="form">
 		    <el-form-item label="最新密码" :label-width="formLabelWidth">
-		      <el-input v-model="form.password" auto-complete="off"></el-input>
+		      <el-input v-model="password" auto-complete="off" @blur="checkPassword"></el-input>
 		    </el-form-item>
 		    <el-form-item label="确认密码" :label-width="formLabelWidth">
-				<el-input v-model="form.enterPassword" auto-complete="off"></el-input>
+				<el-input v-model="enterPassword" auto-complete="off" @blur="checkEnter"></el-input>
 		    </el-form-item>
 		  </el-form>
 	  	<div slot="footer" class="dialog-footer">
@@ -15,6 +15,8 @@
 	</el-dialog>
 </template>
 <script>
+import Tools from '../../utils/tools.js'
+
 export default {
   props: {
     dialogFormVisible: {
@@ -24,10 +26,8 @@ export default {
   },
   data () {
     return {
-      form: {
-        password: '',
-        enterPassword: ''
-      },
+      password: '',
+      enterPassword: '',
       formLabelWidth: '80px'
     }
   },
@@ -35,15 +35,45 @@ export default {
   },
   methods: {
     editPassword () {
-      this.$message({
-        showClose: true,
-        message: '上传成功',
-        type: 'confirm'
+      if (!this.checkPassword() || !this.checkEnter()) {
+        return false
+      }
+      var formData = {
+        password: this.password
+      }
+      Tools.postJson('setPassword', formData, (res) => {
+        if (res.statusCode === 0) {
+          this.$message({
+            showClose: true,
+            message: '恭喜你，修改成功'
+          })
+          this.dialogFormVisible.visibleP = false
+        } else {
+          this.$message.error(res.mess)
+        }
       })
-      this.dialogFormVisible = false
     },
     closeWindow () {
       this.dialogFormVisible.visibleP = false
+    },
+    checkPassword () {
+      if (this.password === '') {
+        this.$message.error('密码不能为空！')
+        return false
+      } else {
+        return true
+      }
+    },
+    checkEnter () {
+      if (this.password === '') {
+        this.$message.error('密码不能为空！')
+        return false
+      } else if (this.enterPassword !== this.password) {
+        this.$message.error('前后密码不一致！')
+        return false
+      } else {
+        return true
+      }
     }
   }
 }

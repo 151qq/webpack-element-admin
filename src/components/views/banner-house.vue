@@ -3,71 +3,16 @@
   	<img class="img-box" src="../../assets/images/banner-bg.jpg">
     <section class="banner-f">
       <div class="left">
-        <echarts-tar :id-name="'echar1'"></echarts-tar>
+        <echarts-tar :id-name="'echar1'" :echarts-date="echartsDate"></echarts-tar>
       </div>
       <div class="right">
         <p>楼盘租金排名</p>
         <ul>
-          <li>
-            <span class="l1">三环新城</span>
-            <span class="l2">50</span>
+          <li v-for="item in listDatas">
+            <span class="l1">{{item.title}}</span>
+            <span class="l2">{{item.price}}</span>
             <span class="l3">㎡ / 天</span>
-            <span class="l4 up-i"></span>
-          </li>
-          <li>
-            <span class="l1">三环新城</span>
-            <span class="l2">50</span>
-            <span class="l3">㎡ / 天</span>
-            <span class="l4 down-i"></span>
-          </li>
-          <li>
-            <span class="l1">三环新城</span>
-            <span class="l2">50</span>
-            <span class="l3">㎡ / 天</span>
-            <span class="l4 up-i"></span>
-          </li>
-          <li>
-            <span class="l1">三环新城</span>
-            <span class="l2">50</span>
-            <span class="l3">㎡ / 天</span>
-            <span class="l4 down-i"></span>
-          </li>
-          <li>
-            <span class="l1">三环新城</span>
-            <span class="l2">50</span>
-            <span class="l3">㎡ / 天</span>
-            <span class="l4 up-i"></span>
-          </li>
-          <li>
-            <span class="l1">三环新城</span>
-            <span class="l2">50</span>
-            <span class="l3">㎡ / 天</span>
-            <span class="l4 down-i"></span>
-          </li>
-          <li>
-            <span class="l1">三环新城</span>
-            <span class="l2">50</span>
-            <span class="l3">㎡ / 天</span>
-            <span class="l4 up-i"></span>
-          </li>
-          <li>
-            <span class="l1">三环新城</span>
-            <span class="l2">50</span>
-            <span class="l3">㎡ / 天</span>
-            <span class="l4 down-i"></span>
-          </li>
-          </li>
-          <li>
-            <span class="l1">三环新城</span>
-            <span class="l2">50</span>
-            <span class="l3">㎡ / 天</span>
-            <span class="l4 down-i"></span>
-          </li>
-          <li>
-            <span class="l1">三环新城</span>
-            <span class="l2">50</span>
-            <span class="l3">㎡ / 天</span>
-            <span class="l4 down-i"></span>
+            <span :class="item.status ? 'l4 up-i' : 'l4 down-i'"></span>
           </li>
         </ul>
       </div>
@@ -76,10 +21,53 @@
 </template>
 <script>
 import echartsTar from '../common/echart-tar.vue'
+import Tools from '../../utils/tools.js'
 
 export default {
   data () {
     return {
+      listDatas: [],
+      pageInfo: {},
+      echartsDate: {}
+    }
+  },
+  created () {
+    this.setData()
+    window._eventObject.$on('cityChange', this.getData)
+  },
+  watch: {
+    $route (to, from) {
+      this.setData()
+      this.getData()
+    }
+  },
+  methods: {
+    getData () {
+      this.getEcharts()
+      this.getDatas()
+    },
+    setData () {
+      this.pageInfo = this.$store.getters.getPageInfo
+    },
+    // 获取资金排名数据
+    getDatas () {
+      Tools.getJson('rents', this.pageInfo, (res) => {
+        if (res.statusCode === 0) {
+          this.listDatas = res.datas
+        } else {
+          this.$message.error(res.mess)
+        }
+      })
+    },
+    // 获取echarts数据
+    getEcharts () {
+      Tools.getJson('echarts', this.pageInfo, (res) => {
+        if (res.statusCode === 0) {
+          this.echartsDate = res.datas
+        } else {
+          this.$message.error(res.mess)
+        }
+      })
     }
   },
   components: {
@@ -115,6 +103,10 @@ export default {
 
       .left {
         float: left;
+        width: 800px;
+        height: 390px;
+        padding: 27px;
+        box-sizing: border-box;
       }
 
       .right {

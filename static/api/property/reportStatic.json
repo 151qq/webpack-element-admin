@@ -1,0 +1,30 @@
+{
+  "statusCode": 0,
+  "datas": [
+    {
+      "imgUrl": "/static/images/eva-b1.png",
+      "ewm": "/static/images/ewm.png",
+      "title": "瑞信投资物业投资报告定制服务",
+      "price": "5000~10,000 元"
+    },
+    {
+      "imgUrl": "/static/images/eva-b2.png",
+      "ewm": "/static/images/ewm.png",
+      "title": "瑞信投资物业投资报告定制服务",
+      "price": "5000~10,000 元"
+    },
+    {
+      "imgUrl": "/static/images/eva-b3.png",
+      "ewm": "/static/images/ewm.png",
+      "title": "瑞信投资物业投资报告定制服务",
+      "price": "5000~10,000 元"
+    },
+    {
+      "imgUrl": "/static/images/eva-b3.png",
+      "ewm": "/static/images/ewm.png",
+      "title": "瑞信投资物业投资报告定制服务",
+      "price": "5000~10,000 元"
+    }
+  ],
+  "mess": ""
+}

@@ -6,61 +6,107 @@
         <ul>
           <li>
             <span>购入资本化率：</span>
-            <input type="text">
+            <input type="text" v-model="rates.buy" @input="computPrice">
+            <p>%</p>
           </li>
           <li>
             <span>退出资本化率：</span>
-            <input type="text">
+            <input type="text" v-model="rates.quit" @input="computPrice">
+            <p>%</p>
           </li>
           <li>
             <span>办公租金增长率 (y1-y3)：</span>
-            <input type="text">
+            <input type="text" v-model="rates.rentO" @input="computPrice">
+            <p>%</p>
           </li>
           <li>
             <span>办公租金增长率 (y4-y10)：</span>
-            <input type="text">
+            <input type="text" v-model="rates.rentT" @input="computPrice">
+            <p>%</p>
           </li>
           <li>
             <span>工业租金增长率 (y1-y10)：</span>
-            <input type="text">
+            <input type="text" v-model="rates.rentE" @input="computPrice">
+            <p>%</p>
           </li>
           <li>
             <span>营业税率：</span>
-            <input type="text">
+            <input type="text" v-model="rates.business" @input="computPrice">
+            <p>%</p>
           </li>
           <li>
             <span>房产税率：</span>
-            <input type="text">
+            <input type="text" v-model="rates.house" @input="computPrice">
+            <p>%</p>
           </li>
           <li>
             <span>企业所得税率：</span>
-            <input type="text">
+            <input type="text" v-model="rates.company" @input="computPrice">
+            <p>%</p>
           </li>
           <li>
             <span>物业费率：</span>
-            <input type="text">
+            <input type="text" v-model="rates.property" @input="computPrice">
+            <p>%</p>
           </li>
           <li>
             <span>净收入率（净收入/租金）：</span>
-            <input type="text">
+            <input type="text" v-model="rates.own">
+            <p>%</p>
           </li>
         </ul>
       </div>
       <div class="right">
-        <echarts-tar :id-name="'echar3'"></echarts-tar>
+        <echarts-tar :id-name="'echar3'" :echarts-date="echartsDate"></echarts-tar>
       </div>
     </section>
   </div>
 </template>
 <script>
 import echartsTar from '../common/echart-tar.vue'
+import Tools from '../../utils/tools.js'
 
 export default {
+  props: ['rates', 'price'],
   data () {
     return {
+      echartsDate: {},
+      pageInfo: {}
     }
   },
   mounted () {
+    this.setData()
+    this.getEcharts()
+    this.computPrice()
+  },
+  methods: {
+    setData () {
+      this.pageInfo = this.$store.getters.getPageInfo
+    },
+    // 获取echarts数据
+    getEcharts () {
+      var formData = {
+        type: this.$route.params.type,
+        city: this.pageInfo.city,
+        id: this.$route.params.id
+      }
+      Tools.getJson('echarts', formData, (res) => {
+        if (res.statusCode === 0) {
+          this.echartsDate = res.datas
+        } else {
+          this.$message.error(res.mess)
+        }
+      })
+    },
+    computPrice () {
+      var result = 0
+      for (var key in this.rates) {
+        if (this.rates[key] !== '') {
+          result += Number(this.rates[key])
+        }
+      }
+      this.price.value = result
+    }
   },
   components: {
     echartsTar
@@ -116,6 +162,7 @@ export default {
             }
 
             input {
+              position: relative;
               float: right;
               width: 124px;
               height: 22px;
@@ -125,7 +172,21 @@ export default {
               line-height: 22px;
               color: #5E6D82;
               box-sizing: border-box;
-              padding: 0 10px;
+              padding: 0 16px 0 10px;
+              text-align: right;
+              background: transparent;
+            }
+
+            p {
+              float: right;
+              width: 16px;
+              height: 22px;
+              font-size: 13px;
+              line-height: 22px;
+              color: #5E6D82;
+              box-sizing: border-box;
+              text-align: right;
+              margin-right: -120px;
             }
           }
         }
@@ -133,6 +194,10 @@ export default {
 
       .right {
         float: right;
+        width: 800px;
+        height: 390px;
+        padding: 27px;
+        box-sizing: border-box;
       }
     }
   }

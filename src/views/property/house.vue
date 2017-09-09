@@ -29,9 +29,9 @@
                 :class="index % 4 == 0 ? 'card-b clearM' : 'card-b'"
                 :span="6"
                 v-for="(o, index) in dataCity[citys.indexOf(item)].articles">
-              <router-link class="linkA" target="_blank" :to="{ name: 'detail'}">
+              <router-link class="linkA" target="_blank" :to="{ name: 'detail', params: { id: o.id }}">
                 <el-card :body-style="{ padding: '0px' }">
-                  <img src="../../assets/images/house1.png" class="image">
+                  <img :src="o.imgUrl" class="image">
                   <div style="padding: 14px;">
                     <span>{{ o.title }}</span>
                     <div class="bottom clearfix">
@@ -65,143 +65,70 @@ export default {
   data () {
     return {
       activeName: '',
-      citys: ['北京', '上海', '深圳'],
-      selectedCity: ['北京', '上海'],
-      dataCity: [
-        {
-          name: '北京',
-          articles: [
-            {
-              imgUrl: '../../assets/images/house1.png',
-              title: '大中华区物业摘要望',
-              date: '第一季度',
-              id: 0
-            },
-            {
-              imgUrl: '../../assets/images/house1.png',
-              title: '大中华区物业摘要望',
-              date: '第一季度'
-            },
-            {
-              imgUrl: '../../assets/images/house1.png',
-              title: '大中华区物业摘要望',
-              date: '第一季度'
-            },
-            {
-              imgUrl: '../../assets/images/house1.png',
-              title: '大中华区物业摘要望',
-              date: '第一季度'
-            },
-            {
-              imgUrl: '../../assets/images/house1.png',
-              title: '大中华区物业摘要望',
-              date: '第一季度'
-            }
-          ]
-        },
-        {
-          name: '上海',
-          articles: [
-            {
-              imgUrl: '../../assets/images/house1.png',
-              title: '大中华区物业摘要望',
-              date: '第一季度'
-            },
-            {
-              imgUrl: '../../assets/images/house1.png',
-              title: '大中华区物业摘要望',
-              date: '第一季度'
-            },
-            {
-              imgUrl: '../../assets/images/house1.png',
-              title: '大中华区物业摘要望',
-              date: '第一季度'
-            },
-            {
-              imgUrl: '../../assets/images/house1.png',
-              title: '大中华区物业摘要望',
-              date: '第一季度'
-            },
-            {
-              imgUrl: '../../assets/images/house1.png',
-              title: '大中华区物业摘要望',
-              date: '第一季度'
-            }
-          ]
-        },
-        {
-          name: '深圳',
-          articles: [
-            {
-              imgUrl: '../../assets/images/house1.png',
-              title: '大中华区物业摘要望',
-              date: '第一季度'
-            },
-            {
-              imgUrl: '../../assets/images/house1.png',
-              title: '大中华区物业摘要望',
-              date: '第一季度'
-            },
-            {
-              imgUrl: '../../assets/images/house1.png',
-              title: '大中华区物业摘要望',
-              date: '第一季度'
-            },
-            {
-              imgUrl: '../../assets/images/house1.png',
-              title: '大中华区物业摘要望',
-              date: '第一季度'
-            },
-            {
-              imgUrl: '../../assets/images/house1.png',
-              title: '大中华区物业摘要望',
-              date: '第一季度'
-            }
-          ]
-        }
-      ],
+      citys: [],
+      selectedCity: [],
+      dataCity: [],
       restaurants: [],
       dialogFormVisible: {
         visibleA: false
       },
       type: '',
-      formData: {}
+      pageInfo: {}
     }
-  },
-  beforeRouteEnter (to, from, next) {
-    next()
-  },
-  beforeRouteUpdate (to, from, next) {
-    this.setData()
-    next()
   },
   created () {
     this.setData()
-    // 初始tab
-    this.activeName = this.selectedCity[0]
+    this.getCitys()
+  },
+  watch: {
+    $route (to, from) {
+      this.setData()
+      this.getCitys()
+    },
+    activeName (value) {
+      this.pageInfo.city = value
+      this.$store.dispatch('setPageInfo', this.pageInfo)
+      window._eventObject.$emit('cityChange')
+    }
   },
   methods: {
     // 页面初始数据设置
     setData () {
+      // 初始tab
+      this.activeName = this.selectedCity[0]
       this.type = this.$route.params.type
-      this.formData = {
+      this.pageInfo = {
         type: this.type,
         city: this.activeName
       }
 
-      window._type = this.type
-      window._city = this.city
+      this.$store.dispatch('setPageInfo', this.pageInfo)
     },
     // 获取banner楼盘数据
     getPMess () {
-      Tools.getJson('url', this.formData, (datas) => {
+      Tools.getJson('url', this.pageInfo, (datas) => {
 
       })
     },
     // 获取城市及报告数据
     getCitys () {
-      Tools.getJson('url', this.formData, (datas) => {
+      let formData = {
+        type: this.pageInfo.type
+      }
 
+      Tools.getJson('reports', formData, (res) => {
+        if (res.statusCode === 0) {
+          this.dataCity = res.datas
+          // 设置所有城市
+          this.citys = res.datas.map((item) => {
+            return item.name
+          })
+          // 设置当前显示
+          this.selectedCity = this.citys.slice(0, 1)
+          this.activeName = this.selectedCity[0]
+        } else {
+          this.$message.error(res.mess)
+        }
       })
     },
     // 设置城市弹窗

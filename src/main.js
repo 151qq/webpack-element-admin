@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import routes from './router'
-import store from './vuex/user'
+import store from './vuex/store'
 // 引入Element UI
 import Element from 'element-ui'
 import 'element-ui/lib/theme-default/index.css'
@@ -49,6 +49,8 @@ router.beforeEach((to, from, next) => {
   //   return false
   // }
 })
+
+window._eventObject = new Vue()
 
 new Vue({
   router,

@@ -46,7 +46,7 @@ const routers = [
         }
       }, {
         // 对标楼盘
-        path: 'index/:type/benchmark',
+        path: 'index/:type/benchmark/:id',
         name: 'benchmark',
         component (resolve) {
           require.ensure(['./views/property/benchmark.vue'], () => {
@@ -64,7 +64,7 @@ const routers = [
         }
       }, {
         // 我的报告
-        path: 'report/detail',
+        path: 'report/detail/:id',
         name: 'detail',
         component (resolve) {
           require.ensure(['./views/report/report-detail.vue'], () => {
@@ -73,7 +73,7 @@ const routers = [
         }
       }, {
         // 我的消息
-        path: 'notice',
+        path: 'notice/:id',
         name: 'notice',
         component (resolve) {
           require.ensure(['./views/notice/notice-detail.vue'], () => {

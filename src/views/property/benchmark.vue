@@ -3,199 +3,96 @@
     <banner-benchmark></banner-benchmark>
 
     <div class="mid-box">
-      <div class="left">
+      <div v-for="(item, index) in benchDatas" class="left">
         <ul class="table">
           <li class="row title">
             <span>名称：</span>
-            <span>北京佳程广场</span>
+            <span>{{item.base.name}}</span>
           </li>
           <li class="row old">
             <span>类型：</span>
-            <span>写字楼</span>
+            <span>{{item.base.type}}</span>
           </li>
           <li class="row even">
             <span>等级：</span>
-            <span>甲级</span>
+            <span>{{item.base.level}}</span>
           </li>
           <li class="row old">
             <span>物业：</span>
-            <span>北京佳程</span>
+            <span>{{item.base.owner}}</span>
           </li>
           <li class="row even">
             <span>剩余年限：</span>
-            <span>45年</span>
+            <span>{{item.base.year}}</span>
           </li>
           <li class="row old">
             <span>容积率：</span>
-            <span>30%</span>
+            <span>{{item.base.ratio}}</span>
           </li>
           <li class="row even">
             <span>面积：</span>
-            <span>3000平方米</span>
+            <span>{{item.base.area}}</span>
           </li>
           <li class="row old">
             <span>总层数：</span>
-            <span>59层</span>
+            <span>{{item.base.plies}}</span>
           </li>
           <li class="row even">
             <span>层高：</span>
-            <span>3米</span>
+            <span>{{item.base.height}}</span>
           </li>
           <li class="row old">
             <span>电梯：</span>
-            <span>29部</span>
+            <span>{{item.base.elevator}}</span>
           </li>
           <li class="row even">
             <span>车位：</span>
-            <span>50000个</span>
+            <span>{{item.base.park}}</span>
           </li>
           <li class="row old">
             <span>空调：</span>
-            <span>中央空调</span>
+            <span>{{item.base.sky}}</span>
           </li>
           <li class="row even">
             <span>地板：</span>
-            <span>架空地板</span>
+            <span>{{item.base.floor}}</span>
           </li>
           <li class="row old">
             <span>物业持有：</span>
-            <span>整体租赁</span>
+            <span>{{item.base.holding}}</span>
           </li>
           <li class="row even">
             <span>交通：</span>
-            <span>地铁沿线</span>
+            <span>{{item.base.traffic}}</span>
           </li>
         </ul>
         <section class="echart-box">
-          <span>echart</span>
+          <echarts-tar :id-name="'echarI' + index" :echarts-date="item.echarInfo"></echarts-tar>
         </section>
         <section class="r-z">
           <span>入驻企业：</span>
-          <span>无</span>
+          <span>{{item.base.rent}}</span>
         </section>
         <section class="j-y">
           <span>交易记录：</span>
-          <p>echarts</p>
+          <p><echarts-tar :id-name="'echarR' + index" :echarts-date="item.echarRecord"></echarts-tar></p>
         </section>
         <section class="one">
-          <p class="title">
-              什么什么楼盘2017年第二季度评估报告
-          </p>
-          <p class="time">2017-06-20 20：00</p>
+          <p class="title">{{item.evaluate.title}}</p>
+          <p class="time">{{item.evaluate.date}}</p>
           <img class="info-big" src="../../assets/images/info-big.png">
-          <p class="info-con">
-              佳程广场总占地面积17690平方米，总建筑面积141075平方米，楼体高度：103.8米。紧临东三环，交通方便。由两栋甲级写字楼、裙楼配套商业(现建为俱乐部)及大型地下停车库组成，为国际建筑师公司——巴马丹拿(P&T GROUP)的灵感代表之作。外墙采用高级反光玻璃幕墙配置铝板及石材的组合表现出建筑的现代感，汲取中国古代建筑美学之灵感，造就中西融汇的独特性格。佳程广场总体布局气势磅礴，双塔凌云耸立，以"掌开而合"的形态，表达对世界的拥抱。6000平方米入口广场上设有巨型水景园林，形成辉耀北京东区的新地标。佳程广场占据北京三元桥东侧显要地段，紧临首都机场高速路，交通网络密集，快速通达各商务主站，真正快捷商务之所。佳程广场与临近的亮马河商务区共同拥抱第三使馆区，形成北京商务活动密集的综合商务区。佳程广场市场定位佳程广场市场定位为国际一流品质纯写字楼，市场细分为特别针对产业国际性的行业领先企业及机构，为其度身定造区域总部新址战略。该项目将于2005年初全面落成，届时，3F新概念的“佳程广场”将提供给客户全面升级的新办公空间，实现效率性(Efficiency)+灵活性( Flexibility)+沟通性(Connectivity)+愉悦性(Enjoyment)四维的新层次需求体验。
-          </p>
+          <p class="info-con">{{item.evaluate.des}}</p>
           <div class="author">
               <section class="a-left">
-                  <img src="../../assets/images/info-t.png">
+                  <img :src="item.evaluate.author.img">
                   <p>
-                      <span class="au-t">James Macdonald</span>
-                      <span>Director, China</span>
-                      <span>+8621 6391 6688 james.macdonald@savills.com.cn</span>
+                      <span class="au-t">{{item.evaluate.author.name}}</span>
+                      <span>{{item.evaluate.author.city}}</span>
+                      <span>{{item.evaluate.author.tel + item.evaluate.author.email}}</span>
                   </p>
               </section>
               <section class="a-right">
-                  <img src="../../assets/images/ewm.png">
-                  <p>请用微信扫码联系作者</p>
-              </section>
-          </div>
-        </section>
-      </div>
-      <div class="left">
-        <ul class="table">
-          <li class="row title">
-            <span>名称：</span>
-            <span>北京佳程广场</span>
-          </li>
-          <li class="row old">
-            <span>类型：</span>
-            <span>写字楼</span>
-          </li>
-          <li class="row even">
-            <span>等级：</span>
-            <span>甲级</span>
-          </li>
-          <li class="row old">
-            <span>物业：</span>
-            <span>北京佳程</span>
-          </li>
-          <li class="row even">
-            <span>剩余年限：</span>
-            <span>45年</span>
-          </li>
-          <li class="row old">
-            <span>容积率：</span>
-            <span>30%</span>
-          </li>
-          <li class="row even">
-            <span>面积：</span>
-            <span>3000平方米</span>
-          </li>
-          <li class="row old">
-            <span>总层数：</span>
-            <span>59层</span>
-          </li>
-          <li class="row even">
-            <span>层高：</span>
-            <span>3米</span>
-          </li>
-          <li class="row old">
-            <span>电梯：</span>
-            <span>29部</span>
-          </li>
-          <li class="row even">
-            <span>车位：</span>
-            <span>50000个</span>
-          </li>
-          <li class="row old">
-            <span>空调：</span>
-            <span>中央空调</span>
-          </li>
-          <li class="row even">
-            <span>地板：</span>
-            <span>架空地板</span>
-          </li>
-          <li class="row old">
-            <span>物业持有：</span>
-            <span>整体租赁</span>
-          </li>
-          <li class="row even">
-            <span>交通：</span>
-            <span>地铁沿线</span>
-          </li>
-        </ul>
-        <section class="echart-box">
-          <span>echart</span>
-        </section>
-        <section class="r-z">
-          <span>入驻企业：</span>
-          <span>无</span>
-        </section>
-        <section class="j-y">
-          <span>交易记录：</span>
-          <p>echarts</p>
-        </section>
-        <section class="one">
-          <p class="title">
-              什么什么楼盘2017年第二季度评估报告
-          </p>
-          <p class="time">2017-06-20 20：00</p>
-          <img class="info-big" src="../../assets/images/info-big.png">
-          <p class="info-con">
-              佳程广场总占地面积17690平方米，总建筑面积141075平方米，楼体高度：103.8米。紧临东三环，交通方便。由两栋甲级写字楼、裙楼配套商业(现建为俱乐部)及大型地下停车库组成，为国际建筑师公司——巴马丹拿(P&T GROUP)的灵感代表之作。外墙采用高级反光玻璃幕墙配置铝板及石材的组合表现出建筑的现代感，汲取中国古代建筑美学之灵感，造就中西融汇的独特性格。佳程广场总体布局气势磅礴，双塔凌云耸立，以"掌开而合"的形态，表达对世界的拥抱。6000平方米入口广场上设有巨型水景园林，形成辉耀北京东区的新地标。佳程广场占据北京三元桥东侧显要地段，紧临首都机场高速路，交通网络密集，快速通达各商务主站，真正快捷商务之所。佳程广场与临近的亮马河商务区共同拥抱第三使馆区，形成北京商务活动密集的综合商务区。佳程广场市场定位佳程广场市场定位为国际一流品质纯写字楼，市场细分为特别针对产业国际性的行业领先企业及机构，为其度身定造区域总部新址战略。该项目将于2005年初全面落成，届时，3F新概念的“佳程广场”将提供给客户全面升级的新办公空间，实现效率性(Efficiency)+灵活性( Flexibility)+沟通性(Connectivity)+愉悦性(Enjoyment)四维的新层次需求体验。
-          </p>
-          <div class="author">
-              <section class="a-left">
-                  <img src="../../assets/images/info-t.png">
-                  <p>
-                      <span class="au-t">James Macdonald</span>
-                      <span>Director, China</span>
-                      <span>+8621 6391 6688 james.macdonald@savills.com.cn</span>
-                  </p>
-              </section>
-              <section class="a-right">
-                  <img src="../../assets/images/ewm.png">
+                  <img :src="item.evaluate.author.ewm">
                   <p>请用微信扫码联系作者</p>
               </section>
           </div>
@@ -206,14 +103,38 @@
 </template>
 <script>
 import bannerBenchmark from '../../components/views/banner-benchmark.vue'
+import echartsTar from '../../components/common/echart-tar.vue'
+import Tools from '../../utils/tools.js'
 
 export default {
   data () {
     return {
+      benchDatas: []
+    }
+  },
+  created () {
+    this.getDatas()
+  },
+  methods: {
+    getDatas () {
+      let formData = {
+        type: this.$route.params.type,
+        id: this.$route.params.id
+      }
+
+      Tools.getJson('benchMark', formData, (res) => {
+        console.log(res.datas)
+        if (res.statusCode === 0) {
+          this.benchDatas = res.datas
+        } else {
+          this.$message.error(res.mess)
+        }
+      })
     }
   },
   components: {
-    bannerBenchmark
+    bannerBenchmark,
+    echartsTar
   }
 }
 </script>
