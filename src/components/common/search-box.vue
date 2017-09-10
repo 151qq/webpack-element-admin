@@ -78,19 +78,37 @@ export default {
     },
     getMess () {
       console.log('ma')
+      if (this.keyValue === '') {
+        return false
+      }
       // getMess
       let _self = this
       this.isShow = true
+      this.isKeyList = false
       var options = {
         onSearchComplete (results) {
           // 更新调用记录
+          var result = []
+          if (_self.isKeyList) {
+            results.foreach((item) => {
+              result.concat(item.vr)
+            })
+          } else {
+            result.concat[results.vr]
+          }
           _self.count++
-          _self.getDatas(results.vr)
+          _self.getDatas(result)
         },
         autoViewport: true
       }
       var local = new window.BMap.LocalSearch(this.pageInfo.city || '北京', options)
-      local.search(this.keyValue)
+      if (this.keyValue.indexOf('，') === -1) {
+        this.isKeyList = false
+        local.search(this.keyValue)
+      } else {
+        this.isKeyList = true
+        local.search(this.keyValue.split('，'))
+      }
     },
     showModel () {
       this.isShow = true
