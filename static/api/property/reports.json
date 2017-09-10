@@ -1,93 +1,57 @@
 {
   "statusCode": 0,
-  "datas": [
-    {
-      "name": "北京",
-      "articles": [
-        {
-          "imgUrl" : "/static/images/house1.png",
-          "title": "大中华区物业摘要望",
-          "date": "第一季度",
-          "id": 1
-        },
-        {
-          "imgUrl" : "/static/images/house1.png",
-          "title": "大中华区物业摘要望",
-          "date": "第一季度",
-          "id": 2
-        },
-        {
-          "imgUrl" : "/static/images/house1.png",
-          "title": "大中华区物业摘要望",
-          "date": "第一季度",
-          "id": 1
-        },
-        {
-          "imgUrl" : "/static/images/house1.png",
-          "title": "大中华区物业摘要望",
-          "date": "第一季度",
-          "id": 1
-        },
-        {
-          "imgUrl" : "/static/images/house1.png",
-          "title": "大中华区物业摘要望",
-          "date": "第一季度",
-          "id": 1
-        }
-      ]
-    },
-    {
-      "name": "上海",
-      "articles": [
-        {
-          "imgUrl" : "/static/images/house1.png",
-          "title": "大中华区物业摘要望",
-          "date": "第一季度",
-          "id": 1
-        },
-        {
-          "imgUrl" : "/static/images/house1.png",
-          "title": "大中华区物业摘要望",
-          "date": "第一季度",
-          "id": 2
-        },
-        {
-          "imgUrl" : "/static/images/house1.png",
-          "title": "大中华区物业摘要望",
-          "date": "第一季度",
-          "id": 1
-        }
-      ]
-    },
-    {
-      "name": "深圳",
-      "articles": [
-        {
-          "imgUrl" : "/static/images/house1.png",
-          "title": "大中华区物业摘要望",
-          "date": "第一季度",
-          "id": 1
-        },
-        {
-          "imgUrl" : "/static/images/house1.png",
-          "title": "大中华区物业摘要望",
-          "date": "第一季度",
-          "id": 2
-        },
-        {
-          "imgUrl" : "/static/images/house1.png",
-          "title": "大中华区物业摘要望",
-          "date": "第一季度",
-          "id": 1
-        },
-        {
-          "imgUrl" : "/static/images/house1.png",
-          "title": "大中华区物业摘要望",
-          "date": "第一季度",
-          "id": 1
-        }
-      ]
-    }
-  ],
+  "datas": {
+    "citys": ["北京", "上海", "深圳"],
+    "articles": [
+      {
+        "imgUrl" : "/static/images/house1.png",
+        "title": "大中华区物业摘要望",
+        "date": "第一季度",
+        "id": 1
+      },
+      {
+        "imgUrl" : "/static/images/house1.png",
+        "title": "大中华区物业摘要望",
+        "date": "第一季度",
+        "id": 2
+      },
+      {
+        "imgUrl" : "/static/images/house1.png",
+        "title": "大中华区物业摘要望",
+        "date": "第一季度",
+        "id": 1
+      },
+      {
+        "imgUrl" : "/static/images/house1.png",
+        "title": "大中华区物业摘要望",
+        "date": "第一季度",
+        "id": 1
+      },
+      {
+        "imgUrl" : "/static/images/house1.png",
+        "title": "大中华区物业摘要望",
+        "date": "第一季度",
+        "id": 1
+      },
+      {
+        "imgUrl" : "/static/images/house1.png",
+        "title": "大中华区物业摘要望",
+        "date": "第一季度",
+        "id": 1
+      },
+      {
+        "imgUrl" : "/static/images/house1.png",
+        "title": "大中华区物业摘要望",
+        "date": "第一季度",
+        "id": 1
+      },
+      {
+        "imgUrl" : "/static/images/house1.png",
+        "title": "大中华区物业摘要望",
+        "date": "第一季度",
+        "id": 1
+      }
+    ]
+  },
   "mess": ""
 }

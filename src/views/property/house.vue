@@ -4,7 +4,7 @@
 
     <section class="card-list">
 
-      <el-button class="set-btn" type="primary" size="mini" @click="showModel">
+      <el-button class="set-btn" type="primary" size="small" @click="showModel">
         设置
       </el-button>
 
@@ -24,26 +24,27 @@
             v-for="item in selectedCity"
             :label="item"
             :name="item">
-          <el-row>
-            <el-col 
-                :class="index % 4 == 0 ? 'card-b clearM' : 'card-b'"
-                :span="6"
-                v-for="(o, index) in dataCity[citys.indexOf(item)].articles">
-              <router-link class="linkA" target="_blank" :to="{ name: 'detail', params: { id: o.id }}">
-                <el-card :body-style="{ padding: '0px' }">
-                  <img :src="o.imgUrl" class="image">
-                  <div style="padding: 14px;">
-                    <span>{{ o.title }}</span>
-                    <div class="bottom clearfix">
-                      <time class="time">{{ o.date }}</time>
-                    </div>
-                  </div>
-                </el-card>
-              </router-link>
-            </el-col>
-          </el-row>
         </el-tab-pane>
       </el-tabs>
+
+      <el-row class="el-box">
+        <el-col 
+            :class="index % 4 == 0 ? 'card-b clearM' : 'card-b'"
+            :span="6"
+            v-for="(o, index) in articles">
+          <router-link class="linkA" target="_blank" :to="{ name: 'detail', params: { id: o.id }}">
+            <el-card :body-style="{ padding: '0px' }">
+              <img :src="o.imgUrl" class="image">
+              <div style="padding: 14px;">
+                <span>{{ o.title }}</span>
+                <div class="bottom clearfix">
+                  <time class="time">{{ o.date }}</time>
+                </div>
+              </div>
+            </el-card>
+          </router-link>
+        </el-col>
+      </el-row>
     </section>
   
     <address-form 
@@ -67,13 +68,13 @@ export default {
       activeName: '',
       citys: [],
       selectedCity: [],
-      dataCity: [],
       restaurants: [],
       dialogFormVisible: {
         visibleA: false
       },
       type: '',
-      pageInfo: {}
+      pageInfo: {},
+      articles: []
     }
   },
   created () {
@@ -118,11 +119,9 @@ export default {
 
       Tools.getJson('reports', formData, (res) => {
         if (res.statusCode === 0) {
-          this.dataCity = res.datas
           // 设置所有城市
-          this.citys = res.datas.map((item) => {
-            return item.name
-          })
+          this.citys = res.datas.citys
+          this.articles = res.datas.articles
           // 设置当前显示
           this.selectedCity = this.citys.slice(0, 1)
           this.activeName = this.selectedCity[0]
@@ -164,19 +163,19 @@ export default {
 
     .map-btn {
       position: absolute;
-      right: 140px;
+      right: 90px;
       top: 0;
       box-sizing: border-box;
-      width: 80px;
-      height: 36px;
-      border: 1px solid #20a0ff;
+      width: 120px;
+      height: 50px;
+      border: 1px solid #0053FF;
       border-radius: 3px;
-      color: #20a0ff;
-      line-height: 36px;
-      font-size: 14px;
+      color: #0053FF;
+      line-height: 50px;
+      font-size: 16px;
 
       img {
-        margin-right: 4px;
+        margin-right: 6px;
       }      
     }
   }
@@ -216,6 +215,10 @@ export default {
   margin-bottom: 20px;
 }
 
+.el-box {
+  margin-bottom: 60px;
+}
+
 .clearM {
   margin-left: 0;
 }
@@ -224,7 +227,13 @@ export default {
   display: block;
 
   span {
-    color: #1F2D3D;
+    display: block;
+    font-size: 16px;
+    color: #000000;
+    white-space:nowrap;
+    text-overflow:ellipsis;
+    -o-text-overflow:ellipsis;
+    overflow:hidden;
   }
 }
 
@@ -245,6 +254,7 @@ export default {
 
 .image {
   width: 100%;
+  heigit: 248px;
   display: block;
 }
 

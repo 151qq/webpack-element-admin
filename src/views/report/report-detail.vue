@@ -15,6 +15,9 @@
         <p class="info-con">
           {{detail.des}}
         </p>
+        <p class="btns-r">
+            <share :down-url="detail.download" :file-name="detail.fileName" :id-type="detail.id"></share>
+          </p>
         <div class="author">
           <section class="a-left">
             <img :src="author.img">
@@ -25,7 +28,7 @@
             </p>
           </section>
           <section class="a-right">
-              <img :src="author.ewm">
+              <img :src="author.ewm" @click="showEWM(author.ewm)">
               <p>请用微信扫码联系作者</p>
           </section>
         </div>
@@ -41,31 +44,41 @@
               </p>
             </div>
           </router-link>
-          <p class="btns">
-            <share :down-url="item.download" :file-name="item.fileName" :id-type="item.id"></share>
-          </p>
         </template>
       </section>
     </div>
     <div class="right">
-      <a v-for="item in adList" class="bench" target="_blank" :href="item.href">
+      <a v-for="item in adList" class="bench" target="_blank" @click="showModel(item.id)">
         <img :src="item.imgUrl">
         <span>{{item.title}}</span>
       </a>
     </div>
+    
+    <ewm-select :dialog-form-visible="dialogFormVisible" :report-type="reportType"></ewm-select>
+    <show-ewm :dialog-visible="dialogVisible" :path="imgPath"></show-ewm>
   </div>
 </template>
 <script>
+import ewmSelect from '../../components/views/ewm-select.vue'
 import share from '../../components/common/share.vue'
+import showEwm from '../../components/common/show-ewm.vue'
 import Tools from '../../utils/tools.js'
 
 export default {
   data () {
     return {
+      dialogVisible: {
+        value: false
+      },
+      imgPath: '',
+      dialogFormVisible: {
+        visibleE: false
+      },
       detail: {},
       list: [],
       adList: [],
-      author: {}
+      author: {},
+      reportType: ''
     }
   },
   created () {
@@ -73,6 +86,14 @@ export default {
     this.getAds()
   },
   methods: {
+    showEWM (path) {
+      this.imgPath = path
+      this.dialogVisible.value = true
+    },
+    showModel (id) {
+      this.reportType = id
+      this.dialogFormVisible.visibleE = true
+    },
     // 获取报告数据
     getReport () {
       var formData = {
@@ -103,7 +124,9 @@ export default {
     }
   },
   components: {
-    share
+    ewmSelect,
+    share,
+    showEwm
   }
 }
 </script>
@@ -119,6 +142,11 @@ export default {
 
         .one {
             margin-top: 10px;
+
+            .btns-r {
+              text-align: right;
+              margin-top: 10px;
+            }
 
             .title {
                 font-size: 30px;
@@ -141,30 +169,6 @@ export default {
                   left: 0;
                   top: 9px;
                   text-align: left;
-
-                  a {
-                    height: 16px;
-                    display: inline-block;
-                    padding-left: 10px;
-                    border-left: 1px solid #C0CCDA;
-                    margin-left: 10px;
-
-                    &:first-child {
-                      border: none;
-                      padding: 0;
-                    }
-
-                    img {
-                      position: relative;
-                      top: -2px;
-                      transition: all 0.3s;
-                      cursor: pointer;
-
-                      &:hover {
-                        opacity: 0.8;
-                      }
-                    }
-                  }
                 }
             }
 
@@ -185,7 +189,7 @@ export default {
                 padding: 34px 118px;
                 border-top: 1px solid #C0CCDA;
                 border-bottom: 1px solid #C0CCDA;
-                margin-top: 20px;
+                margin-top: 10px;
 
                 .a-left {
                     float: left;
@@ -229,6 +233,7 @@ export default {
                         width: 64px;
                         height: 64px;
                         margin: auto;
+                        cursor: pointer;
                     }
 
                     p {
@@ -295,6 +300,7 @@ export default {
             margin-bottom: 15px;
             border: 1px solid #C0CCDA;
             border-radius: 3px;
+            cursor: pointer;
 
             img {
                 width: 260px;

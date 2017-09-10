@@ -135,7 +135,7 @@ export default {
 
             span {
               float: left;
-              font-size: 15px;
+              font-size: 12px;
               color: #475669;
               line-height: 29px;
             }

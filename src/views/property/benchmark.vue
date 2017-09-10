@@ -92,23 +92,29 @@
                   </p>
               </section>
               <section class="a-right">
-                  <img :src="item.evaluate.author.ewm">
+                  <img :src="item.evaluate.author.ewm" @click="showEWM(item.evaluate.author.ewm)">
                   <p>请用微信扫码联系作者</p>
               </section>
           </div>
         </section>
       </div>
     </div>
+    <show-ewm :dialog-visible="dialogVisible" :path="imgPath"></show-ewm>
   </section>
 </template>
 <script>
 import bannerBenchmark from '../../components/views/banner-benchmark.vue'
 import echartsTar from '../../components/common/echart-tar.vue'
+import showEwm from '../../components/common/show-ewm.vue'
 import Tools from '../../utils/tools.js'
 
 export default {
   data () {
     return {
+      dialogVisible: {
+        value: false
+      },
+      imgPath: '',
       benchDatas: []
     }
   },
@@ -116,6 +122,10 @@ export default {
     this.getDatas()
   },
   methods: {
+    showEWM (path) {
+      this.imgPath = path
+      this.dialogVisible.value = true
+    },
     getDatas () {
       let formData = {
         type: this.$route.params.type,
@@ -134,12 +144,17 @@ export default {
   },
   components: {
     bannerBenchmark,
-    echartsTar
+    echartsTar,
+    showEwm
   }
 }
 </script>
 <style lang="scss" scoped>
 .bench-con {
+  .echar-box {
+    height: 270px;
+  }
+
   .mid-box {
     width: 1162px;
     margin: 20px auto;
@@ -190,6 +205,8 @@ export default {
       .echart-box {
         width: 580px;
         padding: 20px;
+        height: 280px;
+        overflow: hidden;
         box-sizing: border-box;
         border-right: 1px solid #E0E6ED;
         border-bottom: 1px solid #E0E6ED;
@@ -219,19 +236,23 @@ export default {
       }
       .j-y {
         width: 580px;
+        height: 320px;
+        overflow: hidden;
         line-height: 40px;
         background: #F9FAFC;
         box-sizing: border-box;
         border-right: 1px solid #E0E6ED;
         border-bottom: 1px solid #E0E6ED;
+        background: #F9FAFC;
         overflow: hidden;
+        padding: 20px;
+        box-sizing: border-box;
 
         span {
           display: block;
           font-size: 14px;
           color: #5E6D82;
           box-sizing: border-box;
-          padding-left: 20px;
         }
 
         p {
@@ -319,6 +340,7 @@ export default {
                 width: 45px;
                 height: 45px;
                 margin: auto;
+                cursor: pointer;
             }
 
             p {

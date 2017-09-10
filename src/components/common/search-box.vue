@@ -161,8 +161,8 @@ export default {
     .mess-box {
       position: absolute;
       left: 0;
-      top: 36px;
-      width: 596px;
+      top: 49px;
+      width: 590px;
       box-sizing: border-box;
       padding: 15px 0;
       border: 1px solid #C0CCDA;
@@ -189,10 +189,13 @@ export default {
 
     .search-btn {
       position: relative;
-      display: inline-block;
+      float: right;
       margin-left: -10px;
       border-top-left-radius: 0;
       border-bottom-left-radius: 0;
+      height: 50px;
+      font-size: 16px;
+      padding: 0 23px;
     }
   }
 </style>

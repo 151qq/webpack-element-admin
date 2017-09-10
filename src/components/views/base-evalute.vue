@@ -16,34 +16,16 @@
                         </p>
                     </section>
                     <section class="a-right">
-                        <img :src="author.ewm">
+                        <img :src="author.ewm" @click="showEWM(author.ewm)">
                         <p>请用微信扫码联系作者</p>
                     </section>
                 </div>
             </section>
             <section class="two">
-                <a @click="showModel('join')">
-                    <img src="../../assets/images/eva-b1.png">
+                <a v-for="item in reports" @click="showModel(item.id)">
+                    <img :src="item.imgUrl">
                     <div>
-                        物业投资报告
-                        <span>
-                            订阅
-                        </span>
-                    </div>
-                </a>
-                <a @click="showModel('manage')">
-                    <img src="../../assets/images/eva-b2.png">
-                    <div>
-                        物业资产管理报告
-                        <span>
-                            订阅
-                        </span>
-                    </div>
-                </a>
-                <a @click="showModel('quit')">
-                    <img src="../../assets/images/eva-b3.png">
-                    <div>
-                        物业退出报告
+                        {{item.title}}
                         <span>
                             订阅
                         </span>
@@ -60,16 +42,22 @@
         </div>
 
         <ewm-select :dialog-form-visible="dialogFormVisible" :report-type="reportType"></ewm-select>
+        <show-ewm :dialog-visible="dialogVisible" :path="imgPath"></show-ewm>
     </div>
 </template>
 <script>
 import ewmSelect from '../../components/views/ewm-select.vue'
+import showEwm from '../../components/common/show-ewm.vue'
 import Tools from '../../utils/tools.js'
 
 export default {
   props: ['evaluate'],
   data () {
     return {
+      dialogVisible: {
+        value: false
+      },
+      imgPath: '',
       dialogFormVisible: {
         visibleE: false
       },
@@ -77,13 +65,15 @@ export default {
       benchs: [],
       reportType: '',
       id: '',
-      author: {}
+      author: {},
+      reports: []
     }
   },
   created () {
     this.type = this.$route.params.type
     this.id = this.$route.params.id
     this.getBenchs()
+    this.getReports()
   },
   mounted () {
     setTimeout(() => {
@@ -91,8 +81,12 @@ export default {
     }, 0)
   },
   methods: {
-    showModel (type) {
-      this.reportType = type
+    showEWM (path) {
+      this.imgPath = path
+      this.dialogVisible.value = true
+    },
+    showModel (id) {
+      this.reportType = id
       this.dialogFormVisible.visibleE = true
     },
     getBenchs () {
@@ -108,10 +102,25 @@ export default {
           this.$message.error(res.mess)
         }
       })
+    },
+    getReports () {
+      let formData = {
+        type: this.type,
+        id: this.$route.params.id
+      }
+
+      Tools.getJson('reportType', formData, (res) => {
+        if (res.statusCode === 0) {
+          this.reports = res.datas
+        } else {
+          this.$message.error(res.mess)
+        }
+      })
     }
   },
   components: {
-    ewmSelect
+    ewmSelect,
+    showEwm
   }
 }
 </script>
@@ -203,6 +212,7 @@ export default {
                         width: 64px;
                         height: 64px;
                         margin: auto;
+                        cursor: pointer;
                     }
 
                     p {

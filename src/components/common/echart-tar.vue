@@ -19,7 +19,7 @@ export default {
           }
         },
         grid: {
-          left: '5%',
+          left: '6%',
           right: '0%'
         },
         legend: {
@@ -47,14 +47,7 @@ export default {
         },
         series: []
       },
-      lineStyle: {
-        type: 'line',
-        itemStyle: {
-          normal: {
-            color: '#c4cddc'
-          }
-        }
-      },
+      colors: ['#1563CA', '#50E3C2', '#F8E71C'],
       barStyle: {
         type: 'bar',
         itemStyle: {
@@ -104,12 +97,26 @@ export default {
       // 设置横轴数据
       this.option.xAxis.data = datas.xAxis
       // 设置纵轴数据
-      this.option.series = [].concat(this.setStyle(datas.seriesLine, 'lineStyle'), this.setStyle(datas.seriesBar, 'barStyle'))
+      this.option.series = [].concat(this.setStyle(datas.seriesLine, 'lineStyle', this.colors), this.setStyle(datas.seriesBar, 'barStyle'))
 
       this.drawEchart()
     },
-    setStyle (arrs, type) {
-      var arrList = arrs.map((item) => {
+    setStyle (arrs, type, colors) {
+      if (!arrs) {
+        return false
+      }
+      var arrList = arrs.map((item, index) => {
+        if (colors) {
+          var itemStyle = {
+            type: 'line',
+            itemStyle: {
+              normal: {
+                color: colors[index]
+              }
+            }
+          }
+          return Object.assign(item, itemStyle)
+        }
         return Object.assign(item, this[type])
       })
       return arrList

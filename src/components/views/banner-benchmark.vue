@@ -66,7 +66,6 @@ export default {
       width: 1160px;
       height: 370px;
       margin: auto;
-      overflow: hidden;
       background: #ffffff;
 
       .m-box {

@@ -134,7 +134,7 @@ export default {
       a {
         display: inline-block;
         font-size: 16px;
-        color: #666666;
+        color: #A4A4A4;
         line-height: 50px;
         margin-right: 30px;
 
@@ -154,7 +154,9 @@ export default {
 
       a {
         float: left;
+        font-size: 14px;
         line-height: 50px;
+        color: #A4A4A4;
         cursor: pointer;
 
         i {

@@ -51,6 +51,12 @@ export default {
    * type string（business house mall）页面类型
    * reportType string (join manage quit) 报告类型
    */
+  reportType: '/static/api/property/reportType.json',
+  /**
+   * 楼盘详情的静态报告列表 get
+   * type string（business house mall）页面类型
+   * id 报告类型
+   */
   reportStatic: '/static/api/property/reportStatic.json',
   /**
    * 楼盘对标列表 get

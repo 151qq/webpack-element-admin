@@ -87,8 +87,8 @@ export default {
     line-height: 36px;
     cursor: pointer;
     color: #fff;
-    background-color: #20a0ff;
-    border-color: #20a0ff;
+    background-color: #0053FF;
+    border-color: #0053FF;
     border-radius: 3px;
     z-index: 120;
     text-align: center;

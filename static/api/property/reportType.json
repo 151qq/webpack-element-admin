@@ -1,0 +1,21 @@
+{
+  "statusCode": 0,
+  "datas": [
+    {
+      "id": 0,
+      "imgUrl": "/static/images/eva-b1.png",
+      "title": "物业投资报告"
+    },
+    {
+      "id": 1,
+      "imgUrl": "/static/images/eva-b2.png",
+      "title": "物业资产管理报告"
+    },
+    {
+      "id": 2,
+      "imgUrl": "/static/images/eva-b3.png",
+      "title": "物业退出报告"
+    }
+  ],
+  "mess": ""
+}

@@ -43,7 +43,7 @@ export default {
     getReports () {
       let formData = {
         type: this.$route.params.type,
-        reportType: this.reportType
+        id: this.reportType
       }
       Tools.getJson('reportStatic', formData, (res) => {
         if (res.statusCode === 0) {

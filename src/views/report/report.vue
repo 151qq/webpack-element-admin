@@ -5,7 +5,7 @@
         <el-input 
           placeholder="请输入需查询的报告标题"
           v-model="keyValue"
-          style="width: 788px;"
+          style="width: 774px;"
           >
         </el-input>
         <el-button class="search-btn" type="primary" icon="search" @click="searchReport">
@@ -33,28 +33,10 @@
     <section class="right">
         <a class="ding-y">我要订阅</a>
         <section class="two">
-          <a @click="showModel('join')">
-              <img src="../../assets/images/eva-b1.png">
+          <a v-for="item in reports" @click="showModel(item.id)">
+              <img :src="item.imgUrl">
               <div>
-                  物业投资报告
-                  <span>
-                      订阅
-                  </span>
-              </div>
-          </a>
-          <a @click="showModel('manage')">
-              <img src="../../assets/images/eva-b2.png">
-              <div>
-                  物业资产管理报告
-                  <span>
-                      订阅
-                  </span>
-              </div>
-          </a>
-          <a @click="showModel('quit')">
-              <img src="../../assets/images/eva-b3.png">
-              <div>
-                  物业退出报告
+                  {{item.title}}
                   <span>
                       订阅
                   </span>
@@ -79,16 +61,32 @@ export default {
       },
       reportList: [],
       reportType: '',
-      keyValue: ''
+      keyValue: '',
+      reports: ''
     }
   },
   created () {
+    this.getTypes()
     this.getReports()
   },
   methods: {
-    showModel (type) {
-      this.reportType = type
+    showModel (id) {
+      this.reportType = id
       this.dialogFormVisible.visibleE = true
+    },
+    getTypes () {
+      let formData = {
+        type: this.type,
+        id: this.$route.params.id
+      }
+
+      Tools.getJson('reportType', formData, (res) => {
+        if (res.statusCode === 0) {
+          this.reports = res.datas
+        } else {
+          this.$message.error(res.mess)
+        }
+      })
     },
     // 获取报告数据
     getReports () {
@@ -129,18 +127,22 @@ export default {
   .input-box {
     display: block;
     width: 1160px;
+    height: 50px;
     margin: 10px auto 20px;
 
     .el-input {
-      display: inline-block;
+      float: left;
     }
 
     .search-btn {
       position: relative;
-      display: inline-block;
+      float: left;
       margin-left: -10px;
       border-top-left-radius: 0;
       border-bottom-left-radius: 0;
+      height: 50px;
+      font-size: 16px;
+      padding: 0 23px;
     }
   }
 
@@ -200,7 +202,7 @@ export default {
       font-size: 20px;
       line-height: 36px;
       color: #000000;
-      margin: 10px 0 20px;
+      margin: 10px 0 30px;
     }
 
     .two {

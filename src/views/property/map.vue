@@ -317,14 +317,15 @@ export default {
             float: right;
             width: 120px;
             height: 36px;
-            border: 1px solid #20a0ff;
+            border: 1px solid #0053FF;
             border-radius: 3px;
-            color: #20a0ff;
+            color: #0053FF;
             line-height: 36px;
             font-size: 14px;
             text-align: center;
             cursor: pointer;
             transition: all 0.15s;
+            margin-top: 7px;
 
             i {
                 margin-left: 10px;
