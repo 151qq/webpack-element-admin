@@ -24,7 +24,7 @@
       <el-popover
           ref="popover1"
           placement="bottom"
-          width="360"
+          width="600"
           trigger="click">
         <div class="con-box">
           <p class="title">任务</p>
@@ -45,6 +45,13 @@
               </div>
             </section>
           </div>
+          <el-pagination
+            small
+            layout="prev, pager, next"
+            :page-size="page.pageSize"
+            :total="page.total"
+            @current-change="changePage">
+          </el-pagination>
         </div>
       </el-popover>
     </div>
@@ -69,6 +76,11 @@ export default {
       dialogFormVisible: {
         visibleF: false,
         visibleP: false
+      },
+      page: {
+        total: 0,
+        pageSize: 2,
+        currentPage: 1
       }
     }
   },
@@ -87,13 +99,24 @@ export default {
       })
     },
     getNotice () {
-      Tools.getJson('notice', {}, (res) => {
+      var formData = {
+        pageSize: this.page.pageSize,
+        currentPage: this.page.currentPage
+      }
+
+      Tools.getJson('notice', formData, (res) => {
         if (res.statusCode === 0) {
           this.noticeList = res.datas
+          this.page.total = res.total
         } else {
           this.$message.error(res.mess)
         }
       })
+    },
+    changePage (value) {
+      console.log(value)
+      this.page.currentPage = value
+      this.getNotice()
     },
     goUrl (id) {
       this.$router.push({name: 'notice', params: {id: id}})
@@ -261,6 +284,8 @@ export default {
         font-size: 14px;
         color: #5E6D82;
         line-height: 20px;
+        height: 40px;
+        overflow: hidden;
       }
 
       a {

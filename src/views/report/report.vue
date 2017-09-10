@@ -118,7 +118,7 @@ export default {
   }
 }
 </script>
-<style lang="scss" scoped>
+<style lang="scss">
 .report-box {
   width: 1160px;
   margin: 20px auto;
@@ -127,11 +127,17 @@ export default {
   .input-box {
     display: block;
     width: 1160px;
-    height: 50px;
+    height: 30px;
     margin: 10px auto 20px;
 
     .el-input {
       float: left;
+      height: 30px;
+
+      input {
+        font-size: 12px;
+        height: 30px;
+      }
     }
 
     .search-btn {
@@ -140,7 +146,7 @@ export default {
       margin-left: -10px;
       border-top-left-radius: 0;
       border-bottom-left-radius: 0;
-      height: 50px;
+      height: 30px;
       font-size: 16px;
       padding: 0 23px;
     }
@@ -200,9 +206,9 @@ export default {
     .ding-y {
       display: block;
       font-size: 20px;
-      line-height: 36px;
+      line-height: 30px;
       color: #000000;
-      margin: 10px 0 30px;
+      margin: 10px 0 13px;
     }
 
     .two {

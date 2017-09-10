@@ -1,5 +1,10 @@
 <template>
   <div class="notice-detail">
+    <div class="nav-o">
+      <router-link class="nav-z">我的任务</router-link>
+      <span class="nav-z"> / </span>
+      任务详情
+    </div>
     <section class="one">
       <p class="title-e">
         {{detail.title}}

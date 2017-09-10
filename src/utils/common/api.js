@@ -13,6 +13,8 @@ export default {
   setPassword: '/static/api/common/setPassword.json',
   /**
    * 我的任务列表 get
+   * pageSize 每页多少条
+   * currentPage 当前页数
    */
   notice: '/static/api/common/notice.json',
   /**

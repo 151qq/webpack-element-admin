@@ -1,5 +1,14 @@
 <template>
   <section class="bench-con">
+
+    <div class="nav-o marg-auto">
+      <router-link class="nav-z" :to="{name: 'index', params: {type: type}}">{{navO[type]}}</router-link>
+      <span class="nav-z"> / </span>
+      <router-link class="nav-z" :to="{name: 'info', params: {type: type, id: id.split(',')[0]}}">楼盘评述</router-link>
+      <span class="nav-z"> / </span>
+      任务详情
+    </div>
+
     <banner-benchmark></banner-benchmark>
 
     <div class="mid-box">
@@ -115,11 +124,20 @@ export default {
         value: false
       },
       imgPath: '',
-      benchDatas: []
+      benchDatas: [],
+      type: '',
+      id: '',
+      navO: {
+        business: '商业地产',
+        mall: '购物中心',
+        house: '写字楼'
+      }
     }
   },
   created () {
     this.getDatas()
+    this.type = this.$route.params.type
+    this.id = this.$route.params.id
   },
   methods: {
     showEWM (path) {
@@ -153,6 +171,11 @@ export default {
 .bench-con {
   .echar-box {
     height: 270px;
+  }
+
+  .marg-auto {
+    width: 1160px;
+    margin: auto;
   }
 
   .mid-box {
