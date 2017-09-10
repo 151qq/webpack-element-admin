@@ -7,8 +7,6 @@
   </el-dialog>
 </template>
 <script>
-import Tools from '../../utils/tools.js'
-
 export default {
   props: {
     dialogVisible: {
@@ -24,27 +22,12 @@ export default {
   },
   mounted () {
     setTimeout(() => {
-      this.getEwm()
+      this.imgPath = this.path
     }, 0)
   },
   watch: {
     path () {
-      this.getEwm()
-    }
-  },
-  methods: {
-    getEwm () {
-      var formData = {
-        path: this.path
-      }
-
-      Tools.getJson('getEwm', formData, (res) => {
-        if (res.statusCode === 0) {
-          this.imgPath = res.datas.imgUrl
-        } else {
-          this.$message.error(res.mess)
-        }
-      })
+      this.imgPath = this.path
     }
   }
 }
@@ -53,8 +36,9 @@ export default {
 <style lang="scss" scoped>
   .ewm-out {
     img {
-      width: 44px;
-      height: 44px;
+      display: block;
+      width: 280px;
+      height: 280px;
       margin: 0 auto 10px;
     }
 

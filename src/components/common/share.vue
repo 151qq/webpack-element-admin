@@ -3,7 +3,7 @@
     <a class="btn" :href="downUrl" :download="fileName">
       <img src="../../assets/images/download.png">
     </a>
-    <a class="btn" @click="showE">
+    <a class="btn" @click="getEwm">
       <img src="../../assets/images/wx.png">
     </a>
     <a class="btn" @click="showModel">
@@ -14,12 +14,13 @@
     </a> -->
 
     <email :visible-data="visibleData" :id-type="itemId"></email>
-    <show-ewm :dialog-visible="dialogVisible" :path="urlPath"></show-ewm>
+    <show-ewm :dialog-visible="dialogVisible" :path="imgPath"></show-ewm>
   </div>
 </template>
 <script>
 import email from './email.vue'
 import showEwm from './show-ewm.vue'
+import Tools from '../../utils/tools.js'
 
 export default {
   props: ['downUrl', 'fileName', 'idType', 'path'],
@@ -32,24 +33,28 @@ export default {
         value: false
       },
       itemId: '',
-      urlPath: ''
+      imgPath: ''
     }
   },
   created () {
     this.itemId = this.idType
-    this.urlPath = this.path
-  },
-  watch: {
-    path (value) {
-      this.urlPath = value
-    }
   },
   methods: {
     showModel () {
       this.visibleData.value = true
     },
-    showE () {
-      this.dialogVisible.value = true
+    getEwm () {
+      var formData = {
+        path: this.path
+      }
+      Tools.getJson('getEwm', formData, (res) => {
+        if (res.statusCode === 0) {
+          this.imgPath = res.datas.imgUrl
+          this.dialogVisible.value = true
+        } else {
+          this.$message.error(res.mess)
+        }
+      })
     }
   },
   components: {
