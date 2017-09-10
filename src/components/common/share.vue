@@ -3,7 +3,7 @@
     <a class="btn" :href="downUrl" :download="fileName">
       <img src="../../assets/images/download.png">
     </a>
-    <a class="btn">
+    <a class="btn" @click="showE">
       <img src="../../assets/images/wx.png">
     </a>
     <a class="btn" @click="showModel">
@@ -14,31 +14,47 @@
     </a> -->
 
     <email :visible-data="visibleData" :id-type="itemId"></email>
+    <show-ewm :dialog-visible="dialogVisible" :path="urlPath"></show-ewm>
   </div>
 </template>
 <script>
 import email from './email.vue'
+import showEwm from './show-ewm.vue'
 
 export default {
-  props: ['downUrl', 'fileName', 'idType'],
+  props: ['downUrl', 'fileName', 'idType', 'path'],
   data () {
     return {
+      dialogVisible: {
+        value: false
+      },
       visibleData: {
         value: false
       },
-      itemId: ''
+      itemId: '',
+      urlPath: ''
     }
   },
   created () {
     this.itemId = this.idType
+    this.urlPath = this.path
+  },
+  watch: {
+    path (value) {
+      this.urlPath = value
+    }
   },
   methods: {
     showModel () {
       this.visibleData.value = true
+    },
+    showE () {
+      this.dialogVisible.value = true
     }
   },
   components: {
-    email
+    email,
+    showEwm
   }
 }
 </script>

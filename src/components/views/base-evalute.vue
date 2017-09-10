@@ -8,15 +8,15 @@
                 <p class="info-con">{{evaluate.des}}</p>
                 <div class="author">
                     <section class="a-left">
-                        <img :src="evaluate.author.img">
+                        <img :src="author.img">
                         <p>
-                            <span class="au-t">{{evaluate.author.name}}</span>
-                            <span>{{evaluate.author.city}}</span>
-                            <span>{{evaluate.author.tel + evaluate.author.email}}</span>
+                            <span class="au-t">{{author.name}}</span>
+                            <span>{{author.city}}</span>
+                            <span>{{author.tel + author.email}}</span>
                         </p>
                     </section>
                     <section class="a-right">
-                        <img :src="evaluate.author.ewm">
+                        <img :src="author.ewm">
                         <p>请用微信扫码联系作者</p>
                     </section>
                 </div>
@@ -76,13 +76,19 @@ export default {
       type: '',
       benchs: [],
       reportType: '',
-      id: ''
+      id: '',
+      author: {}
     }
   },
   created () {
     this.type = this.$route.params.type
     this.id = this.$route.params.id
     this.getBenchs()
+  },
+  mounted () {
+    setTimeout(() => {
+      this.author = this.evaluate.author
+    }, 0)
   },
   methods: {
     showModel (type) {

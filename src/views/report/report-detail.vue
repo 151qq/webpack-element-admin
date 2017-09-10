@@ -11,21 +11,21 @@
           </p>
           {{detail.date}}
         </div>
-        <img class="info-big" src="../../assets/images/info-big.png">
+        <img class="info-big" :src="detail.img">
         <p class="info-con">
           {{detail.des}}
         </p>
         <div class="author">
           <section class="a-left">
-            <img :src="detail.author.img">
+            <img :src="author.img">
             <p>
-              <span class="au-t">{{detail.author.name}}</span>
-              <span>{{detail.author.city}}</span>
-              <span>{{detail.author.tel + detail.author.email}}</span>
+              <span class="au-t">{{author.name}}</span>
+              <span>{{author.city}}</span>
+              <span>{{author.tel + author.email}}</span>
             </p>
           </section>
           <section class="a-right">
-              <img :src="detail.author.ewm">
+              <img :src="author.ewm">
               <p>请用微信扫码联系作者</p>
           </section>
         </div>
@@ -64,7 +64,8 @@ export default {
     return {
       detail: {},
       list: [],
-      adList: []
+      adList: [],
+      author: {}
     }
   },
   created () {
@@ -80,6 +81,7 @@ export default {
       Tools.getJson('reportDetail', formData, (res) => {
         if (res.statusCode === 0) {
           this.detail = res.datas.detail
+          this.author = res.datas.detail.author
           this.list = res.datas.list
         } else {
           this.$message.error(res.mess)

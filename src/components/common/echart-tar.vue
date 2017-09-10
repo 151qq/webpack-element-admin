@@ -100,9 +100,9 @@ export default {
       // 设置标题
       this.option.title.text = datas.title
       // 设置legend
-      this.option.legend.data = datas.legend.data
+      this.option.legend.data = datas.legend
       // 设置横轴数据
-      this.option.xAxis.data = datas.xAxis.data
+      this.option.xAxis.data = datas.xAxis
       // 设置纵轴数据
       this.option.series = [].concat(this.setStyle(datas.seriesLine, 'lineStyle'), this.setStyle(datas.seriesBar, 'barStyle'))
 

@@ -122,5 +122,10 @@ export default {
    * type string（business house mall）页面类型
    * city string eg: "北京" 所选城市
    */
-  typeMap: '/static/api/property/typeMap.json'
+  typeMap: '/static/api/property/typeMap.json',
+  /**
+   * 获取二维码 get
+   * path
+   */
+  getEwm: '/static/api/common/getEwm.json'
 }
