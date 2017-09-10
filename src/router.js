@@ -37,7 +37,7 @@ const routers = [
         }
       }, {
         // 评估楼价
-        path: 'index/:type/evaluate',
+        path: 'index/:type/evaluate/:id',
         name: 'evaluate',
         component (resolve) {
           require.ensure(['./views/property/evaluate.vue'], () => {

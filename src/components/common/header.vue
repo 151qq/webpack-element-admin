@@ -133,7 +133,7 @@ export default {
 
       a {
         display: inline-block;
-        font-size: 16px;
+        font-size: 13px;
         color: #A4A4A4;
         line-height: 50px;
         margin-right: 30px;

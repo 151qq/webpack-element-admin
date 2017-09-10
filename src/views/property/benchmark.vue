@@ -179,7 +179,7 @@ export default {
             width: 174px;
             height: 40px;
             font-size: 14px;
-            color: #5E6D82;
+            color: #666666;
             box-sizing: border-box;
             padding-left: 20px;
             border-right: 1px solid #E0E6ED;
@@ -188,7 +188,7 @@ export default {
 
           & span:last-child {
             width: 406px;
-            color: #1F2D3D;
+            color: #000000;
           }
         }
 

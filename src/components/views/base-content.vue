@@ -109,7 +109,7 @@ export default {
             width: 80px;
             font-size: 16px;
             line-height: 40px;
-            color: #5E6D82;
+            color: #666666;
         }
 
         .base-content {
@@ -117,7 +117,7 @@ export default {
             width: 280px;
             font-size: 16px;
             line-height: 40px;
-            color: #111922;
+            color: #000000;
         }
     }
 

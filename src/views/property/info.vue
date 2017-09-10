@@ -3,7 +3,7 @@
     <banner-info></banner-info>
 
     <div class="mid-box">
-      <router-link class="eval-btn" target="_blank" :to="{name: 'evaluate', params: { type: type }}">
+      <router-link class="eval-btn" target="_blank" :to="{name: 'evaluate', params: { type: type, id: id }}">
         <img src="../../assets/images/eval-icon.png">
         自评估工具
       </router-link>
@@ -36,11 +36,13 @@ export default {
       evaluate: {},
       imgs: [],
       bigImgs: [],
-      type: ''
+      type: '',
+      id: ''
     }
   },
   created () {
     this.type = this.$route.params.type
+    this.id = this.$route.params.id
     this.getDatas()
   },
   methods: {

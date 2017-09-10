@@ -76,11 +76,11 @@ export default {
       pageInfo: {}
     }
   },
-  created () {
-    setTimeout(() => {
-      this.setEcharts()
-    }, 0)
-  },
+  // created () {
+  //   setTimeout(() => {
+  //     this.setEcharts()
+  //   }, 0)
+  // },
   watch: {
     echartsDate () {
       this.setEcharts()
@@ -98,6 +98,8 @@ export default {
       this.option.xAxis.data = datas.xAxis
       // 设置纵轴数据
       this.option.series = [].concat(this.setStyle(datas.seriesLine, 'lineStyle', this.colors), this.setStyle(datas.seriesBar, 'barStyle'))
+
+      console.log(this.option, 'option')
 
       this.drawEchart()
     },

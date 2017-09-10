@@ -122,6 +122,7 @@ export default {
           font-size: 16px;
           color: #000000;
           margin-bottom: 10px;
+          font-weight: bold;
         }
 
         ul {
