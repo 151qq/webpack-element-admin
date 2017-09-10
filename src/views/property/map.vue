@@ -147,6 +147,8 @@ export default {
     },
     getMap () {
       var count = this.count
+      this.formData.type = this.pageInfo.type
+      this.formData.city = this.pageInfo.city
       this.formData.vr = this.$store.getters.getMapInfo
 
       Tools.getJson('searchMap', this.formData, (res) => {
