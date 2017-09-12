@@ -7,45 +7,67 @@
 </template>
 <script>
 import WindowOverlay from '../../utils/common/mapOverlay.js'
+import Tools from '../../utils/tools.js'
 
 export default {
   data () {
-    return {}
+    return {
+      mapList: []
+    }
   },
   mounted () {
-    this.$nextTick(() => {
-      // map
-      var map = new window.BMap.Map('container2')
-      var point = new window.BMap.Point(116.409, 39.918)
-      var point1 = new window.BMap.Point(116.400, 39.910)
-      map.centerAndZoom(point, 15)
-      // var marker = new window.BMap.Marker(point)
-      // map.addOverlay(marker)
-      // var marker1 = new window.BMap.Marker(point1)
-      // map.addOverlay(marker1)
-
-      var opts = {
-        width: 100,
-        height: 36,
-        color: '#0053FF',
-        template: this.createTemplate('唤云高花园小区')
-      }
-
-      var opts1 = {
-        width: 100,
-        height: 36,
-        color: '#0053FF',
-        template: this.createTemplate('唤云高花园小区')
-      }
-
-      var windowInfo = new WindowOverlay(point, opts)
-      var windowInfo1 = new WindowOverlay(point1, opts1)
-
-      map.addOverlay(windowInfo)
-      map.addOverlay(windowInfo1)
-    })
+    this.getDatas()
   },
   methods: {
+    // 获取搜索数据
+    getDatas () {
+      let formData = {
+        id: this.$route.params.id
+      }
+
+      Tools.getJson('searchInfoMap', formData, (res) => {
+        if (res.statusCode === 0) {
+          this.mapList = res.datas
+          this.drawMap()
+        } else {
+          this.$message.error(res.mess)
+        }
+      })
+    },
+    drawMap () {
+      if (!this.mapList.length) {
+        return false
+      }
+
+      var map = new window.BMap.Map('container2')
+
+      var pointList = []
+
+      this.mapList.forEach((item, index) => {
+        var point = new window.BMap.Point(item.point.lng, item.point.lat)
+        // 初始第一个point
+        if (index === 0) {
+          map.centerAndZoom(point, 15)
+        }
+        // 整理显示点，用于自动缩放
+        pointList.push(point)
+
+        var opts = {
+          width: 'auto',
+          height: 36,
+          color: '#0053FF',
+          template: this.createTemplate(item.title)
+        }
+
+        var windowInfo = new WindowOverlay(point, opts)
+
+        map.addOverlay(windowInfo)
+      })
+
+      var view = map.getViewport(pointList)
+      map.setCenter(view.center)
+      map.setZoom(view.zoom)
+    },
     createTemplate (title) {
       var p = document.createElement('p')
       p.style.color = '#ffffff'
@@ -53,8 +75,8 @@ export default {
       p.style.height = '32px'
       p.style.fontSize = '14px'
       p.style.padding = '4px 14px'
+      p.style.whiteSpace = 'nowrap'
       p.innerHTML = title
-      console.log(p)
       return p
     }
   }

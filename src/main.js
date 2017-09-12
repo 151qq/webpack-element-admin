@@ -11,18 +11,18 @@ Vue.use(VueRouter)
 Vue.use(Element)
 
 // 设置跳转前台环境
-let origin = window.location.origin
-if (origin.indexOf('yunwoke') > -1) {
-  // 测试环境
-  origin = 'http://test.yunwoke.com'
-} else if (origin.indexOf('clouderwork') > -1) {
-  // 线上环境
-  origin = 'http://www.clouderwork.com'
-} else {
-  // 本地环境
-  origin = 'http://localhost:8080'
-}
-window._SettingOrigin = origin
+// let origin = window.location.host
+// if (origin.indexOf('yunwoke') > -1) {
+//   // 测试环境
+//   origin = 'http://test.yunwoke.com'
+// } else if (origin.indexOf('clouderwork') > -1) {
+//   // 线上环境
+//   origin = 'http://www.clouderwork.com'
+// } else {
+//   // 本地环境
+//   origin = 'http://localhost:8080'
+// }
+// window._SettingOrigin = origin
 
 // 给提示添加持续时间
 let saveNotify = Vue.prototype.$notify
@@ -39,6 +39,9 @@ const router = new VueRouter({
 
 // 验证登录
 router.beforeEach((to, from, next) => {
+  // 滚动置顶
+  window.scrollTo(0, 0)
+
   if (to.name === 'home') {
     next({ path: '/index/business' })
   } else {

@@ -198,6 +198,7 @@ export default {
     },
     drawOverlay (map, datas) {
       var type = this.pageInfo.type
+      var pointList = []
       datas.forEach((item) => {
         var href = {
           name: 'info',
@@ -214,11 +215,15 @@ export default {
         }
 
         var point = new window.BMap.Point(item.point.lng, item.point.lat)
-        map.panTo(point)
+        pointList.push(point)
         var windowInfo = new WindowOverlay(point, opts)
 
         map.addOverlay(windowInfo)
       })
+      var view = map.getViewport(pointList)
+      console.log(view, 'view')
+      map.setCenter(view.center)
+      map.setZoom(view.zoom)
     },
     // 页面初始数据设置
     setData () {
@@ -269,7 +274,6 @@ export default {
       a.style.padding = '0 14px'
       a.innerHTML = title.length > 6 ? title.substring(0, 6) + '...' : title
       a.onclick = () => {
-        console.log(href)
         this.$router.push(href)
       }
 

@@ -11,7 +11,7 @@
       搜索
     </el-button>
     <div class="mess-box" v-show="messDate.length !== 0 && isShow">
-      <p v-for="item in messDate" @click.stop="setMap(item)">{{ item.title }}</p>
+      <router-link v-for="item in messDate" class="nav-r" target="_blank" :to="{name: 'info', params: {type: pageInfo.type, id: item.id}}">{{ item.title }}</router-link>
     </div>
   </div>
 </template>
@@ -77,9 +77,10 @@ export default {
       })
     },
     getMess () {
-      console.log('ma')
       if (this.keyValue === '') {
         return false
+      } else if (this.keyValue.split('，').length > 20) {
+        this.$message.error('最多支持20个关键字搜索')
       }
       // getMess
       let _self = this
@@ -116,27 +117,15 @@ export default {
     hideMess (e) {
       this.isShow = false
     },
-    setMap (item) {
-      this.$store.dispatch('setMapInfo', [item])
-      if (this.isPage) {
-        this.isShow = false
-        this.$emit('mapChange')
+    goMap () {
+      if (this.keyValue === '') {
+        this.$message.error('请输入搜索关键字')
         return false
       }
-      var url = {
-        name: 'map',
-        params: {
-          type: this.pageInfo.type
-        }
-      }
-      this.isShow = false
-      this.$router.push(url)
-    },
-    goMap () {
+
       this.$store.dispatch('setMapInfo', this.messDate)
       if (this.isPage) {
         this.isShow = false
-        console.log(this.isShow)
         this.$emit('mapChange')
         return false
       }
@@ -170,7 +159,8 @@ export default {
       background: #ffffff;
       z-index: 10;
       
-      p {
+      .nav-r {
+        display: block;
         padding: 0 15px;
         font-size: 14px;
         line-height: 30px;

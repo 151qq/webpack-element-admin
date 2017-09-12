@@ -18,37 +18,48 @@ export default {
   data () {
     return {
       echartsDate: {},
-      pageInfo: {}
+      pageInfo: {},
+      mapInfo: {}
     }
-  },
-  mounted () {
-    this.$nextTick(() => {
-      // map
-      var map = new window.BMap.Map('container1')
-      var point = new window.BMap.Point(116.409, 39.918)
-      map.centerAndZoom(point, 15)
-      // var marker = new window.BMap.Marker(point)
-      // map.addOverlay(marker)
-
-      var opts = {
-        width: 100,
-        height: 36,
-        color: '#0053FF',
-        template: this.createTemplate('唤云高花园小区')
-      }
-
-      var windowInfo = new WindowOverlay(point, opts)
-
-      map.addOverlay(windowInfo)
-    })
   },
   created () {
     this.setData()
+    this.getDatas()
     this.getEcharts()
   },
   methods: {
     setData () {
       this.pageInfo = this.$store.getters.getPageInfo
+    },
+    // 获取搜索数据
+    getDatas () {
+      let formData = {
+        id: this.$route.params.id
+      }
+
+      Tools.getJson('searchInfoMap', formData, (res) => {
+        if (res.statusCode === 0) {
+          this.mapInfo = res.datas[0]
+          this.drawMap()
+        } else {
+          this.$message.error(res.mess)
+        }
+      })
+    },
+    drawMap () {
+      var map = new window.BMap.Map('container1')
+      var point = new window.BMap.Point(this.mapInfo.point.lng, this.mapInfo.point.lat)
+      map.centerAndZoom(point, 15)
+      var opts = {
+        width: 'auto',
+        height: 36,
+        color: '#0053FF',
+        template: this.createTemplate(this.mapInfo.title)
+      }
+
+      var windowInfo = new WindowOverlay(point, opts)
+
+      map.addOverlay(windowInfo)
     },
     createTemplate (title) {
       var p = document.createElement('p')
@@ -57,6 +68,7 @@ export default {
       p.style.height = '32px'
       p.style.fontSize = '14px'
       p.style.padding = '4px 14px'
+      p.style.whiteSpace = 'nowrap'
       p.innerHTML = title
       return p
     },

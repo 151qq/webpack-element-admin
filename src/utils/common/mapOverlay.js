@@ -18,7 +18,7 @@ WindowOverlay.prototype.initialize = function (map) {
   div.className = 'info-box'
   div.style.position = 'absolute'
   // 可以根据参数设置元素外观
-  div.style.width = this._width + 'px'
+  div.style.width = this._width === 'auto' ? this._width : this._width + 'px'
   div.style.height = this._height + 'px'
   div.style.background = this._color
   div.style.borderRadius = '5px'
@@ -35,6 +35,8 @@ WindowOverlay.prototype.initialize = function (map) {
   div.appendChild(botB)
   // 将div添加到覆盖物容器中
   map.getPanes().markerPane.appendChild(div)
+  this._clientWhidth = div.clientWidth
+  this._clientHeight = div.clientHeight
   // 保存div实例
   this._div = div
   // 需要将div元素作为方法的返回值，当调用该覆盖物的show
@@ -46,8 +48,8 @@ WindowOverlay.prototype.initialize = function (map) {
 WindowOverlay.prototype.draw = function () {
   // 根据地理坐标转换为像素坐标，并设置给容器
   var position = this._map.pointToOverlayPixel(this._center)
-  this._div.style.left = position.x - this._width / 2 + 'px'
-  this._div.style.top = position.y - this._height - 13 + 'px'
+  this._div.style.left = position.x - this._clientWhidth / 2 + 'px'
+  this._div.style.top = position.y - this._clientHeight - 13 + 'px'
 }
 
 export default WindowOverlay

@@ -126,6 +126,11 @@ export default {
    */
   searchMap: '/static/api/report/searchMap.json',
   /**
+   * 过滤地图数据 get
+   * id 楼盘序列标识 一个id返回一条，两个id返回两条 id以’,‘间隔
+   */
+  searchInfoMap: '/static/api/report/searchInfoMap.json',
+  /**
    * 地图过滤条件 get
    * type string（business house mall）页面类型
    * city string eg: "北京" 所选城市
