@@ -81,9 +81,11 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
   .file-container {
     position: relative;
+    left: 50%;
+    transform: translateX(-50%);
 
     .el-dragger {
       width: 180px;
@@ -102,6 +104,10 @@ export default {
       height: 30px;
       opacity: 0;
       cursor: pointer;
+    }
+
+    .el-button--small {
+      width: 80px;
     }
   }
 </style>

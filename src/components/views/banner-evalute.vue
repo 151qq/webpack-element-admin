@@ -6,52 +6,52 @@
         <ul>
           <li>
             <span>购入资本化率：</span>
-            <input type="text" v-model="rates.buy" @input="computPrice">
+            <el-input-number v-model="rates.buy" @change="computPrice" size="small" :min="0" :max="100"></el-input-number>
             <p>%</p>
           </li>
           <li>
             <span>退出资本化率：</span>
-            <input type="text" v-model="rates.quit" @input="computPrice">
+            <el-input-number v-model="rates.quit" @change="computPrice" size="small" :min="0" :max="100"></el-input-number>
             <p>%</p>
           </li>
           <li>
             <span>办公租金增长率 (y1-y3)：</span>
-            <input type="text" v-model="rates.rentO" @input="computPrice">
+            <el-input-number v-model="rates.rentO" @change="computPrice" size="small" :min="0" :max="100"></el-input-number>
             <p>%</p>
           </li>
           <li>
             <span>办公租金增长率 (y4-y10)：</span>
-            <input type="text" v-model="rates.rentT" @input="computPrice">
+            <el-input-number v-model="rates.rentT" @change="computPrice" size="small" :min="0" :max="100"></el-input-number>
             <p>%</p>
           </li>
           <li>
             <span>工业租金增长率 (y1-y10)：</span>
-            <input type="text" v-model="rates.rentE" @input="computPrice">
+            <el-input-number v-model="rates.rentE" @change="computPrice" size="small" :min="0" :max="100"></el-input-number>
             <p>%</p>
           </li>
           <li>
             <span>营业税率：</span>
-            <input type="text" v-model="rates.business" @input="computPrice">
+            <el-input-number v-model="rates.business" @change="computPrice" size="small" :min="0" :max="100"></el-input-number>
             <p>%</p>
           </li>
           <li>
             <span>房产税率：</span>
-            <input type="text" v-model="rates.house" @input="computPrice">
+            <el-input-number v-model="rates.house" @change="computPrice" size="small" :min="0" :max="100"></el-input-number>
             <p>%</p>
           </li>
           <li>
             <span>企业所得税率：</span>
-            <input type="text" v-model="rates.company" @input="computPrice">
+            <el-input-number v-model="rates.company" @change="computPrice" size="small" :min="0" :max="100"></el-input-number>
             <p>%</p>
           </li>
           <li>
             <span>物业费率：</span>
-            <input type="text" v-model="rates.property" @input="computPrice">
+            <el-input-number v-model="rates.property" @change="computPrice" size="small" :min="0" :max="100"></el-input-number>
             <p>%</p>
           </li>
           <li>
             <span>净收入率（净收入/租金）：</span>
-            <input type="text" v-model="rates.own">
+            <el-input-number v-model="rates.own" @change="computPrice" size="small" :min="0" :max="100"></el-input-number>
             <p>%</p>
           </li>
         </ul>
@@ -113,7 +113,7 @@ export default {
   }
 }
 </script>
-<style lang="scss" scoped>
+<style lang="scss">
   .banner-box {
     position: relative;
     width: 100%;
@@ -153,40 +153,56 @@ export default {
             height: 22px;
             margin-bottom: 10px;
 
-            span {
+            &>span {
               float: left;
               width: 173px;
               font-size: 14px;
               color: #1F2D3D;
-              line-heigt: 22px;
+              line-height: 22px;
             }
 
-            input {
+            .el-input-number {
               position: relative;
               float: right;
               width: 124px;
               height: 22px;
-              border: 1px solid #C0CCDA;
-              border-radius: 4px;
-              font-size: 13px;
-              line-height: 22px;
-              color: #5E6D82;
-              box-sizing: border-box;
-              padding: 0 16px 0 10px;
-              text-align: right;
-              background: transparent;
+            }
+
+            .el-input-number--small {
+
+              .el-input-number__decrease {
+                right: 22px;
+              }
+              
+              span {
+                line-height: 22px;
+                width: 22px;
+                font-size: 12px;
+                top: 0;
+              }
+
+              .el-input--small {
+                font-size: 12px;
+
+                input {
+                  padding-right: 62px;
+                  height: 22px;
+                  background: transparent;
+                  text-align: right;
+                }
+              }
             }
 
             p {
               float: right;
               width: 16px;
               height: 22px;
-              font-size: 13px;
+              font-size: 12px;
               line-height: 22px;
               color: #5E6D82;
               box-sizing: border-box;
               text-align: right;
-              margin-right: -120px;
+              margin-right: -76px;
             }
           }
         }

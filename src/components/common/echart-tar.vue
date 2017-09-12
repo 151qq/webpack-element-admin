@@ -5,7 +5,7 @@
 import echarts from 'echarts'
 
 export default {
-  props: ['idName', 'echartsDate'],
+  props: ['idName', 'echartsDate', 'isChange'],
   data () {
     return {
       option: {
@@ -76,13 +76,16 @@ export default {
       pageInfo: {}
     }
   },
-  // created () {
-  //   setTimeout(() => {
-  //     this.setEcharts()
-  //   }, 0)
-  // },
+  created () {
+    setTimeout(() => {
+      this.setEcharts()
+    }, 300)
+  },
   watch: {
     echartsDate () {
+      if (!this.isChange) {
+        return false
+      }
       this.setEcharts()
     }
   },
@@ -127,6 +130,7 @@ export default {
       this.$nextTick(() => {
         // 基于准备好的dom，初始化echarts实例
         var dom = document.getElementById(this.idName)
+        console.log(dom)
         var myChart = echarts.init(dom)
         // 使用刚指定的配置项和数据显示图表。
         myChart.setOption(this.option)

@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "echarts": "^3.7.1",
-    "element-ui": "^1.0.0-rc.9",
+    "element-ui": "^1.4.4",
     "vue": "^2.0.1",
     "vue-awesome-swiper": "^2.6.2",
     "vue-router": "^2.7.0",

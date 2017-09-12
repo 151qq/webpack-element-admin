@@ -3,7 +3,7 @@
   	<img class="img-box" src="../../assets/images/banner-bg.jpg">
     <section class="banner-f">
       <div class="left">
-        <echarts-tar :id-name="'echar1'" :echarts-date="echartsDate"></echarts-tar>
+        <echarts-tar :id-name="'echar1'" :echarts-date="echartsDate" :is-change="true"></echarts-tar>
       </div>
       <div class="right">
         <p>楼盘租金排名</p>

@@ -221,7 +221,6 @@ export default {
         map.addOverlay(windowInfo)
       })
       var view = map.getViewport(pointList)
-      console.log(view, 'view')
       map.setCenter(view.center)
       map.setZoom(view.zoom)
     },

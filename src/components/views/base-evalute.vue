@@ -3,7 +3,6 @@
         <div class="left">
             <section class="one">
                 <p class="title">{{evaluate.title}}</p>
-                <p class="time">{{evaluate.date}}</p>
                 <img class="info-big" :src="evaluate.img">
                 <p class="info-con">{{evaluate.des}}</p>
                 <div class="author">
@@ -78,7 +77,7 @@ export default {
   mounted () {
     setTimeout(() => {
       this.author = this.evaluate.author
-    }, 0)
+    }, 300)
   },
   methods: {
     showEWM (path) {
@@ -135,25 +134,16 @@ export default {
         width: 867px;
 
         .one {
-            margin-top: 10px;
 
             .title {
-                font-size: 30px;
-                line-height: 32px;
+                font-size: 20px;
+                line-height: 28px;
                 color: #000000;
-                text-align: center;
-            }
-
-            .time {
-                font-size: 14px;
-                line-height: 33px;
-                color: #8492A6;
-                text-align: center;
+                margin-bottom: 10px;
             }
 
             .info-big {
                 width: 100%;
-                margin-top: 10px;
             }
 
             .info-con {
@@ -271,7 +261,7 @@ export default {
             font-size: 20px;
             line-height: 28px;
             color: #000000;
-            margin: 41px 0 15px;
+            margin-bottom: 10px;
         }
 
         .bench {

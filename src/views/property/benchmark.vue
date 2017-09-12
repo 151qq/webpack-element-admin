@@ -262,7 +262,6 @@ export default {
         height: 320px;
         overflow: hidden;
         line-height: 40px;
-        background: #F9FAFC;
         box-sizing: border-box;
         border-right: 1px solid #E0E6ED;
         border-bottom: 1px solid #E0E6ED;

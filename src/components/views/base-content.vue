@@ -17,7 +17,7 @@
                 <span class="title">地址：</span>
                 <span class="base-content">{{base.address}}</span>
             </p>
-            <p class="base-b base-big">
+            <p class="base-b">
                 <span class="title">地块：</span>
                 <span class="base-content">{{base.massif}}</span>
             </p>
@@ -29,7 +29,7 @@
                 <span class="title">容积率：</span>
                 <span class="base-content">{{base.ratio}}</span>
             </p>
-            <p class="base-b">
+            <p class="base-b base-big">
                 <span class="title">业主：</span>
                 <span class="base-content">{{base.owner}}</span>
             </p>
@@ -81,7 +81,7 @@
                 <span class="title">物业持有：</span>
                 <span class="base-content">{{base.holding}}</span>
             </p>
-            <p class="base-b">
+            <p class="base-b base-big">
                 <span class="title">交通：</span>
                 <span class="base-content">{{base.traffic}}</span>
             </p>

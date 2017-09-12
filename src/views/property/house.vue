@@ -160,10 +160,12 @@ export default {
     top: 72px;
     text-align: center;
     z-index: 100;
+    padding-right: 100px;
+    box-sizing: border-box;
 
     .map-btn {
       position: absolute;
-      right: 90px;
+      right: 150px;
       top: 0;
       box-sizing: border-box;
       width: 120px;
