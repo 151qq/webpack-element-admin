@@ -265,7 +265,6 @@ export default {
         box-sizing: border-box;
         border-right: 1px solid #E0E6ED;
         border-bottom: 1px solid #E0E6ED;
-        background: #F9FAFC;
         overflow: hidden;
         padding: 20px;
         box-sizing: border-box;
