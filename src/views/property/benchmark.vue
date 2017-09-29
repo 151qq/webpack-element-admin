@@ -76,7 +76,7 @@
           </li>
         </ul>
         <section class="echart-box">
-          <echarts-tar :id-name="'echarI' + index" :echarts-date="item.echarInfo"></echarts-tar>
+          <echarts-tar :id-name="'echarI' + index" :echarts-date="item.echarInfo" :ref="'echarI' + index"></echarts-tar>
         </section>
         <section class="r-z">
           <span>入驻企业：</span>
@@ -84,7 +84,7 @@
         </section>
         <section class="j-y">
           <span>交易记录：</span>
-          <p><echarts-tar :id-name="'echarR' + index" :echarts-date="item.echarRecord"></echarts-tar></p>
+          <p><echarts-tar :id-name="'echarR' + index" :echarts-date="item.echarRecord" :ref="'echarR' + index"></echarts-tar></p>
         </section>
         <section class="one">
           <p class="title">{{item.evaluate.title}}</p>
@@ -154,6 +154,12 @@ export default {
         console.log(res.datas)
         if (res.statusCode === 0) {
           this.benchDatas = res.datas
+          setTimeout(() => {
+            this.$refs.echarI0[0].setEcharts()
+            this.$refs.echarI1[0].setEcharts()
+            this.$refs.echarR0[0].setEcharts()
+            this.$refs.echarR1[0].setEcharts()
+          }, 0)
         } else {
           this.$message.error(res.mess)
         }

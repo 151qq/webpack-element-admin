@@ -9,7 +9,7 @@
     <section class="img-boxs">
       <p>公共区域</p>
       <div>
-        <img v-for="item in imgs.public" @click="showImg" :src="item">
+        <img v-for="item in imgs.publics" @click="showImg" :src="item">
       </div>
     </section>
     <section class="img-boxs">

@@ -32,7 +32,7 @@ compiler.plugin('compilation', function (compilation) {
 })
 
 // proxy api requests （https://github.com/chimurai/http-proxy-middleware）
-// app.use(proxyMiddleware('/api', {target: 'http://localhost:8001/', changeOrigin: true}))
+// app.use(proxyMiddleware('http://localhost', {target: 'http://192.168.2.100:8080', changeOrigin: true}))
 // handle fallback for HTML5 history API
 app.use(require('connect-history-api-fallback')())
 

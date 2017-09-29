@@ -53,13 +53,13 @@ export default {
       }
 
       Tools.getJson('info', formData, (res) => {
-        if (res.statusCode === 0) {
-          this.base = res.datas.base
-          this.evaluate = res.datas.evaluate
-          this.imgs = res.datas.imgs
-          this.bigImgs = res.datas.bigImgs
+        if (res.success === '1') {
+          this.base = res.result.base
+          this.evaluate = res.result.evaluate
+          this.imgs = res.result.imgs
+          this.bigImgs = res.result.bigImgs
         } else {
-          this.$message.error(res.mess)
+          this.$message.error(res.message)
         }
       })
     }

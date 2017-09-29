@@ -3,7 +3,7 @@
   	<img class="img-box" src="../../assets/images/banner-bg.jpg">
     <section class="banner-f">
       <div class="left">
-        <echarts-tar :id-name="'echar1'" :echarts-date="echartsDate" :is-change="true"></echarts-tar>
+        <echarts-tar :id-name="'echar1'" :echarts-date="echartsDate" :is-change="true" ref="echarts"></echarts-tar>
       </div>
       <div class="right">
         <p>楼盘租金排名</p>
@@ -32,40 +32,36 @@ export default {
     }
   },
   created () {
-    this.setData()
-    window._eventObject.$on('cityChange', this.getData)
-  },
-  watch: {
-    $route (to, from) {
-      this.setData()
-      this.getData()
-    }
   },
   methods: {
     getData () {
       this.getEcharts()
       this.getDatas()
-    },
-    setData () {
-      this.pageInfo = this.$store.getters.getPageInfo
+      console.log(3)
     },
     // 获取资金排名数据
     getDatas () {
+      this.pageInfo = this.$store.getters.getPageInfo
       Tools.getJson('rents', this.pageInfo, (res) => {
-        if (res.statusCode === 0) {
-          this.listDatas = res.datas
+        if (res.success === '1') {
+          this.listDatas = res.result
         } else {
-          this.$message.error(res.mess)
+          this.$message.error(res.message)
         }
       })
     },
     // 获取echarts数据
     getEcharts () {
+      this.pageInfo = this.$store.getters.getPageInfo
       Tools.getJson('echarts', this.pageInfo, (res) => {
-        if (res.statusCode === 0) {
-          this.echartsDate = res.datas
+        if (res.success === '1') {
+          this.echartsDate = res.result
+          console.log(this.echartsDate)
+          setTimeout(() => {
+            this.$refs.echarts.setEcharts()
+          }, 0)
         } else {
-          this.$message.error(res.mess)
+          this.$message.error(res.message)
         }
       })
     }

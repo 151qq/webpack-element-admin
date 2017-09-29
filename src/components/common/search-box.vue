@@ -36,7 +36,6 @@ export default {
     }
   },
   created () {
-    this.setData()
     var _self = this
     $('body').click(function () {
       _self.keyValue = ''
@@ -44,19 +43,13 @@ export default {
       _self.isShow = false
     })
   },
-  watch: {
-    $route (to, from) {
-      this.setData()
-    }
-  },
   methods: {
-    setData () {
-      this.pageInfo = this.$store.getters.getPageInfo
-    },
     // 获取搜索数据
     getDatas (vr) {
       // 记录被调用序号
       var count = this.count
+
+      this.pageInfo = this.$store.getters.getPageInfo
 
       let formData = {
         type: this.pageInfo.type,

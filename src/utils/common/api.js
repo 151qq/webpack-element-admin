@@ -1,3 +1,4 @@
+
 export default {
   /**
    * 用户资料 get
@@ -15,8 +16,9 @@ export default {
    * 我的任务列表 get
    * pageSize 每页多少条
    * currentPage 当前页数
+   * '/static/api/common/notice.json'
    */
-  notice: '/static/api/common/notice.json',
+  notice: 'http://localhost/task/list.json',
   /**
    * 任务详情 get
    * id 任务标识
@@ -27,27 +29,32 @@ export default {
    * type string（business house mall）页面类型
    * city string eg: "北京" 所选城市
    * id 为空是首页的图表数据，不为空为相应楼盘的图表数据
+   * echarts: '/static/api/property/echarts.json',
    */
-  echarts: '/static/api/property/echarts.json',
+  echarts: 'http://localhost/houses/houseCharts.json',
+
   /**
    * 首页租金信息 get
    * type string（business house mall）页面类型
    * city string eg: "北京" 所选城市
+   * '/static/api/property/rents.json',
    */
-  rents: '/static/api/property/rents.json',
+  rents: 'http://localhost/houses/rentsCharts.json',
   /**
    * 首页报告列表 get
    * type string（business house mall）页面类型
    * city string eg: "北京" 所选城市
+   * '/static/api/property/reports.json'
    */
-  reports: '/static/api/property/reports.json',
+  reports: 'http://localhost/report/reportCity.json',
   /**
    * 楼盘详情 get
    * type string（business house mall）页面类型
    * city string eg: "北京" 所选城市
    * id 楼盘序列标识
+   * '/static/api/property/info.json'
    */
-  info: '/static/api/property/info.json',
+  info: 'http://localhost/houses/houseInfo.json',
   /**
    * 楼盘详情的静态报告列表 get
    * type string（business house mall）页面类型
@@ -85,15 +92,16 @@ export default {
    * 我的报告列表 get
    * type string（business house mall）页面类型
    * city string eg: "北京" 所选城市
+   * '/static/api/report/reportList.json'
    */
-  reportList: '/static/api/report/reportList.json',
+  reportList: 'http://localhost/report/reportList.json',
   /**
    * 我的报告搜索 get
    * type string（business house mall）页面类型
    * city string eg: "北京" 所选城市
    * key 关键字
    */
-  searchReport: '/static/api/report/reportList.json',
+  searchReport: 'http://localhost/report/reportList.json',
   /**
    * 报告详情 get
    * type string（business house mall）页面类型

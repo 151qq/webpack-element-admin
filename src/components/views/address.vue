@@ -1,7 +1,7 @@
 <template>
     <el-dialog title="选择定制城市" v-model="dialogFormVisible.visibleA" size="tiny">
         <el-checkbox-group v-model="checkL">
-          <el-checkbox class="check-box" v-for="(item, index) in citys" :label="item"></el-checkbox>
+          <el-checkbox class="check-box" v-for="(item, index) in citys" :label="index">{{item.title}}</el-checkbox>
         </el-checkbox-group>
         <div class="mess">{{mess}}</div>
         <div slot="footer" class="dialog-footer">
@@ -28,14 +28,9 @@ export default {
   },
   data () {
     return {
-      checkL: [],
+      checkL: [0],
       mess: ''
     }
-  },
-  mounted () {
-    setTimeout(() => {
-      this.checkL = this.checkList.concat([])
-    }, 0)
   },
   methods: {
     closeWindow () {

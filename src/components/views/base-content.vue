@@ -29,13 +29,17 @@
                 <span class="title">容积率：</span>
                 <span class="base-content">{{base.ratio}}</span>
             </p>
-            <p class="base-b base-big">
-                <span class="title">业主：</span>
-                <span class="base-content">{{base.owner}}</span>
+            <p class="base-b">
+                <span class="title">星标：</span>
+                <span class="base-content">{{base.star}}</span>
             </p>
             <p class="base-b">
                 <span class="title">物业：</span>
                 <span class="base-content">{{base.property}}</span>
+            </p>
+            <p class="base-b">
+                <span class="title">业主：</span>
+                <span class="base-content">{{base.owner}}</span>
             </p>
         </div>
         <div class="out-box">

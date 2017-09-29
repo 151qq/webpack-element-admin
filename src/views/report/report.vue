@@ -2,7 +2,7 @@
   <div class="report-box">
     <section class="left">
       <div class="input-box">
-        <el-input 
+        <el-input
           placeholder="请输入需查询的报告标题"
           v-model="keyValue"
           style="width: 774px;"
@@ -91,10 +91,10 @@ export default {
     // 获取报告数据
     getReports () {
       Tools.getJson('reportList', {}, (res) => {
-        if (res.statusCode === 0) {
-          this.reportList = res.datas
+        if (res.success === '1') {
+          this.reportList = res.result
         } else {
-          this.$message.error(res.mess)
+          this.$message.error(res.message)
         }
       })
     },
@@ -169,7 +169,7 @@ export default {
         padding-bottom: 30px;
         border-bottom: 1px solid #C0CCDA;
         margin-bottom: 30px;
-        
+
         .i-t {
           float: left;
           width: 200px;

@@ -4,7 +4,7 @@
     <section class="banner-f">
       <div class="left" id="container1"></div>
       <div class="right">
-        <echarts-tar :id-name="'echar2'" :echarts-date="echartsDate"></echarts-tar>
+        <echarts-tar :id-name="'echar2'" :echarts-date="echartsDate" ref="echarts"></echarts-tar>
       </div>
     </section>
   </div>
@@ -82,6 +82,9 @@ export default {
       Tools.getJson('echarts', formData, (res) => {
         if (res.statusCode === 0) {
           this.echartsDate = res.datas
+          setTimeout(() => {
+            this.$refs.echarts.setEcharts()
+          }, 0)
         } else {
           this.$message.error(res.mess)
         }

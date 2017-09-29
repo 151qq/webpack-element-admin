@@ -5,9 +5,10 @@
 import echarts from 'echarts'
 
 export default {
-  props: ['idName', 'echartsDate', 'isChange'],
+  props: ['idName', 'echartsDate'],
   data () {
     return {
+      isNoFirst: false,
       option: {
         title: {
           text: ''
@@ -76,19 +77,6 @@ export default {
       pageInfo: {}
     }
   },
-  created () {
-    setTimeout(() => {
-      this.setEcharts()
-    }, 300)
-  },
-  watch: {
-    echartsDate () {
-      if (!this.isChange) {
-        return false
-      }
-      this.setEcharts()
-    }
-  },
   methods: {
     // 获取echarts数据
     setEcharts () {
@@ -127,14 +115,15 @@ export default {
       return arrList
     },
     drawEchart () {
-      this.$nextTick(() => {
+      // 使用刚指定的配置项和数据显示图表。
+      if (!this.isInit) {
         // 基于准备好的dom，初始化echarts实例
         var dom = document.getElementById(this.idName)
-        console.log(dom)
-        var myChart = echarts.init(dom)
-        // 使用刚指定的配置项和数据显示图表。
-        myChart.setOption(this.option)
-      })
+        this.myChart = echarts.init(dom)
+      }
+      console.log(this.option, 'o')
+      this.myChart.setOption(this.option)
+      this.isInit = true
     }
   }
 }

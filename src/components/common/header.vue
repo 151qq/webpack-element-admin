@@ -31,17 +31,17 @@
           <div class="mess-list">
             <section v-for="item in noticeList">
               <div class="top">
-                <img :src="item.imgUrl">
+                <img :src="item.taskIcon">
                 <p>
-                  <span class="people">{{item.name}}</span>
-                  <span>{{item.company}}</span>
+                  <span class="people">{{item.taskTitle}}</span>
+                  <span>{{item.enterpriseCname}}</span>
                 </p>
               </div>
               <div class="mid">
-                <p>{{item.des}}</p>
+                <p>{{item.taskDescribe}}</p>
               </div>
               <div class="bottom">
-                <el-button class="edit" type="primary" icon="edit" size="small" @click="goUrl(item.id)">处理</el-button>
+                <el-button class="edit" type="primary" icon="edit" size="small" @click="goUrl(item.taskCode)">处理</el-button>
               </div>
             </section>
           </div>
@@ -105,11 +105,12 @@ export default {
       }
 
       Tools.getJson('notice', formData, (res) => {
-        if (res.statusCode === 0) {
-          this.noticeList = res.datas
-          this.page.total = res.total
+        if (res.success === '1') {
+          this.noticeList = res.result
+          console.log(res.totalPages)
+          this.page.total = parseInt(res.total)
         } else {
-          this.$message.error(res.mess)
+          this.$message.error(res.success)
         }
       })
     },
@@ -208,7 +209,7 @@ export default {
       i {
         color: #999999;
       }
-      
+
       .circle {
         position: absolute;
         width: 8px;
@@ -221,10 +222,10 @@ export default {
       }
     }
   }
-  
+
   .el-popover {
     padding: 0;
-  }  
+  }
 
   .con-box {
 
