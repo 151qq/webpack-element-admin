@@ -82,6 +82,14 @@ const routers = [
         }
       }
     ]
+  }, {
+    path: '/login',
+    name: 'login',
+    component (resolve) {
+      require.ensure(['./views/login/login.vue'], () => {
+        resolve(require('./views/login/login.vue'))
+      })
+    }
   }
 ]
 
