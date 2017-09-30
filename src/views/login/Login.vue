@@ -23,7 +23,7 @@
                         <input class="form-control" type="hidden" v-model="corpId"/>
                         <input class="form-control" type="hidden" v-model="wechatName"/>
 
-                        <div class="forget-p">
+                        <div class="forget-p" @click="dialogVisible = true">
                             忘记密码
                         </div>
                         <div class="form-group">
@@ -74,6 +74,37 @@
                 </div>
             </div>
         </div>
+        <el-dialog
+            title="忘记密码"
+            :visible.sync="dialogVisible"
+            size="tiny"
+            :before-close="handleClose">
+          
+            <div class="form-b">
+                <section>
+                    <span>手机</span>
+                    <el-input placeholder="请输入内容" v-model="forgetData.tel">
+                        <template slot="append">
+                            <span class="code-b" v-if="iscanPost" @click="getCode">获取验证码</span>
+                            <span v-else>{{leastSencond}}</span>
+                        </template>
+                    </el-input>
+                </section>
+                <section>
+                    <span>验证码</span>
+                    <el-input placeholder="请输入内容" v-model="forgetData.code"></el-input>
+                </section>
+                <section>
+                    <span>新密码</span>
+                    <el-input placeholder="请输入内容" v-model="forgetData.password"></el-input>
+                </section>
+            </div>
+
+            <span slot="footer" class="dialog-footer">
+                <el-button @click="dialogVisible = false">取 消</el-button>
+                <el-button type="primary" @click="updaetPassword">确 定</el-button>
+            </span>
+        </el-dialog>
     </div>
 </template>
 <script>
@@ -106,20 +137,82 @@
                         {picUrl: 'static/bootstrap/images/ip_big3.jpg'}
                     ]
                 },
+                dialogVisible: false,
+                leastSencond: 90,
+                forgetData: {
+                    tel: '',
+                    code: '',
+                    password: ''
+                },
+                telCode: '',
+                iscanPost: true,
+                timer: null
             }
         },
         mounted() {
 
         },
         methods: {
+            getCode () {
+                if (this.forgetData.tel == '' || !(/^1[3|4|5|8][0-9]\d{4,8}$/).test(this.forgetData.tel.trim())) {
+                    this.$message.error('请输入11位注册手机号')
+                    return
+                }
+                
+                util.request({
+                    method: 'get',
+                    interface: 'getTelCode',
+                    data: {
+                        tel: this.forgetData.tel
+                    }
+                }).then((res) => {
+                    this.telCode = res.result.result.code
+                    this.leastSencond = 90
+                    this.iscanPost = false
+                    this.timer = setInterval(() => {
+                        this.leastSencond = this.leastSencond - 1
+                        if (this.leastSencond === 0) {
+                            this.iscanPost = true
+                            clearInterval(this.timer)
+                        }
+                    }, 1000)
+                })
+            },
+            updaetPassword () {
+                if (this.forgetData.tel == '' || !(/^1[3|4|5|8][0-9]\d{4,8}$/).test(this.forgetData.tel.trim())) {
+                    this.$message.error('请输入11位注册手机号')
+                    return
+                }
+                if (this.forgetData.code == '' || this.forgetData.code !== this.telCode) {
+                    this.$message.error('请输入正确验证码')
+                    return
+                }
+                if (this.forgetData.password === '') {
+                    this.$message.error('请输入新密码')
+                    return
+                }
+                util.request({
+                    method: 'post',
+                    interface: 'forgetPassword',
+                    data: {
+                        password: this.forgetData.password
+                    }
+                }).then((res) => {
+                    this.dialogVisible = false
+                    this.$message({
+                      message: '恭喜你，密码修改成功',
+                      type: 'success'
+                    })
+                })
+            },
             subBtn() {
 
                 if (this.userLoginAccount == '') {
-                    alert('请输入用户名');
+                    this.$message.error('请输入用户名');
                     return;
                 }
                 if (this.userPassword == '') {
-                    alert('请输入密码');
+                    this.$message.error('请输入密码');
                     return;
                 }
 
@@ -143,19 +236,16 @@
             regBtn(){
 
                 if (this.enterpriseCname == '') {
-                    alert('请输入公司名称');
+                    this.$message.error('请输入公司名称')
                     return;
                 }
-                if (this.enterpriseIndustry == '') {
-                    alert('请选择公司类型');
-                    return;
-                }
+
                 if (this.userCname == '') {
-                    alert('请输入申请人');
+                    this.$message.error('请输入申请人')
                     return;
                 }
                 if (this.userPhone == '' || !(/^1[3|4|5|8][0-9]\d{4,8}$/).test(this.userPhone.trim())) {
-                    alert('请输入11位注册手机号');
+                    this.$message.error('请输入11位注册手机号')
                     return;
                 }
 

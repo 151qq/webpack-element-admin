@@ -6,6 +6,8 @@ let wc = window.location;
 const platform = "/esocial/";
 export default {
     interfaces: {
-        "authentication": "/esocial/authentication.json",     //登录
+        "authentication": "/esocial/authentication.json",     // 登录
+        "getTelCode": "/static/api/common/telcode.json"       // 获取手机验证码
+        "forgetPassword": "/static/api/common/telcode.json"   // 提交新密码
     }
 }
