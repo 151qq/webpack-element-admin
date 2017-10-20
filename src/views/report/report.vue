@@ -34,9 +34,9 @@
         <a class="ding-y">我要订阅</a>
         <section class="two">
           <a v-for="item in reports" @click="showModel(item.id)">
-              <img :src="item.imgUrl">
+              <img :src="item.catalogImage">
               <div>
-                  {{item.title}}
+                  {{item.catalogCname}}
                   <span>
                       订阅
                   </span>
@@ -81,10 +81,10 @@ export default {
       }
 
       Tools.getJson('reportType', formData, (res) => {
-        if (res.statusCode === 0) {
-          this.reports = res.datas
+        if (res.success === '1') {
+          this.reports = res.result
         } else {
-          this.$message.error(res.mess)
+          this.$message.error(res.message)
         }
       })
     },

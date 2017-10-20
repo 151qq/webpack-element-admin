@@ -3,8 +3,8 @@
     <div class="mid-box">
       <router-link class="logo-box" to="/business"><img src="../../assets/images/bottom-logo.png"></router-link>
       <p>
-        2004-2017 © xx网® qyer.com All rights reserved. Version v5.57  京ICP备12003524号  京公网安备11010102001935  京ICP证140673号  营业执照  经营许可证<br>
-        xx网为旅行者提供原创实用的出境游旅行指南和旅游攻略、旅行社区和问答交流平台，并提供签证、保险、机票、酒店预订、租车等服务。
+        2004-2017 © 商房云® chinacredata.com All rights reserved. 版本 1.0.0 京ICP备12003524号 京公网安备11010102001935 京ICP证140673号 营业执照。<br>
+        为金融投资机构、物业业主、物业评估机构提供公正、真实的物业基础数据
       </p>
     </div>
   </section>

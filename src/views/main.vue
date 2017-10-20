@@ -11,7 +11,6 @@
 <script>
 import pratoHeader from '../components/common/header'
 import pratoFooter from '../components/common/footer'
-require('../assets/sass/main.scss')
 export default {
   data () {
     return {

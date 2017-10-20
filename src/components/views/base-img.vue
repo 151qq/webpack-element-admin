@@ -59,8 +59,6 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-  @import url("../../assets/sass/common/swiper.min.css");
-
   .img-box {
     position: relative;
     width: 1160px;

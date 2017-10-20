@@ -1,12 +1,12 @@
 <template>
     <el-dialog class="reset-w" title="选择" v-model="dialogFormVisible.visibleE">
-        
+
         <section class="ewm-box">
             <a v-for="item in reports.slice(0, 3)">
-                <img class="img-t" :src="item.imgUrl">
+                <img class="img-t" :src="item.catalogImage">
                 <img class="ewm" :src="item.ewm">
-                <span class="title">{{item.title}}</span>
-                <span class="money">{{item.price}}</span>
+                <span class="title">{{item.catalogCname}}</span>
+                <span class="money">{{item.id}}</span>
             </a>
         </section>
 
@@ -46,10 +46,10 @@ export default {
         id: this.reportType
       }
       Tools.getJson('reportStatic', formData, (res) => {
-        if (res.statusCode === 0) {
-          this.reports = res.datas
+        if (res.success === '1') {
+          this.reports = res.result
         } else {
-          this.$message.error(res.mess)
+          this.$message.error(res.message)
         }
       })
     }

@@ -6,8 +6,12 @@ let wc = window.location;
 const platform = "/esocial/";
 export default {
     interfaces: {
-        "authentication": "/esocial/authentication.json",     // 登录
-        "getTelCode": "/static/api/common/telcode.json",      // 获取手机验证码
-        "forgetPassword": "/static/api/common/telcode.json"   // 提交新密码
+        "authentication": platform + "authentication.json",     // 登录
+        "resetPassword": platform + "resetPassword.json",  // 重置密码
+        "getUserInfo": platform + "getUserInfo.json",
+        "logout": platform + 'logout.json',
+        "uploadArticleAreaImage": platform + "siteEdit/uploadArticleAreaImage.json",   //图片上传接口
+        "changePassword": platform + "changePassword.json",         //修改密码
+        "notice": "/localhost/task/list.json",
     }
 }

@@ -10,13 +10,31 @@
     </div>
 
     <div class="member-box">
-      <a class="img-box" @click="editImgUrl"><img :src="userInfo.imgUrl"></a>
-      <a @click="editPassword">
-        您好
-        <span>{{userInfo.name}}</span>
-        <i class="el-icon-caret-bottom"></i>
-      </a>
+      <a class="img-box" @click="editImgUrl"><img :src="userInfo.iconUrl"></a>
+      <el-dropdown>
+        <span class="el-dropdown-link">
+          您好
+          <span>{{userInfo.userCnName}}</span>
+          <i class="el-icon-caret-bottom el-icon--right"></i>
+        </span>
+        <el-dropdown-menu slot="dropdown">
+          <el-dropdown-item>
+            <div @click="editPassword">
+              <img src="../../assets/images/change-password.png">
+              修改密码
+            </div>
+          </el-dropdown-item>
+          <el-dropdown-item>
+            <div @click="logout">
+              <img src="../../assets/images/logout.png">
+              退出登录
+            </div>
+          </el-dropdown-item>
+        </el-dropdown-menu>
+      </el-dropdown>
     </div>
+
+    <div class="line-box"></div>
 
     <div class="mess-box" v-popover:popover1>
       <i class="el-icon-message"></i>
@@ -55,14 +73,14 @@
         </div>
       </el-popover>
     </div>
-    <upload-file :path="userInfo.imgUrl" :dialog-form-visible="dialogFormVisible" @imgChange="changeImg"></upload-file>
+    <upload-file :path="userInfo.iconUrl" :dialog-form-visible="dialogFormVisible" @imgChange="changeImg"></upload-file>
     <password :dialog-form-visible="dialogFormVisible"></password>
   </section>
 </template>
 <script>
 import uploadFile from './upload-file.vue'
 import password from './password.vue'
-import Tools from '../../utils/tools.js'
+import util from '../../assets/common/util.js'
 
 export default {
   data () {
@@ -70,7 +88,7 @@ export default {
       origin: window._SettingOrigin,
       userInfo: {
         name: '',
-        imgUrl: ''
+        iconUrl: ''
       },
       noticeList: [],
       dialogFormVisible: {
@@ -90,11 +108,22 @@ export default {
   },
   methods: {
     getUserInfo () {
-      Tools.getJson('userInfo', {}, (res) => {
-        if (res.statusCode === 0) {
-          this.userInfo = res.datas
-        } else {
-          this.$message.error(res.mess)
+      util.request({
+        method: 'get',
+        interface: 'getUserInfo',
+        data: {}
+      }).then(res => {
+        this.userInfo = res.result.result
+      })
+    },
+    logout () {
+      util.request({
+        method: 'post',
+        interface: 'logout',
+        data: {}
+      }).then(res => {
+        if (res.result.success == '1') {
+          window.location.href = 'login.html'
         }
       })
     },
@@ -104,10 +133,13 @@ export default {
         currentPage: this.page.currentPage
       }
 
-      Tools.getJson('notice', formData, (res) => {
-        if (res.success === '1') {
+      util.request({
+        method: 'get',
+        interface: 'notice',
+        data: {}
+      }).then(res => {
+        if (res.success == '1') {
           this.noticeList = res.result
-          console.log(res.totalPages)
           this.page.total = parseInt(res.total)
         } else {
           this.$message.error(res.success)
@@ -123,7 +155,7 @@ export default {
       this.$router.push({name: 'notice', params: {id: id}})
     },
     changeImg (path) {
-      this.userInfo.imgUrl = path
+      this.userInfo.iconUrl = path
     },
     editImgUrl () {
       this.dialogFormVisible.visibleF = true
@@ -138,13 +170,37 @@ export default {
   }
 }
 </script>
-<style lang="scss" scoped>
+<style lang="scss">
+  .el-dropdown-menu__item {
+    font-size: 14px;
+
+    img {
+      float: left;
+      width: 16px;
+      height: 16px;
+      margin: 10px 10px 0 2px;
+    }
+
+    div {
+      line-height: 36px;
+      overflow: hidden;
+    }
+  }
+
+  .el-dropdown-menu {
+    min-width: 120px;
+  }
+
   .header {
     height: 50px;
     line-height: 50px;
     background: #000000;
     color: #fff;
     padding: 0 20px;
+
+    .el-input__inner {
+      height: 36px;
+    }
 
     .logo-box {
       float: left;
@@ -174,7 +230,13 @@ export default {
 
     .member-box {
       float: right;
-      margin-left: 26px;
+
+      .el-dropdown-link {
+        font-size: 14px;
+        line-height: 50px;
+        color: #A4A4A4;
+        cursor: pointer;
+      }
 
       a {
         float: left;
@@ -196,6 +258,14 @@ export default {
         line-height: 0;
         background: url(../../assets/images/head-icon.png) left top no-repeat;
       }
+    }
+
+    .line-box {
+      float: right;
+      width: 1px;
+      height: 20px;
+      margin: 15px 13px;
+      background: #555555;
     }
 
     .mess-box {

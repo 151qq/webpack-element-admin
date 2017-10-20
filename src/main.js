@@ -5,6 +5,8 @@ import store from './vuex/store'
 // 引入Element UI
 import Element from 'element-ui'
 import 'element-ui/lib/theme-default/index.css'
+import './assets/sass/common/swiper.min.css'
+import './assets/sass/main.scss'
 // import Cookies from 'js-cookie'
 
 Vue.use(VueRouter)
