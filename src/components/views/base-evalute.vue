@@ -2,10 +2,11 @@
     <div class="evalute-box">
         <div class="left">
             <section class="one">
-                <p class="title">{{evaluate.title}}</p>
-                <img class="info-big" :src="evaluate.img">
-                <p class="info-con">{{evaluate.des}}</p>
-                <div class="author">
+                <p class="title">{{evaluate.html5PageTitle}}</p>
+                <iframe class="htmlBox" :src="evaluate.html5Path"></iframe>
+                <!-- <img class="info-big" :src="evaluate.img">
+                <p class="info-con">{{evaluate.des}}</p> -->
+                <!-- <div class="author">
                     <section class="a-left">
                         <img :src="author.img">
                         <p>
@@ -18,13 +19,13 @@
                         <img :src="author.ewm" @click="showEWM(author.ewm)">
                         <p>请用微信扫码联系作者</p>
                     </section>
-                </div>
+                </div> -->
             </section>
             <section class="two">
                 <a v-for="item in reports" @click="showModel(item.id)">
-                    <img :src="item.imgUrl">
+                    <img :src="item.catalogImage">
                     <div>
-                        {{item.title}}
+                        {{item.catalogCname}}
                         <span>
                             订阅
                         </span>
@@ -109,10 +110,10 @@ export default {
       }
 
       Tools.getJson('reportType', formData, (res) => {
-        if (res.statusCode === 0) {
-          this.reports = res.datas
+        if (res.success === '1') {
+          this.reports = res.result
         } else {
-          this.$message.error(res.mess)
+          this.$message.error(res.message)
         }
       })
     }
@@ -134,6 +135,12 @@ export default {
         width: 867px;
 
         .one {
+
+            .htmlBox {
+                width: 100%;
+                height: auto;
+                min-height: 500px;
+            }
 
             .title {
                 font-size: 20px;

@@ -13,6 +13,6 @@ export default {
         "logout": platform + 'logout.json',
         "uploadArticleAreaImage": platform + "siteEdit/uploadArticleAreaImage.json",   //图片上传接口
         "changePassword": platform + "changePassword.json",         //修改密码
-        "notice": host + "/task/list.json",
+        "notice": platform + "/task/list.json",
     }
 }

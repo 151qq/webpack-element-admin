@@ -138,16 +138,16 @@ export default {
         interface: 'notice',
         data: {}
       }).then(res => {
-        if (res.success == '1') {
-          this.noticeList = res.result
-          this.page.total = parseInt(res.total)
+        if (res.result.success == '1') {
+          this.noticeList = res.result.result
+          this.page.total = parseInt(res.result.total)
+          console.log(this.noticeList)
         } else {
           this.$message.error(res.success)
         }
       })
     },
     changePage (value) {
-      console.log(value)
       this.page.currentPage = value
       this.getNotice()
     },

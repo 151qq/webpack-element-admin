@@ -80,13 +80,13 @@ export default {
         id: this.$route.params.id
       }
       Tools.getJson('echarts', formData, (res) => {
-        if (res.statusCode === 0) {
-          this.echartsDate = res.datas
+        if (res.success === '1') {
+          this.echartsDate = res.result
           setTimeout(() => {
             this.$refs.echarts.setEcharts()
           }, 0)
         } else {
-          this.$message.error(res.mess)
+          this.$message.error(res.message)
         }
       })
     }

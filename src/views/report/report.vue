@@ -8,7 +8,7 @@
           style="width: 774px;"
           >
         </el-input>
-        <el-button class="search-btn" type="primary" icon="search" @click="searchReport">
+        <el-button class="search-btn" type="primary" icon="search" @keyup.13="searchReport" @click="searchReport">
           搜索
         </el-button>
       </div>
@@ -27,6 +27,14 @@
             <share :down-url="item.download" :file-name="item.fileName" :id-type="item.id"></share>
           </p>
         </template>
+
+        <el-pagination
+          v-if="total"
+          layout="prev, pager, next"
+          @current-change="pageChange"
+          :page-size="pageSize"
+          :total="total">
+        </el-pagination>
       </div>
 
     </section>
@@ -62,7 +70,10 @@ export default {
       reportList: [],
       reportType: '',
       keyValue: '',
-      reports: ''
+      reports: '',
+      total: 0,
+      pageNumber: 1,
+      pageSize: 10
     }
   },
   created () {
@@ -88,11 +99,21 @@ export default {
         }
       })
     },
+    pageChange (size) {
+      this.pageNumber = size
+      this.getReports()
+    },
     // 获取报告数据
     getReports () {
-      Tools.getJson('reportList', {}, (res) => {
+      var formData = {
+        pageNumber: this.pageNumber,
+        pageSize: this.pageSize
+      }
+
+      Tools.getJson('reportList', formData, (res) => {
         if (res.success === '1') {
           this.reportList = res.result
+          this.total = Number(res.total)
         } else {
           this.$message.error(res.message)
         }
@@ -100,14 +121,22 @@ export default {
     },
     // 获取报告数据
     searchReport () {
+      if (this.keyValue == '') {
+        this.getReports()
+        return
+      } else {
+        this.total = 0
+      }
+
       var formData = {
         key: this.keyValue
       }
+
       Tools.getJson('searchReport', formData, (res) => {
-        if (res.statusCode === 0) {
-          this.reportList = res.datas
+        if (res.success === '1') {
+          this.reportList = res.result
         } else {
-          this.$message.error(res.mess)
+          this.$message.error(res.message)
         }
       })
     }

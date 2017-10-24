@@ -31,7 +31,7 @@
             </p>
             <p class="base-b">
                 <span class="title">星标：</span>
-                <span class="base-content">{{base.star}}</span>
+                <span class="base-content">{{base.star == '0' ? '否' : '是'}}</span>
             </p>
             <p class="base-b">
                 <span class="title">物业：</span>
