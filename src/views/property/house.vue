@@ -272,7 +272,7 @@ export default {
 
 .image {
   width: 100%;
-  heigit: 248px;
+  height: 248px;
   display: block;
 }
 

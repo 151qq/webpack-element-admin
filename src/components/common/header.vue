@@ -254,9 +254,18 @@ export default {
       .img-box {
         width: 24px;
         height: 24px;
+        border-radius: 50%;
         margin: 13px 20px 0 0;
         line-height: 0;
         background: url(../../assets/images/head-icon.png) left top no-repeat;
+        background-size: 24px 24px;
+        overflow: hidden;
+
+        img {
+          display: block;
+          width: 24px;
+          height: 24px;
+        }
       }
     }
 

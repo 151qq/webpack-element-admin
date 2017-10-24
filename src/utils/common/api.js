@@ -1,4 +1,6 @@
 
+const host = "http://192.168.2.104:8080"
+
 export default {
   /**
    * 用户资料 get
@@ -18,7 +20,7 @@ export default {
    * currentPage 当前页数
    * '/static/api/common/notice.json'
    */
-  notice: '/localhost/task/list.json',
+  notice: host + '/task/list.json',
   /**
    * 任务详情 get
    * id 任务标识
@@ -31,7 +33,7 @@ export default {
    * id 为空是首页的图表数据，不为空为相应楼盘的图表数据
    * echarts: '/static/api/property/echarts.json',
    */
-  echarts: '/localhost/houses/houseCharts.json',
+  echarts: host + '/houses/houseCharts.json',
 
   /**
    * 首页租金信息 get
@@ -39,14 +41,14 @@ export default {
    * city string eg: "北京" 所选城市
    * '/static/api/property/rents.json',
    */
-  rents: '/localhost/houses/rentsCharts.json',
+  rents: host + '/houses/rentsCharts.json',
   /**
    * 首页报告列表 get
    * type string（business house mall）页面类型
    * city string eg: "北京" 所选城市
    * '/static/api/property/reports.json'
    */
-  reports: '/localhost/report/reportCity.json',
+  reports: host + '/report/reportCity.json',
   /**
    * 楼盘详情 get
    * type string（business house mall）页面类型
@@ -54,21 +56,21 @@ export default {
    * id 楼盘序列标识
    * '/static/api/property/info.json'
    */
-  info: '/localhost/houses/houseInfo.json',
+  info: host + '/houses/houseInfo.json',
   /**
    * 楼盘详情的静态报告列表 get
    * type string（business house mall）页面类型
    * reportType string (join manage quit) 报告类型
    * '/static/api/property/reportType.json'
    */
-  reportType: '/localhost/report/reportType.json',
+  reportType: host + '/report/reportType.json',
   /**
    * 楼盘详情的静态报告列表 get
    * type string（business house mall）页面类型
    * id 报告类型
    * '/static/api/property/reportStatic.json'
    */
-  reportStatic: '/localhost/report/reportType.json',
+  reportStatic: host + '/report/reportType.json',
   /**
    * 楼盘对标列表 get
    * type string（business house mall）页面类型
@@ -96,14 +98,14 @@ export default {
    * city string eg: "北京" 所选城市
    * '/static/api/report/reportList.json'
    */
-  reportList: '/localhost/report/reportList.json',
+  reportList: host + '/report/reportList.json',
   /**
    * 我的报告搜索 get
    * type string（business house mall）页面类型
    * city string eg: "北京" 所选城市
    * key 关键字
    */
-  searchReport: '/localhost/report/reportList.json',
+  searchReport: host + '/report/reportList.json',
   /**
    * 报告详情 get
    * type string（business house mall）页面类型
