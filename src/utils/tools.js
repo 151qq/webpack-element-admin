@@ -20,7 +20,7 @@ export default {
       url: apis.interfaces[url],
       type: 'POST',
       dataType: 'application/json',
-      data: window.JSON.stringify(data),
+      data: data,
       headers: assemblingData(true),
       success (res) {
         cb(res)

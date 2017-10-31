@@ -127,7 +127,7 @@ export default {
            * hold: 'all' 同level
            * measure: 'all'  同level
         */
-        searchMap: '/static/api/report/searchMap.json',
+        searchMap: host + '/houses/searchHousesFileter.json',
         /**
            * 过滤地图数据 get
            * id 楼盘序列标识 一个id返回一条，两个id返回两条 id以’,‘间隔

@@ -45,20 +45,17 @@ export default {
   },
   methods: {
     // 获取搜索数据
-    getDatas (vr) {
+    getDatas () {
       // 记录被调用序号
       var count = this.count
 
       this.pageInfo = this.$store.getters.getPageInfo
 
       let formData = {
-        type: this.pageInfo.type,
-        city: this.pageInfo.city,
-        key: this.keyValue,
-        vr: vr
+        key: this.keyValue
       }
 
-      Tools.getJson('searchMap', formData, (res) => {
+      Tools.postJson('searchMap', formData, (res) => {
         if (res.statusCode === 0) {
           if (count !== this.count) {
             return false
@@ -76,33 +73,9 @@ export default {
         this.$message.error('最多支持20个关键字搜索')
       }
       // getMess
-      let _self = this
       this.isShow = true
-      this.isKeyList = false
-      var options = {
-        onSearchComplete (results) {
-          // 更新调用记录
-          var result = []
-          if (_self.isKeyList) {
-            results.foreach((item) => {
-              result.concat(item.vr)
-            })
-          } else {
-            result.concat[results.vr]
-          }
-          _self.count++
-          _self.getDatas(result)
-        },
-        autoViewport: true
-      }
-      var local = new window.BMap.LocalSearch(this.pageInfo.city || '北京', options)
-      if (this.keyValue.indexOf('，') === -1) {
-        this.isKeyList = false
-        local.search(this.keyValue)
-      } else {
-        this.isKeyList = true
-        local.search(this.keyValue.split('，'))
-      }
+      this.count++
+      this.getDatas()
     },
     showModel () {
       this.isShow = true
