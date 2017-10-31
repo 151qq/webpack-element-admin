@@ -11,13 +11,13 @@
       搜索
     </el-button>
     <div class="mess-box" v-show="messDate.length !== 0 && isShow">
-      <router-link v-for="item in messDate" class="nav-r" target="_blank" :to="{name: 'info', params: {type: pageInfo.type, id: item.id}}">{{ item.title }}</router-link>
+      <router-link v-for="item in messDate" class="nav-r" target="_blank" :to="{name: 'info', params: {type: pageInfo.type, id: item.housesId}}">{{ item.housesDesc }}</router-link>
     </div>
   </div>
 </template>
 <script>
 import $ from 'Jquery'
-import Tools from '../../utils/tools.js'
+import util from '../../assets/common/util.js'
 
 export default {
   props: {
@@ -55,14 +55,18 @@ export default {
         key: this.keyValue
       }
 
-      Tools.postJson('searchMap', formData, (res) => {
-        if (res.statusCode === 0) {
+      util.request({
+        method: 'post',
+        interface: 'searchMap',
+        data: formData
+      }).then(res => {
+        if (res.result.success == '1') {
           if (count !== this.count) {
             return false
           }
-          this.messDate = res.datas
+          this.messDate = res.result.result
         } else {
-          this.$message.error(res.mess)
+          this.$message.error(res.result.mess)
         }
       })
     },

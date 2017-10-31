@@ -4,8 +4,6 @@ import apis from '../assets/common/interfaces.js'
 
 let assemblingData = (isGet) => {
   let header = {
-    AUTHENTICATION: Cookies.get('token'),
-    UID: Cookies.get('uid'),
     'Content-Type': 'application/json'
   }
   if (isGet) {
@@ -25,7 +23,7 @@ export default {
       success (res) {
         cb(res)
       },
-      error () {
+      error (e) {
         fail ? fail() : ''
       }
     })
