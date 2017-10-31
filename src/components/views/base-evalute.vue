@@ -22,10 +22,10 @@
                 </div> -->
             </section>
             <section class="two">
-                <a v-for="item in reports" @click="showModel(item.id)">
-                    <img :src="item.catalogImage">
+                <a v-for="item in reports.slice(0, 3)" @click="showModel(item.productCode)">
+                    <img :src="item.productLogoUrl">
                     <div>
-                        {{item.catalogCname}}
+                        {{item.productCname}}
                         <span>
                             订阅
                         </span>
@@ -36,8 +36,8 @@
         <div class="right">
             <p>对标楼盘</p>
             <router-link v-for="item in benchs" class="bench" target="_blank" :to="{name: 'benchmark', params: { type: type, id: id + ',' + item.id }}">
-                <img :src="item.imgUrl">
-                <span>{{item.title}}</span>
+                <img :src="item.base.housesImg">
+                <span>{{item.base.name}}</span>
             </router-link>
         </div>
 
@@ -51,7 +51,7 @@ import showEwm from '../../components/common/show-ewm.vue'
 import Tools from '../../utils/tools.js'
 
 export default {
-  props: ['evaluate'],
+  props: ['evaluate', 'benchs'],
   data () {
     return {
       dialogVisible: {
@@ -62,7 +62,6 @@ export default {
         visibleE: false
       },
       type: '',
-      benchs: [],
       reportType: '',
       id: '',
       author: {},
@@ -72,7 +71,6 @@ export default {
   created () {
     this.type = this.$route.params.type
     this.id = this.$route.params.id
-    this.getBenchs()
     this.getReports()
   },
   mounted () {
@@ -85,31 +83,12 @@ export default {
       this.imgPath = path
       this.dialogVisible.value = true
     },
-    showModel (id) {
-      this.reportType = id
+    showModel (code) {
+      this.reportType = code
       this.dialogFormVisible.visibleE = true
     },
-    getBenchs () {
-      let formData = {
-        type: this.type,
-        id: this.$route.params.id
-      }
-
-      Tools.getJson('benchList', formData, (res) => {
-        if (res.statusCode === 0) {
-          this.benchs = res.datas
-        } else {
-          this.$message.error(res.mess)
-        }
-      })
-    },
     getReports () {
-      let formData = {
-        type: this.type,
-        id: this.$route.params.id
-      }
-
-      Tools.getJson('reportType', formData, (res) => {
+      Tools.getJson('reportProduct', {}, (res) => {
         if (res.success === '1') {
           this.reports = res.result
         } else {

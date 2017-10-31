@@ -72,6 +72,7 @@ export default {
     },
     getMess () {
       if (this.keyValue === '') {
+        this.isShow = false
         return false
       } else if (this.keyValue.split('，').length > 20) {
         this.$message.error('最多支持20个关键字搜索')

@@ -10,32 +10,20 @@ import WindowOverlay from '../../utils/common/mapOverlay.js'
 import Tools from '../../utils/tools.js'
 
 export default {
+  props: ['benchs'],
   data () {
     return {
       mapList: []
     }
   },
-  mounted () {
-    this.getDatas()
+  watch: {
+    benchs () {
+      this.drawMap()
+    }
   },
   methods: {
-    // 获取搜索数据
-    getDatas () {
-      let formData = {
-        id: this.$route.params.id
-      }
-
-      Tools.getJson('searchInfoMap', formData, (res) => {
-        if (res.statusCode === 0) {
-          this.mapList = res.datas
-          this.drawMap()
-        } else {
-          this.$message.error(res.mess)
-        }
-      })
-    },
     drawMap () {
-      if (!this.mapList.length) {
+      if (!this.benchs.length) {
         return false
       }
 
@@ -43,8 +31,9 @@ export default {
 
       var pointList = []
 
-      this.mapList.forEach((item, index) => {
-        var point = new window.BMap.Point(item.point.lng, item.point.lat)
+      this.benchs.forEach((item, index) => {
+        var pointArr = item.base.point.split(',')
+        var point = new window.BMap.Point(pointArr[1], pointArr[0])
         // 初始第一个point
         if (index === 0) {
           map.centerAndZoom(point, 15)
@@ -56,7 +45,7 @@ export default {
           width: 'auto',
           height: 36,
           color: '#0053FF',
-          template: this.createTemplate(item.title)
+          template: this.createTemplate(item.base.name)
         }
 
         var windowInfo = new WindowOverlay(point, opts)

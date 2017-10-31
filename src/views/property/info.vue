@@ -1,6 +1,6 @@
 <template>
   <section class="info-con">
-    <banner-info></banner-info>
+    <banner-info :base="base"></banner-info>
 
     <div class="mid-box">
       <router-link class="eval-btn" target="_blank" :to="{name: 'evaluate', params: { type: type, id: id }}">
@@ -12,7 +12,7 @@
           <base-content :base="base"></base-content>
         </el-tab-pane>
         <el-tab-pane class="card-outer" label="楼盘评述" name="楼盘评述">
-          <base-evalute :evaluate="evaluate"></base-evalute>
+          <base-evalute :evaluate="evaluate" :benchs="benchs"></base-evalute>
         </el-tab-pane>
         <el-tab-pane class="card-outer" label="楼盘照片" name="楼盘照片">
           <base-img :imgs="imgs" :big-imgs="bigImgs"></base-img>
@@ -36,6 +36,7 @@ export default {
       evaluate: {},
       imgs: [],
       bigImgs: [],
+      benchs: [],
       type: '',
       id: ''
     }
@@ -58,6 +59,21 @@ export default {
           this.evaluate = res.result.evaluate
           this.imgs = res.result.imgs
           this.bigImgs = res.result.bigImgs
+          this.getBenchs()
+        } else {
+          this.$message.error(res.message)
+        }
+      })
+    },
+    // 获取对标物业
+    getBenchs () {
+      let formData = {
+        id: this.base.benchmark.join(',')
+      }
+
+      Tools.getJson('benchList', formData, (res) => {
+        if (res.success == '1') {
+          this.benchs = res.result
         } else {
           this.$message.error(res.message)
         }

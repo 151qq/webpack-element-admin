@@ -54,21 +54,21 @@ export default {
            * reportType string (join manage quit) 报告类型
            * '/static/api/property/reportType.json'
         */
-        reportType: host + '/report/reportType.json',
+        reportProduct: host + '/report/reportProduct.json',
         /**
            * 楼盘详情的静态报告列表 get
            * type string（business house mall）页面类型
            * id 报告类型
            * '/static/api/property/reportStatic.json'
         */
-        reportStatic: host + '/report/reportType.json',
+        reportStatic: host + '/report/searchEnterpriseReportByProductCode.json.json',
         /**
            * 楼盘对标列表 get
            * type string（business house mall）页面类型
            * city string eg: "北京" 所选城市
            * id 楼盘序列标识
         */
-        benchList: '/static/api/property/benchList.json',
+        benchList: platform + 'houses/findHousesInfoByArrayls.json',
         /**
            * 楼盘对标详情 get
            * type string（business house mall）页面类型
@@ -127,12 +127,7 @@ export default {
            * hold: 'all' 同level
            * measure: 'all'  同level
         */
-        searchMap: host + '/houses/searchHousesFileter.json',
-        /**
-           * 过滤地图数据 get
-           * id 楼盘序列标识 一个id返回一条，两个id返回两条 id以’,‘间隔
-        */
-        searchInfoMap: '/static/api/report/searchInfoMap.json',
+        searchMap: platform + 'houses/searchHousesFileter.json',
         /**
            * 地图过滤条件 get
            * type string（business house mall）页面类型

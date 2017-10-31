@@ -15,6 +15,7 @@ import WindowOverlay from '../../utils/common/mapOverlay.js'
 import Tools from '../../utils/tools.js'
 
 export default {
+  props: ['base'],
   data () {
     return {
       echartsDate: {},
@@ -24,37 +25,31 @@ export default {
   },
   created () {
     this.setData()
-    this.getDatas()
-    this.getEcharts()
+  },
+  watch: {
+    base () {
+      this.getEcharts()
+      this.drawMap()
+    }
   },
   methods: {
     setData () {
       this.pageInfo = this.$store.getters.getPageInfo
     },
-    // 获取搜索数据
-    getDatas () {
-      let formData = {
-        id: this.$route.params.id
+    drawMap () {
+      if (!this.base.point) {
+        return false
       }
 
-      Tools.getJson('searchInfoMap', formData, (res) => {
-        if (res.statusCode === 0) {
-          this.mapInfo = res.datas[0]
-          this.drawMap()
-        } else {
-          this.$message.error(res.mess)
-        }
-      })
-    },
-    drawMap () {
       var map = new window.BMap.Map('container1')
-      var point = new window.BMap.Point(this.mapInfo.point.lng, this.mapInfo.point.lat)
+      var pointArr = this.base.point.split(',')
+      var point = new window.BMap.Point(pointArr[1], pointArr[0])
       map.centerAndZoom(point, 15)
       var opts = {
         width: 'auto',
         height: 36,
         color: '#0053FF',
-        template: this.createTemplate(this.mapInfo.title)
+        template: this.createTemplate(this.base.name)
       }
 
       var windowInfo = new WindowOverlay(point, opts)

@@ -1,13 +1,17 @@
 <template>
-    <el-dialog class="reset-w" title="选择" v-model="dialogFormVisible.visibleE">
+    <el-dialog class="reset-w" title="企业订阅" v-model="dialogFormVisible.visibleE">
 
-        <section class="ewm-box">
-            <a v-for="item in reports.slice(0, 3)">
-                <img class="img-t" :src="item.catalogImage">
-                <img class="ewm" :src="item.ewm">
-                <span class="title">{{item.catalogCname}}</span>
-                <span class="money">{{item.id}}</span>
+        <section v-if="reports.length" class="ewm-box">
+            <a v-for="item in reports">
+                <img class="img-t" :src="item.productLogoUrl">
+                <img class="ewm" :src="item.productQrcode">
+                <span class="title">{{item.enterpriseCname}}</span>
+                <span class="money">{{item.productPrice}}</span>
             </a>
+        </section>
+
+        <section v-else class="no-data">
+          暂无企业提供该类报告
         </section>
 
         <div slot="footer" class="dialog-footer">
@@ -43,7 +47,7 @@ export default {
     getReports () {
       let formData = {
         type: this.$route.params.type,
-        id: this.reportType
+        productCode: this.reportType
       }
       Tools.getJson('reportStatic', formData, (res) => {
         if (res.success === '1') {
@@ -63,14 +67,24 @@ export default {
   }
 }
 
+.no-data {
+  height: 200px;
+  text-align: center;
+  line-height: 200px;
+  font-size: 36px;
+  color: #999999;
+}
+
 .ewm-box {
-  width: 110%;
+  display: flex;
+  flex-wrap: nowrap;
+  width: 100%;
+  overflow: auto;
 
   a {
-    float: left;
+    display: block;
     width: 270px;
     margin-right: 15px;
-    margin-bottom: 25px;
     border: 1px solid #D3DCE6;
     border-radius: 3px;
     padding-bottom: 15px;

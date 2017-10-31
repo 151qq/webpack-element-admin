@@ -6,10 +6,10 @@
       <span class="nav-z"> / </span>
       <router-link class="nav-z" :to="{name: 'info', params: {type: type, id: id.split(',')[0]}}">楼盘评述</router-link>
       <span class="nav-z"> / </span>
-      任务详情
+      对标详情
     </div>
 
-    <banner-benchmark></banner-benchmark>
+    <banner-benchmark :benchs="benchDatas"></banner-benchmark>
 
     <div class="mid-box">
       <div v-for="(item, index) in benchDatas" class="left">
@@ -39,38 +39,42 @@
             <span>{{item.base.ratio}}</span>
           </li>
           <li class="row even">
+            <span>星标：</span>
+            <span>{{item.base.star == '0' ? '否' : '是'}}</span>
+          </li>
+          <li class="row old">
             <span>面积：</span>
             <span>{{item.base.area}}</span>
           </li>
-          <li class="row old">
+          <li class="row even">
             <span>总层数：</span>
             <span>{{item.base.plies}}</span>
           </li>
-          <li class="row even">
+          <li class="row old">
             <span>层高：</span>
             <span>{{item.base.height}}</span>
           </li>
-          <li class="row old">
+          <li class="row even">
             <span>电梯：</span>
             <span>{{item.base.elevator}}</span>
           </li>
-          <li class="row even">
+          <li class="row old">
             <span>车位：</span>
             <span>{{item.base.park}}</span>
           </li>
-          <li class="row old">
+          <li class="row even">
             <span>空调：</span>
             <span>{{item.base.sky}}</span>
           </li>
-          <li class="row even">
+          <li class="row old">
             <span>地板：</span>
             <span>{{item.base.floor}}</span>
           </li>
-          <li class="row old">
+          <li class="row even">
             <span>物业持有：</span>
             <span>{{item.base.holding}}</span>
           </li>
-          <li class="row even">
+          <li class="row old">
             <span>交通：</span>
             <span>{{item.base.traffic}}</span>
           </li>
@@ -86,7 +90,7 @@
           <span>交易记录：</span>
           <p><echarts-tar :id-name="'echarR' + index" :echarts-date="item.echarRecord" :ref="'echarR' + index"></echarts-tar></p>
         </section>
-        <section class="one">
+        <!-- <section class="one">
           <p class="title">{{item.evaluate.title}}</p>
           <p class="time">{{item.evaluate.date}}</p>
           <img class="info-big" src="../../assets/images/info-big.png">
@@ -105,7 +109,7 @@
                   <p>请用微信扫码联系作者</p>
               </section>
           </div>
-        </section>
+        </section> -->
       </div>
     </div>
     <show-ewm :dialog-visible="dialogVisible" :path="imgPath"></show-ewm>
@@ -135,9 +139,9 @@ export default {
     }
   },
   created () {
-    this.getDatas()
     this.type = this.$route.params.type
     this.id = this.$route.params.id
+    this.getDatas()
   },
   methods: {
     showEWM (path) {
@@ -150,10 +154,9 @@ export default {
         id: this.$route.params.id
       }
 
-      Tools.getJson('benchMark', formData, (res) => {
-        console.log(res.datas)
-        if (res.statusCode === 0) {
-          this.benchDatas = res.datas
+      Tools.getJson('benchList', formData, (res) => {
+        if (res.success == '1') {
+          this.benchDatas = res.result
           setTimeout(() => {
             this.$refs.echarI0[0].setEcharts()
             this.$refs.echarI1[0].setEcharts()
@@ -161,7 +164,7 @@ export default {
             this.$refs.echarR1[0].setEcharts()
           }, 0)
         } else {
-          this.$message.error(res.mess)
+          this.$message.error(res.message)
         }
       })
     }
