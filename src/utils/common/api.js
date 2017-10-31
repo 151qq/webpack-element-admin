@@ -1,5 +1,5 @@
 
-const host = "http://192.168.2.104:8080"
+const host = "http://192.168.2.103:8080"
 
 export default {
   /**

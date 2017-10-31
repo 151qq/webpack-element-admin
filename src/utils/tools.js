@@ -1,6 +1,6 @@
 import Cookies from 'js-cookie'
 import $ from 'Jquery'
-import apis from './common/api.js'
+import apis from '../assets/common/interfaces.js'
 
 let assemblingData = (isGet) => {
   let header = {
@@ -17,7 +17,7 @@ let assemblingData = (isGet) => {
 export default {
   postJson (url, data, cb, fail) {
     return $.ajax({
-      url: apis[url],
+      url: apis.interfaces[url],
       type: 'POST',
       dataType: 'application/json',
       data: window.JSON.stringify(data),
@@ -32,7 +32,7 @@ export default {
   },
   getJson (url, data, cb, fail) {
     return $.ajax({
-      url: apis[url] + '?timestamp=' + new Date().getTime(),
+      url: apis.interfaces[url] + '?timestamp=' + new Date().getTime(),
       type: 'GET',
       dataType: 'json',
       data: data,
@@ -47,7 +47,7 @@ export default {
   },
   deleteJson (url, data, cb) {
     return $.ajax({
-      url: apis[url],
+      url: apis.interfaces[url],
       type: 'DELETE',
       dataType: 'json',
       data: window.JSON.stringify(data),
@@ -59,7 +59,7 @@ export default {
   },
   putJson (url, data, cb) {
     return $.ajax({
-      url: apis[url],
+      url: apis.interfaces[url],
       type: 'PUT',
       dataType: 'json',
       data: data,
@@ -72,7 +72,7 @@ export default {
   postFile (url, data, cb) {
     return $.ajax({
       type: 'POST',
-      url: apis[url],
+      url: apis.interfaces[url],
       cache: false,
       dataType: 'json',
       data: data,

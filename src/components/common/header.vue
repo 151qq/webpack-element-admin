@@ -123,7 +123,7 @@ export default {
         data: {}
       }).then(res => {
         if (res.result.success == '1') {
-          window.location.href = 'login.html'
+          window.location.href = '/#/login'
         }
       })
     },
