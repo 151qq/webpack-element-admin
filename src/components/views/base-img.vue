@@ -2,20 +2,29 @@
   <div class="img-box">
     <section class="img-boxs">
       <p>外观</p>
-      <div>
+      <div v-if="imgs.appearance.length">
         <img v-for="item in imgs.appearance" @click="showImg" :src="item">
+      </div>
+      <div v-else>
+        暂无图片
       </div>
     </section>
     <section class="img-boxs">
       <p>公共区域</p>
-      <div>
+      <div v-if="imgs.publics.length">
         <img v-for="item in imgs.publics" @click="showImg" :src="item">
+      </div>
+      <div v-else>
+        暂无图片
       </div>
     </section>
     <section class="img-boxs">
       <p>周边环境</p>
-      <div>
+      <div v-if="imgs.surround.length">
         <img v-for="item in imgs.surround" @click="showImg" :src="item">
+      </div>
+      <div v-else>
+        暂无图片
       </div>
     </section>
 
@@ -75,7 +84,13 @@ export default {
 
       div {
         width: 110%;
+        min-height: 120px;
         overflow: hidden;
+
+        font-size: 36px;
+        color: #999999;
+        text-align: center;
+        line-height: 120px;
 
         img {
           float: left;

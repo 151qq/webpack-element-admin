@@ -13,8 +13,8 @@
       <img src="../../assets/images/print.png">
     </a> -->
 
-    <email :visible-data="visibleData" :id-type="itemId"></email>
-    <show-ewm :dialog-visible="dialogVisible" :path="imgPath"></show-ewm>
+    <email :visible-data="visibleData" :url-type="downUrl"></email>
+    <show-ewm :dialog-visible="dialogVisible" :path="ewmImg"></show-ewm>
   </div>
 </template>
 <script>
@@ -23,7 +23,7 @@ import showEwm from './show-ewm.vue'
 import Tools from '../../utils/tools.js'
 
 export default {
-  props: ['downUrl', 'fileName', 'idType', 'path'],
+  props: ['downUrl', 'fileName', 'ewmImg', 'idType', 'path'],
   data () {
     return {
       dialogVisible: {

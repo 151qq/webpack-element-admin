@@ -34,9 +34,9 @@
       </el-dropdown>
     </div>
 
-    <div class="line-box"></div>
+    <!-- <div class="line-box"></div> -->
 
-    <div class="mess-box" v-popover:popover1>
+    <!-- <div class="mess-box" v-popover:popover1>
       <i class="el-icon-message"></i>
       <span class="circle"></span>
       <el-popover
@@ -71,7 +71,7 @@
             @current-change="changePage">
           </el-pagination>
         </div>
-      </el-popover>
+      </el-popover> -->
     </div>
     <upload-file :path="userInfo.iconUrl" :dialog-form-visible="dialogFormVisible" @imgChange="changeImg"></upload-file>
     <password :dialog-form-visible="dialogFormVisible"></password>
@@ -104,7 +104,7 @@ export default {
   },
   created () {
     this.getUserInfo()
-    this.getNotice()
+    // this.getNotice()
   },
   methods: {
     getUserInfo () {

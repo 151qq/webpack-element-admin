@@ -12,7 +12,7 @@
           <base-content :base="base"></base-content>
         </el-tab-pane>
         <el-tab-pane class="card-outer" label="楼盘评述" name="楼盘评述">
-          <base-evalute :evaluate="evaluate" :benchs="benchs"></base-evalute>
+          <base-evalute :evaluate="evaluate" :benchs="benchs" :base="base" :author="author"></base-evalute>
         </el-tab-pane>
         <el-tab-pane class="card-outer" label="楼盘照片" name="楼盘照片">
           <base-img :imgs="imgs" :big-imgs="bigImgs"></base-img>
@@ -38,7 +38,8 @@ export default {
       bigImgs: [],
       benchs: [],
       type: '',
-      id: ''
+      id: '',
+      author: ''
     }
   },
   created () {
@@ -60,6 +61,23 @@ export default {
           this.imgs = res.result.imgs
           this.bigImgs = res.result.bigImgs
           this.getBenchs()
+          this.getAuthor()
+        } else {
+          this.$message.error(res.message)
+        }
+      })
+    },
+    getAuthor () {
+      if (!this.base.investor) {
+        return false
+      }
+      
+      var formData = {
+        userCode: this.base.investor
+      }
+      Tools.getJson('findUserInfoByCode', formData, (res) => {
+        if (res.success == '1') {
+          this.author = res.result
         } else {
           this.$message.error(res.message)
         }

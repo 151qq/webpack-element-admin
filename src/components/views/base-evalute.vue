@@ -2,24 +2,24 @@
     <div class="evalute-box">
         <div class="left">
             <section class="one">
-                <p class="title">{{evaluate.html5PageTitle}}</p>
-                <iframe class="htmlBox" :src="evaluate.html5Path"></iframe>
+                <p class="title">{{base.name}}</p>
+                <iframe class="htmlBox" :src="evaluate"></iframe>
                 <!-- <img class="info-big" :src="evaluate.img">
                 <p class="info-con">{{evaluate.des}}</p> -->
-                <!-- <div class="author">
+                <div class="author" v-if="author">
                     <section class="a-left">
-                        <img :src="author.img">
+                        <img :src="author.userImage">
                         <p>
-                            <span class="au-t">{{author.name}}</span>
+                            <span class="au-t">{{author.userLoginName}}</span>
                             <span>{{author.city}}</span>
-                            <span>{{author.tel + author.email}}</span>
+                            <span>{{author.userMobile + author.userMail}}</span>
                         </p>
                     </section>
                     <section class="a-right">
-                        <img :src="author.ewm" @click="showEWM(author.ewm)">
+                        <img :src="author.qrcode" @click="showEWM(author.qrcode)">
                         <p>请用微信扫码联系作者</p>
                     </section>
-                </div> -->
+                </div>
             </section>
             <section class="two">
                 <a v-for="item in reports.slice(0, 3)" @click="showModel(item.productCode)">
@@ -51,7 +51,7 @@ import showEwm from '../../components/common/show-ewm.vue'
 import Tools from '../../utils/tools.js'
 
 export default {
-  props: ['evaluate', 'benchs'],
+  props: ['evaluate', 'benchs', 'base', 'author'],
   data () {
     return {
       dialogVisible: {
@@ -64,7 +64,6 @@ export default {
       type: '',
       reportType: '',
       id: '',
-      author: {},
       reports: []
     }
   },
@@ -72,11 +71,6 @@ export default {
     this.type = this.$route.params.type
     this.id = this.$route.params.id
     this.getReports()
-  },
-  mounted () {
-    setTimeout(() => {
-      this.author = this.evaluate.author
-    }, 300)
   },
   methods: {
     showEWM (path) {
@@ -88,7 +82,10 @@ export default {
       this.dialogFormVisible.visibleE = true
     },
     getReports () {
-      Tools.getJson('reportProduct', {}, (res) => {
+      var formData = {
+        catalogCode: 'propertyreport'
+      }
+      Tools.getJson('reportProduct', formData, (res) => {
         if (res.success === '1') {
           this.reports = res.result
         } else {

@@ -14,17 +14,21 @@
       </div>
       <div class="cards-box">
         <template v-for="item in reportList">
-          <router-link class="card-b" :to="{ name: 'detail' ,params: {id: item.id}}">
-            <img class="i-t" :src="item.imgUrl">
+          <router-link class="card-b" :to="{ name: 'detail' ,params: {id: item.html5PageCode}}">
+            <img class="i-t" :src="item.html5PageindexImg">
             <div class="card">
-              <p class="title">{{item.title}}</p>
+              <p class="title">{{item.html5PageTitle}}</p>
               <p class="cont">
-                {{item.des}}
+                {{item.html5Summary}}
               </p>
             </div>
           </router-link>
           <p class="btns">
-            <share :down-url="item.download" :file-name="item.fileName" :id-type="item.id"></share>
+            <share
+              :down-url="item.html5Path"
+              :file-name="item.html5PageTitle"
+              :ewm-img="item.html5Qrcode"
+              :id-type="item.id"></share>
           </p>
         </template>
 
@@ -41,10 +45,10 @@
     <section class="right">
         <a class="ding-y">我要订阅</a>
         <section class="two">
-          <a v-for="item in reports" @click="showModel(item.id)">
-              <img :src="item.catalogImage">
+          <a v-for="item in reports" @click="showModel(item.productCode)">
+              <img :src="item.productLogoUrl">
               <div>
-                  {{item.catalogCname}}
+                  {{item.productCname}}
                   <span>
                       订阅
                   </span>
@@ -86,12 +90,7 @@ export default {
       this.dialogFormVisible.visibleE = true
     },
     getTypes () {
-      let formData = {
-        type: this.type,
-        id: this.$route.params.id
-      }
-
-      Tools.getJson('reportType', formData, (res) => {
+      Tools.getJson('reportProduct', {}, (res) => {
         if (res.success === '1') {
           this.reports = res.result
         } else {

@@ -12,6 +12,7 @@ export default {
         "notice": platform + "/task/list.json",
         "headImage": platform + "headImage.json",
         "sendSmsCode": platform + 'sendSmsCode.json',
+        findUserInfoByCode: platform + 'findUserInfoByCode.json',
         /**
            * 任务详情 get
            * id 任务标识
@@ -103,7 +104,8 @@ export default {
            * city string eg: "北京" 所选城市
            * id 报告序列标识
         */
-        reportDetail: '/static/api/report/reportDetail.json',
+        reportDetail: platform + 'report/findReportInfoByCode.json',
+        findRecommendArticleByCode: platform + 'report/findRecommendArticleByCode.json',
         /**
            * 广告列表 get
         */
@@ -113,7 +115,7 @@ export default {
            * email 邮件地址
            * id 报告序列标识
         */
-        sendMail: '/static/api/report/sendMail.json',
+        sendMail: platform + 'report/sendMail.json',
         /**
            * 过滤地图数据 get
            * type string（business house mall）页面类型

@@ -15,7 +15,7 @@
 import Tools from '../../utils/tools.js'
 
 export default {
-  props: ['visibleData', 'idType'],
+  props: ['visibleData', 'urlType'],
   data () {
     return {
       email: '',
@@ -30,11 +30,11 @@ export default {
         return false
       }
       var formData = {
-        email: this.email,
-        id: this.idType
+        mailBox: this.email,
+        reportLink: this.urlType
       }
-      Tools.postJson('sendMail', formData, (res) => {
-        if (res.statusCode === 0) {
+      Tools.getJson('sendMail', formData, (res) => {
+        if (res.success == '1') {
           this.$message({
             showClose: true,
             message: '恭喜你，发送成功'
@@ -42,7 +42,7 @@ export default {
           this.email = ''
           this.visibleData.value = false
         } else {
-          this.$message.error(res.mess)
+          this.$message.error(res.message)
         }
       })
     },

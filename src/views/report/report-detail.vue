@@ -3,44 +3,49 @@
     <div class="left">
       <section class="one">
         <p class="title">
-          {{detail.title}}
+          {{detail.html5PageTitle}}
         </p>
         <div class="time">
           <p class="btns">
-            <share :down-url="detail.download" :file-name="detail.fileName" :id-type="detail.id"></share>
+            <share
+              :down-url="detail.html5Path"
+              :file-name="detail.html5PageTitle"
+              :ewm-img="detail.html5Qrcode"
+              :id-type="detail.id"></share>
           </p>
-          {{detail.date}}
+          {{creatTime}}
         </div>
-        <img class="info-big" :src="detail.img">
-        <p class="info-con">
-          {{detail.des}}
-        </p>
+        <iframe class="info-con" :src="detail.html5Path"></iframe>
         <p class="btns-r">
-            <share :down-url="detail.download" :file-name="detail.fileName" :id-type="detail.id"></share>
-          </p>
-        <div class="author">
+            <share
+              :down-url="detail.html5Path"
+              :file-name="detail.html5PageTitle"
+              :ewm-img="detail.html5Qrcode"
+              :id-type="detail.id"></share>
+        </p>
+        <div class="author" v-if="author">
           <section class="a-left">
-            <img :src="author.img">
+            <img :src="author.userImage">
             <p>
-              <span class="au-t">{{author.name}}</span>
+              <span class="au-t">{{author.userLoginName}}</span>
               <span>{{author.city}}</span>
-              <span>{{author.tel + author.email}}</span>
+              <span>{{author.userMobile + author.userMail}}</span>
             </p>
           </section>
           <section class="a-right">
-              <img :src="author.ewm" @click="showEWM(author.ewm)">
+              <img :src="author.qrcode" @click="showEWM(author.qrcode)">
               <p>请用微信扫码联系作者</p>
           </section>
         </div>
       </section>
       <section class="two">
         <template v-for="item in list">
-          <router-link class="card-b" :to="{ name: 'detail' ,params: {id: item.id}}">
-            <img class="i-t" :src="item.imgUrl">
+          <router-link class="card-b" :to="{ name: 'detail' ,params: {id: item.html5PageCode}}">
+            <img class="i-t" :src="item.html5PageindexImg">
             <div class="card">
-              <p class="title">{{item.title}}</p>
+              <p class="title">{{item.html5PageTitle}}</p>
               <p class="cont">
-                {{item.des}}
+                {{item.html5Summary}}
               </p>
             </div>
           </router-link>
@@ -48,9 +53,9 @@
       </section>
     </div>
     <div class="right">
-      <a v-for="item in adList" class="bench" target="_blank" @click="showModel(item.id)">
-        <img :src="item.imgUrl">
-        <span>{{item.title}}</span>
+      <a v-for="item in adList" class="bench" target="_blank" @click="showModel(item.productCode)">
+        <img :src="item.productLogoUrl">
+        <span>{{item.productCname}}</span>
       </a>
     </div>
     
@@ -77,8 +82,9 @@ export default {
       detail: {},
       list: [],
       adList: [],
-      author: {},
-      reportType: ''
+      author: '',
+      reportType: '',
+      creatTime: ''
     }
   },
   created () {
@@ -97,28 +103,58 @@ export default {
     // 获取报告数据
     getReport () {
       var formData = {
-        id: this.$route.params.id
+        fileCode: this.$route.params.id
       }
       Tools.getJson('reportDetail', formData, (res) => {
-        if (res.statusCode === 0) {
-          this.detail = res.datas.detail
-          this.author = res.datas.detail.author
-          this.list = res.datas.list
+        if (res.success == '1') {
+          this.detail = res.result
+          this.creatTime = res.responsetime.split(' ')[0]
+          this.getAuthor()
+          this.getSelectList()
         } else {
-          this.$message.error(res.mess)
+          this.$message.error(res.message)
+        }
+      })
+    },
+    getAuthor () {
+      if (!this.detail.editorCode) {
+        return false
+      }
+
+      var formData = {
+        userCode: this.detail.editorCode
+      }
+      Tools.getJson('findUserInfoByCode', formData, (res) => {
+        if (res.success == '1') {
+          this.author = res.result
+        } else {
+          this.$message.error(res.message)
+        }
+      })
+    },
+    getSelectList () {
+      var formData = {
+        fileCode: this.detail.html5PageCode
+      }
+
+      Tools.getJson('findRecommendArticleByCode', formData, (res) => {
+        if (res.success == '1') {
+          this.list = res.result
+        } else {
+          this.$message.error(res.message)
         }
       })
     },
     // 获取广告数据
     getAds () {
       var formData = {
-        id: this.$route.params.id
+        catalogCode: ''
       }
-      Tools.getJson('adList', formData, (res) => {
-        if (res.statusCode === 0) {
-          this.adList = res.datas
+      Tools.getJson('reportProduct', formData, (res) => {
+        if (res.success === '1') {
+          this.adList = res.result
         } else {
-          this.$message.error(res.mess)
+          this.$message.error(res.message)
         }
       })
     }
@@ -178,10 +214,8 @@ export default {
             }
 
             .info-con {
-                font-size: 14px;
-                line-height: 30px;
-                margin-top: 20px;
-                color: #1F2D3D;
+                width: 100%;
+                min-height: 300px;
             }
 
             .author {
