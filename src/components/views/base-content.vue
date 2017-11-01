@@ -45,7 +45,7 @@
         <div class="out-box">
             <p class="base-b base-big">
                 <span class="title">交易记录：</span>
-                <span class="base-content">{{base.record}}</span>
+                <span class="base-content">{{record}}</span>
             </p>
             <p class="base-b base-big">
                 <span class="title">现在租户：</span>
@@ -94,7 +94,7 @@
 </template>
 <script>
 export default {
-  props: ['base']
+  props: ['base', 'record']
 }
 </script>
 <style lang="scss" scoped>

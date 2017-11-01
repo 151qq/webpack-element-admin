@@ -9,7 +9,7 @@
       </router-link>
       <el-tabs class="card-box" v-model="activeName">
         <el-tab-pane class="card-outer" label="基本信息" name="基本信息">
-          <base-content :base="base"></base-content>
+          <base-content :base="base" :record="record"></base-content>
         </el-tab-pane>
         <el-tab-pane class="card-outer" label="楼盘评述" name="楼盘评述">
           <base-evalute :evaluate="evaluate" :benchs="benchs" :base="base" :author="author"></base-evalute>
@@ -39,7 +39,8 @@ export default {
       benchs: [],
       type: '',
       id: '',
-      author: ''
+      author: '',
+      record: ''
     }
   },
   created () {
@@ -62,6 +63,27 @@ export default {
           this.bigImgs = res.result.bigImgs
           this.getBenchs()
           this.getAuthor()
+          this.getRecord()
+        } else {
+          this.$message.error(res.message)
+        }
+      })
+    },
+    getRecord () {
+      var formData = {
+        id: this.$route.params.id
+      }
+      Tools.getJson('record', formData, (res) => {
+        if (res.success == '1') {
+          var record = ''
+          res.result.changes.forEach((item, index) => {
+            if (index != 0) {
+              record = '，' + record
+            }
+
+            record = record + item.date.split(' ')[0] + ' ' + item.changeA + ' -> ' + item.changeB + ' （' + item.price + '万元）'
+          })
+          this.record = record
         } else {
           this.$message.error(res.message)
         }

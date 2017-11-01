@@ -49,6 +49,7 @@ export default {
            * '/static/api/property/info.json'
         */
         info: host + '/houses/houseInfo.json',
+        record: host + '/houses/findHousesTrade.json',
         /**
            * 楼盘详情的静态报告列表 get
            * type string（business house mall）页面类型
