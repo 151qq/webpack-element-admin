@@ -38,7 +38,9 @@ export default {
   created () {
     var _self = this
     $('body').click(function () {
-      _self.keyValue = ''
+      if (!_self.isPage) {
+        _self.keyValue = ''
+      }
       _self.messDate = []
       _self.isShow = false
     })
@@ -71,6 +73,10 @@ export default {
       })
     },
     getMess () {
+      if (this.isPage) {
+        return false
+      }
+
       if (this.keyValue === '') {
         this.isShow = false
         return false
@@ -97,7 +103,7 @@ export default {
       this.$store.dispatch('setMapInfo', this.messDate)
       if (this.isPage) {
         this.isShow = false
-        this.$emit('mapChange')
+        this.$emit('mapChange', this.keyValue)
         return false
       }
 

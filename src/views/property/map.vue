@@ -1,7 +1,7 @@
 <template>
     <section class="map-box">
         <div class="input-box">
-            <search-box :is-page="true" @mapChange="drawMap"></search-box>
+            <search-box :is-page="true" @mapChange="setKey"></search-box>
 
             <span class="dropdown-link" @click="searSlide">
                 高级检索<i class="el-icon-caret-bottom el-icon--right"></i>
@@ -10,7 +10,7 @@
         <div :class="isShow ? 'sear-box hide-sear' : 'sear-box'">
             <section class="sec">
                 <label class="t-n">区域:</label>
-                <div class="s-c">
+                <!-- <div class="s-c">
                     <p class="area-t">
                         <a @click="nowIndex = 'all'" :class="nowIndex === 'all' ? 'active' : ''">全部</a>
                         <a v-for="item in typeData.area" @click="tabChange(item.city)"
@@ -22,49 +22,77 @@
                             :class="o === countyIndex ? 'active' : ''"
                             @click="countyIndex = o">{{o}}</a>
                     </p>
+                </div> -->
+                <div class="s-c">
+                    <span>
+                      <el-checkbox class="all-c" label="全部" v-model="ischeckA"
+                          @change="levelAll('ischeckA', 'circleCode', 'tradeList')"></el-checkbox>
+                    </span>
+                    <el-checkbox-group class="more-box" v-model="formData.fileter.circleCode"
+                        @change="levelChange('ischeckA', 'circleCode', 'tradeList')">
+                        <el-checkbox v-for="(item, index) in typeData.tradeList"
+                                      :label="item.nodeCode"
+                                      >{{item.label}}</el-checkbox>
+                    </el-checkbox-group>
                 </div>
             </section>
             <section class="sec">
                 <label class="t-n">等级:</label>
                 <div class="s-c">
-                    <span @click="levelAll('D', 'level')">
-                      <el-checkbox class="all-c" label="全部" v-model="ischeckD"></el-checkbox>
+                    <span>
+                      <el-checkbox class="all-c" label="全部" v-model="ischeckD"
+                          @change="levelAll('ischeckD', 'housesGrade', 'level')"></el-checkbox>
                     </span>
-                    <el-checkbox-group v-model="checkD" @change="levelChange('D', 'level')">
-                        <el-checkbox v-for="item in typeData.level" :label="item"></el-checkbox>
+                    <el-checkbox-group v-model="formData.fileter.housesGrade"
+                        @change="levelChange('ischeckD', 'housesGrade', 'level')">
+                        <el-checkbox v-for="(item, index) in typeData.level"
+                                      :label="item.dictKeyCode"
+                                      >{{item.dictKeyValue}}</el-checkbox>
                     </el-checkbox-group>
                 </div>
             </section>
             <section class="sec">
                 <label class="t-n">租金:</label>
                 <div class="s-c">
-                    <span @click="levelAll('Z', 'rent')">
-                      <el-checkbox class="all-c" label="全部" v-model="ischeckZ"></el-checkbox>
+                    <span>
+                      <el-checkbox class="all-c" label="全部" v-model="ischeckZ"
+                          @change="levelAll('ischeckZ', 'rentValue', 'rent')"></el-checkbox>
                     </span>
-                    <el-checkbox-group v-model="checkZ" @change="levelChange('Z', 'rent')">
-                        <el-checkbox v-for="item in typeData.rent" :label="item"></el-checkbox>
+                    <el-checkbox-group v-model="formData.fileter.rentValue"
+                        @change="levelChange('ischeckZ', 'rentValue', 'rent')">
+                        <el-checkbox v-for="(item, index) in typeData.rent"
+                                      :label="item.dictKeyCode"
+                                      >{{item.dictKeyValue}}</el-checkbox>
                     </el-checkbox-group>
                 </div>
             </section>
             <section class="sec">
                 <label class="t-n">持有:</label>
                 <div class="s-c">
-                    <span @click="levelAll('C', 'hold')">
-                      <el-checkbox class="all-c" label="全部" v-model="ischeckC"></el-checkbox>
+                    <span>
+                      <el-checkbox class="all-c" label="全部" v-model="ischeckC"
+                          @change="levelAll('ischeckC', 'propertyHolder', 'hold')"></el-checkbox>
                     </span>
-                    <el-checkbox-group v-model="checkC" @change="levelChange('C', 'hold')">
-                        <el-checkbox v-for="item in typeData.hold" :label="item"></el-checkbox>
+                    <el-checkbox-group v-model="formData.fileter.propertyHolder"
+                        @change="levelChange('ischeckC', 'propertyHolder', 'hold')">
+                        <el-checkbox v-for="(item, index) in typeData.hold"
+                                      :label="item.dictKeyCode"
+                                      >{{item.dictKeyValue}}</el-checkbox>
                     </el-checkbox-group>
                 </div>
             </section>
             <section class="sec">
                 <label class="t-n">面积:</label>
                 <div class="s-c">
-                    <span @click="levelAll('M', 'measure')">
-                      <el-checkbox class="all-c" label="全部" v-model="ischeckM"></el-checkbox>
+                    <span>
+                      <el-checkbox class="all-c" label="全部" v-model="ischeckM"
+                          @change="levelAll('ischeckM', 'area', 'measure')"></el-checkbox>
                     </span>
-                    <el-checkbox-group v-model="checkM" @change="levelChange('M', 'measure')">
-                        <el-checkbox v-for="item in typeData.measure" :label="item"></el-checkbox>
+                    <el-checkbox-group v-model="formData.fileter.area"
+                        @change="levelChange('ischeckM', 'area', 'measure')">
+                        <el-checkbox v-for="(item, index) in typeData.measure"
+                                      :label="item.dictKeyCode"
+                                      >{{item.dictKeyValue}}</el-checkbox>
                     </el-checkbox-group>
                 </div>
             </section>
@@ -76,6 +104,7 @@
 import WindowOverlay from '../../utils/common/mapOverlay.js'
 import searchBox from '../../components/common/search-box.vue'
 import Tools from '../../utils/tools.js'
+import util from '../../assets/common/util.js'
 
 export default {
   data () {
@@ -85,23 +114,33 @@ export default {
       checkZ: [],
       checkC: [],
       checkM: [],
-      ischeckD: true,
-      ischeckZ: true,
-      ischeckC: true,
-      ischeckM: true,
+      ischeckA: false,
+      ischeckD: false,
+      ischeckZ: false,
+      ischeckC: false,
+      ischeckM: false,
       pageInfo: {},
-      typeData: {},
-      nowIndex: 'all',
-      countyIndex: 'all',
-      formData: {
-        areaCity: 'all',
-        areaCounty: 'all',
-        level: 'all',
-        rent: 'all',
-        hold: 'all',
-        measure: 'all'
+      typeData: {
+        measure: [],
+        floors: [],
+        propertys: [],
+        level: [],
+        rent: [],
+        hold: [],
+        tradeList: []
       },
-      count: 0
+      count: 0,
+      formData: {
+        key: '',
+        fileter: {
+          cityCode: [],
+          circleCode: [],
+          housesGrade: [],
+          rentValue: [],
+          propertyHolder: [],
+          area: []
+        }
+      }
     }
   },
   created () {
@@ -118,48 +157,36 @@ export default {
       this.drawMap()
     })
   },
-  watch: {
-    nowIndex (value) {
-      this.formData.areaCity = value
-      this.getMap()
-      this.count++
-    },
-    countyIndex (value) {
-      this.formData.areaCounty = value
-      this.getMap()
-      this.count++
-    }
-  },
   methods: {
     getTypes () {
       let formData = {
-        type: this.pageInfo.type,
-        city: this.pageInfo.city
+        city: this.$route.query.city
       }
 
-      Tools.getJson('typeMap', formData, (res) => {
-        if (res.statusCode === 0) {
-          this.typeData = res.datas
+      Tools.getJson('searchHousesKey', formData, (res) => {
+        if (res.success == '1') {
+          this.typeData = res.result
         } else {
-          this.$message.error(res.mess)
+          this.$message.error(res.message)
         }
       })
     },
     getMap () {
       var count = this.count
-      this.formData.type = this.pageInfo.type
-      this.formData.city = this.pageInfo.city
-      this.formData.vr = this.$store.getters.getMapInfo
 
-      Tools.getJson('searchMap', this.formData, (res) => {
-        if (res.statusCode === 0) {
+      util.request({
+        method: 'post',
+        interface: 'searchMap',
+        data: this.formData
+      }).then(res => {
+        if (res.result.success == '1') {
           if (count !== this.count) {
             return false
           }
-          this.$store.dispatch('setMapInfo', res.datas)
+          this.$store.dispatch('setMapInfo', res.result.result)
           this.drawMap()
         } else {
-          this.$message.error(res.mess)
+          this.$message.error(res.result.message)
         }
       })
     },
@@ -167,29 +194,29 @@ export default {
       this.nowIndex = index
       this.countyIndex = 'all'
     },
-    levelAll (q, h) {
-      if (this['ischeck' + q]) {
-        this.formData[h] = 'all'
-        this['check' + q] = [].concat(this.typeData[h])
+    levelAll (check, form, show) {
+      if (this[check]) {
+        this.formData.fileter[form] = this.typeData[show].map((item) => {
+          if (item.nodeCode) {
+            return item.nodeCode
+          }
+          return item.dictKeyCode
+        })
       } else {
-        this.formData[h] = 'all'
-        this['check' + q] = []
+        this.formData.fileter[form] = []
       }
       this.count++
       this.getMap()
     },
-    levelChange (q, h) {
-      if (this['check' + q].lenght === 0) {
-        this.formData[h] = 'all'
-        this['ischeck' + q] = false
-      } else if (this['check' + q].length === this.typeData[h].length) {
-        this.formData[h] = 'all'
-        this['ischeck' + q] = true
-      } else {
-        this.formData[h] = this['check' + q].join(',')
-        this['ischeck' + q] = false
-      }
+    levelChange (check, form, show) {
+      this[check] = this.formData.fileter[form].length == this.typeData[show].length
       this.count++
+      this.getMap()
+    },
+    setKey (key) {
+      if (key) {
+        this.formData.key = key
+      }
       this.getMap()
     },
     drawMap () {
@@ -197,24 +224,30 @@ export default {
       this.drawOverlay(this.map, this.$store.getters.getMapInfo)
     },
     drawOverlay (map, datas) {
-      var type = this.pageInfo.type
+      var type = this.$route.params.type
       var pointList = []
+
+      if (!datas || !datas.length) {
+        var point = new window.BMap.Point(116.409, 39.918)
+        map.centerAndZoom(point, 15)
+        return
+      }
       datas.forEach((item) => {
         var href = {
           name: 'info',
           params: {
             type: type,
-            id: item.id
+            id: item.housesId
           }
         }
 
         var opts = {
-          width: 140,
+          width: 160,
           height: 100,
-          template: this.createTemplate(href, item.title, item.price1, item.price2)
+          template: this.createTemplate(href, item.housesDesc, item.rentValue, item.rentUnit)
         }
 
-        var point = new window.BMap.Point(item.point.lng, item.point.lat)
+        var point = new window.BMap.Point(item.housesGps.split[1], item.housesGps[0])
         pointList.push(point)
         var windowInfo = new WindowOverlay(point, opts)
 
@@ -252,7 +285,7 @@ export default {
 
       var span4 = document.createElement('span')
       span4.style.float = 'right'
-      span4.style.width = '47px'
+      span4.style.width = '60px'
       span4.style.textAlign = 'right'
       span4.style.color = '#99A9BF'
       span4.innerHTML = '元 ㎡/天'
@@ -380,6 +413,13 @@ export default {
 
               .active {
                 color: #20a0ff;
+              }
+            }
+
+            .more-box {
+              .el-checkbox {
+                margin-left: 0;
+                margin-right: 15px;
               }
             }
 

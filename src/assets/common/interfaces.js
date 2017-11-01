@@ -12,6 +12,7 @@ export default {
         "notice": platform + "/task/list.json",
         "headImage": platform + "headImage.json",
         "sendSmsCode": platform + 'sendSmsCode.json',
+        searchHousesKey: platform + 'houses/searchHousesKey.json',
         findUserInfoByCode: platform + 'findUserInfoByCode.json',
         /**
            * 任务详情 get
