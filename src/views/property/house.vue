@@ -120,7 +120,7 @@ export default {
     getCitys () {
       let formData = {
         type: this.pageInfo.type,
-        html5TemplateCode: '02'
+        html5TemplateCode: 'tpl_002'
       }
 
       Tools.getJson('reports', formData, (res) => {
