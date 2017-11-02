@@ -249,10 +249,12 @@ export default {
         var opts = {
           width: 160,
           height: 100,
-          template: this.createTemplate(href, item.housesDesc, item.rentValue, item.rentUnit)
+          template: this.createTemplate(href, item.housesDesc, item.rentUnit, item.rentUnit)
         }
 
-        var point = new window.BMap.Point(item.housesGps.split[0], item.housesGps[1])
+        var pointArry = item.housesGps.split(',')
+
+        var point = new window.BMap.Point(pointArry[1], pointArry[0])
         pointList.push(point)
         var windowInfo = new WindowOverlay(point, opts)
 

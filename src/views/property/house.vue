@@ -84,7 +84,6 @@ export default {
     $route (to, from) {
       this.getCitys()
       this.$refs.banner.getData()
-      console.log(1)
     },
     activeName (value) {
       if (!value || value === '0') {
@@ -93,7 +92,6 @@ export default {
       this.pageInfo.city = this.filterCity()
       this.$store.dispatch('setPageInfo', this.pageInfo)
       this.$refs.banner.getData()
-      console.log(value, 2)
     }
   },
   methods: {
@@ -121,7 +119,8 @@ export default {
     // 获取城市及报告数据
     getCitys () {
       let formData = {
-        type: this.pageInfo.type
+        type: this.pageInfo.type,
+        html5TemplateCode: '02'
       }
 
       Tools.getJson('reports', formData, (res) => {

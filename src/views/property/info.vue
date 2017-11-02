@@ -43,7 +43,7 @@ export default {
       record: ''
     }
   },
-  created () {
+  mounted () {
     this.type = this.$route.params.type
     this.id = this.$route.params.id
     this.getDatas()
@@ -56,11 +56,11 @@ export default {
       }
 
       Tools.getJson('info', formData, (res) => {
-        if (res.success === '1') {
+        if (res.success == '1') {
           this.base = res.result.base
           this.evaluate = res.result.evaluate
           this.imgs = res.result.imgs
-          this.bigImgs = res.result.bigImgs
+          this.bigImgs = this.setImgs()
           this.getBenchs()
           this.getAuthor()
           this.getRecord()
@@ -68,6 +68,22 @@ export default {
           this.$message.error(res.message)
         }
       })
+    },
+    setImgs () {
+      var imgs = []
+      if (this.imgs.appearance.length) {
+        imgs = imgs.concat(this.imgs.appearance)
+      }
+
+      if (this.imgs.publics.length) {
+        imgs = imgs.concat(this.imgs.publics)
+      }
+
+      if (this.imgs.surround.length) {
+        imgs = imgs.concat(this.imgs.surround)
+      }
+
+      return imgs
     },
     getRecord () {
       var formData = {
@@ -107,6 +123,10 @@ export default {
     },
     // 获取对标物业
     getBenchs () {
+      if (!this.base.benchmark || !this.base.benchmark.length) {
+        return false
+      }
+
       let formData = {
         id: this.base.benchmark.join(',')
       }

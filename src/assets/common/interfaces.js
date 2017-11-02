@@ -1,4 +1,5 @@
 const platform = "/esocial/";
+// const platform = "http://192.168.2.105:8080/";
 
 export default {
     interfaces: {
