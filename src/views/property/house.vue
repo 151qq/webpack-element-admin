@@ -118,12 +118,6 @@ export default {
       }
       return result
     },
-    // 获取banner楼盘数据
-    getPMess () {
-      Tools.getJson('url', this.pageInfo, (datas) => {
-
-      })
-    },
     // 获取城市及报告数据
     getCitys () {
       let formData = {
@@ -131,17 +125,12 @@ export default {
       }
 
       Tools.getJson('reports', formData, (res) => {
-        if (res.success === '1') {
-          // 设置所有城市
-          this.citys = res.result.citys
-          this.articles = res.result.articles
-          // 设置当前显示
-          this.selectedCity = [0]
-          this.activeName = this.citys[0].title
-          this.setData()
-        } else {
-          this.$message.error(res.message)
-        }
+        this.citys = res.result.citys
+        this.articles = res.result.articles
+        // 设置当前显示
+        this.selectedCity = [0]
+        this.activeName = this.citys[0].title
+        this.setData()
       })
     },
     // 设置城市弹窗

@@ -155,6 +155,11 @@ export default {
       map.centerAndZoom(point, 15)
       map.addControl(new window.BMap.NavigationControl())
       this.drawMap()
+
+      if (this.$route.query.key) {
+        this.formData.key = key
+        this.getMap()
+      }
     })
   },
   methods: {
@@ -247,7 +252,7 @@ export default {
           template: this.createTemplate(href, item.housesDesc, item.rentValue, item.rentUnit)
         }
 
-        var point = new window.BMap.Point(item.housesGps.split[1], item.housesGps[0])
+        var point = new window.BMap.Point(item.housesGps.split[0], item.housesGps[1])
         pointList.push(point)
         var windowInfo = new WindowOverlay(point, opts)
 

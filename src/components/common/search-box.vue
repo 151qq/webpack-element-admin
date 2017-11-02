@@ -111,6 +111,9 @@ export default {
         name: 'map',
         params: {
           type: this.pageInfo.type
+        },
+        query: {
+          key: this.keyValue
         }
       }
       this.isShow = false

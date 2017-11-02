@@ -32,8 +32,7 @@ compiler.plugin('compilation', function (compilation) {
 })
 
 // proxy api requests （https://github.com/chimurai/http-proxy-middleware）
-app.use(proxyMiddleware('/esocial', {target: 'http://192.168.2.103:8080', changeOrigin: true, pathRewrite: {'^/esocial': ''}}))
-// app.use(proxyMiddleware('/localhost', {target: 'http://112.126.90.50:8080', changeOrigin: true, pathRewrite: {'^/localhost': ''}}))
+app.use(proxyMiddleware('/esocial', {target: 'http://192.168.2.105:8080', changeOrigin: true, pathRewrite: {'/esocial': ''}}))
 // handle fallback for HTML5 history API
 app.use(require('connect-history-api-fallback')())
 

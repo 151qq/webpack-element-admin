@@ -17,7 +17,7 @@ export default {
     return $.ajax({
       url: apis.interfaces[url],
       type: 'POST',
-      dataType: 'application/json',
+      dataType: 'json',
       data: data,
       headers: assemblingData(true),
       success (res) {
