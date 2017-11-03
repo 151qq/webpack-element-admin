@@ -106,7 +106,8 @@ export default {
     getReports () {
       var formData = {
         pageNumber: this.pageNumber,
-        pageSize: this.pageSize
+        pageSize: this.pageSize,
+        html5TemplateCode: 'tpl_002'
       }
 
       Tools.getJson('reportList', formData, (res) => {

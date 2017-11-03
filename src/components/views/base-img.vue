@@ -58,7 +58,7 @@ export default {
   },
   methods: {
     showImg (e) {
-      this.index = $('.img-box img').index($(e.target))
+      this.index = $('.img-box img').index($(e.target)) - 1
       this.isShow.value = true
     }
   },

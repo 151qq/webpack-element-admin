@@ -45,6 +45,7 @@ export default {
   watch: {
     index () {
       this.$refs.mySwiper.swiper.slideTo(this.index)
+      console.log(this.index, 'index')
     }
   },
   components: {
@@ -56,7 +57,8 @@ export default {
 </script>
 <style lang="scss" scoped>
   .swiper-slide img {
-    width: 100%;
+    width: 740px;
+    height: 420px;
   }
 
   .swiper-button-prev {
