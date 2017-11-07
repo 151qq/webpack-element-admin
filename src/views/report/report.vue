@@ -45,10 +45,10 @@
     <section class="right">
         <a class="ding-y">我要订阅</a>
         <section class="two">
-          <a v-for="item in reports" @click="showModel(item.productCode)">
-              <img :src="item.productLogoUrl">
+          <a v-for="item in reports" @click="showModel(item[0])">
+              <img :src="item[2]">
               <div>
-                  {{item.productCname}}
+                  {{item[1]}}
                   <span>
                       订阅
                   </span>
@@ -107,7 +107,7 @@ export default {
       var formData = {
         pageNumber: this.pageNumber,
         pageSize: this.pageSize,
-        html5TemplateCode: 'tpl_002'
+        editorCode: 'tpl_002'
       }
 
       Tools.getJson('reportList', formData, (res) => {

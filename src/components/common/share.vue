@@ -32,8 +32,7 @@ export default {
       visibleData: {
         value: false
       },
-      itemId: '',
-      imgPath: ''
+      itemId: ''
     }
   },
   created () {
@@ -44,17 +43,7 @@ export default {
       this.visibleData.value = true
     },
     getEwm () {
-      var formData = {
-        path: this.path
-      }
-      Tools.getJson('getEwm', formData, (res) => {
-        if (res.statusCode === 0) {
-          this.imgPath = res.datas.imgUrl
-          this.dialogVisible.value = true
-        } else {
-          this.$message.error(res.mess)
-        }
-      })
+      this.dialogVisible.value = true
     }
   },
   components: {

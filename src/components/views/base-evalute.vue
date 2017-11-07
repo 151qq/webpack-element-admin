@@ -22,10 +22,10 @@
                 </div>
             </section>
             <section class="two">
-                <a v-for="item in reports.slice(0, 3)" @click="showModel(item.productCode)">
-                    <img :src="item.productLogoUrl">
+                <a v-for="item in reports.slice(0, 3)" @click="showModel(item[0])">
+                    <img :src="item[2]">
                     <div>
-                        {{item.productCname}}
+                        {{item[1]}}
                         <span>
                             订阅
                         </span>
@@ -83,7 +83,7 @@ export default {
     },
     getReports () {
       var formData = {
-        catalogCode: 'propertyreport'
+        catalogCode: 'property'
       }
       Tools.getJson('reportProduct', formData, (res) => {
         if (res.success === '1') {
