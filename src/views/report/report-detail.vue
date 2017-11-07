@@ -53,9 +53,9 @@
       </section>
     </div>
     <div class="right">
-      <a v-for="item in adList" class="bench" target="_blank" @click="showModel(item.productCode)">
-        <img :src="item.productLogoUrl">
-        <span>{{item.productCname}}</span>
+      <a v-for="item in adList" class="bench" target="_blank" @click="showModel(item[0])">
+        <img :src="item[2]">
+        <span>{{item[1]}}</span>
       </a>
     </div>
     
