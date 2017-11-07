@@ -9,6 +9,19 @@
         </div>
         <div :class="isShow ? 'sear-box hide-sear' : 'sear-box'">
             <section class="sec">
+                <label class="t-n">城市:</label>
+                <div class="s-c">
+                    <el-select v-model="cityName" placeholder="请选择" size="small" @change="getTypes">
+                      <el-option
+                        v-for="(item, index) in citys"
+                        :key="index"
+                        :label="item.title"
+                        :value="item.title">
+                      </el-option>
+                    </el-select>
+                </div>
+            </section>
+            <section class="sec">
                 <label class="t-n">区域:</label>
                 <!-- <div class="s-c">
                     <p class="area-t">
@@ -140,12 +153,15 @@ export default {
           propertyHolder: [],
           area: []
         }
-      }
+      },
+      cityName: '',
+      citys: []
     }
   },
   created () {
     this.setData()
     this.getTypes()
+    this.getCitys()
   },
   mounted () {
     this.$nextTick(() => {
@@ -163,9 +179,20 @@ export default {
     })
   },
   methods: {
+    // 获取城市及报告数据
+    getCitys () {
+      let formData = {
+        type: this.$route.params.type,
+        html5TemplateCode: 'tpl_002'
+      }
+
+      Tools.getJson('reports', formData, (res) => {
+        this.citys = res.result.citys
+      })
+    },
     getTypes () {
       let formData = {
-        city: this.$route.query.city
+        city: this.cityName
       }
 
       Tools.getJson('searchHousesKey', formData, (res) => {
@@ -267,6 +294,7 @@ export default {
     // 页面初始数据设置
     setData () {
       this.pageInfo = this.$store.getters.getPageInfo
+      this.cityName = this.$route.query.city
     },
     searSlide () {
       this.isShow = !this.isShow
