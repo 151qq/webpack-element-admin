@@ -158,7 +158,7 @@ export default {
     }
 
     .con-right {
-      width: 940px;
+      width: 887px;
       float: right;
       height: 130px;
     }

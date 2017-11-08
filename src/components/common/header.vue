@@ -140,7 +140,7 @@ export default {
   },
   created () {
     this.getUserInfo()
-    if (this.$route.name == 'invest') {
+    if (this.$route.name == 'invest' || this.$route.name == 'invest-detail') {
       this.pathName = 'invest'
     } else if (this.$route.name == 'security') {
       this.pathName = 'security'

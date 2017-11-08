@@ -1,24 +1,21 @@
 <template>
-  <div class="banner-invest">
-    <div class="left">
-        <!-- <swiper :options="swiperOption" :not-next-tick="notNextTick" ref="mySwiper">
-          <swiper-slide v-for="item in bannerData">
-            <img class="img-invest" :src="item.imgUrl">
-          </swiper-slide>
-        </swiper> -->
-
-        <el-carousel :interval="4000" type="card" height="200px" @change="bannerChange">
+  <div class="banner-box">
+    <img class="img-box" src="../../assets/images/banner-bg.jpg">
+    <section class="banner-f">
+      <div class="left">
+        <el-carousel :interval="4000" type="card" height="310px" @change="bannerChange">
           <el-carousel-item v-for="(item, index) in bannerData" :key="index">
             <img class="img-invest" :src="item.imgUrl">
           </el-carousel-item>
         </el-carousel>
-    </div>
-    <div class="right">
-      <p>描述</p>
-      <div>
-        {{bannerData[currentIndex].des}}
       </div>
-    </div>
+      <div class="right">
+        <p>描述</p>
+        <div>
+          {{bannerData[currentIndex].des}}
+        </div>
+      </div>
+    </section>
   </div>
 </template>
 <script>
@@ -87,32 +84,49 @@ export default {
 }
 </script>
 <style lang="scss">
-  .banner-invest {
+.banner-box {
+  position: relative;
+  width: 100%;
+  height: 450px;
+
+  .img-box {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    margin-left: -50%;
+    display: block;
+    width: 1440px;
+    height: 450px;
+  }
+
+  .banner-f {
+    position: absolute;
     width: 1160px;
-    margin: auto;
+    height: 370px;
+    left: 50%;
+    top: 50%;
+    margin: -185px 0 0 -580px;
     overflow: hidden;
-    margin-top: 15px;
-    background: #f1f1f1;
-    border-radius: 5px;
+    background: #ffffff;
 
     .left {
       float: left;
       width: 800px;
-      height: 240px;
+      height: 370px;
 
       .el-carousel {
-        margin-top: 5px;
+        margin-top: 20px;
       }
 
       .swiper-container {
         width: 800px;
-        height: 240px;
+        height: 370px;
         overflow: hidden;
       }
 
       .img-invest {
         width: 100%;
-        min-height: 240px;
+        min-height: 310px;
       }
     }
 
@@ -131,4 +145,5 @@ export default {
       }
     }
   }
+}
 </style>

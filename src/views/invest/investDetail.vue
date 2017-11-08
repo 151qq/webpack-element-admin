@@ -6,21 +6,13 @@
       <el-tabs class="card-box" v-model="activeName">
         <el-tab-pane class="card-outer" label="基本信息" name="基本信息">
           <div class="out-box">
-            <p class="base-b big-b">
+            <p class="base-b">
                 <span class="title">投资机构名称：</span>
                 <span class="base-content">{{base.name}}</span>
             </p>
-            <p class="base-b mid-b">
+            <p class="base-b">
                 <span class="title">投资机构法人：</span>
                 <span class="base-content">{{base.holder}}</span>
-            </p>
-            <p class="base-b big-b">
-                <span class="title">注册地址：</span>
-                <span class="base-content">{{base.address}}</span>
-            </p>
-            <p class="base-b mid-b">
-                <span class="title">官方网站：</span>
-                <span class="base-content">{{base.webSite}}</span>
             </p>
             <p class="base-b">
                 <span class="title">成立时间：</span>
@@ -37,6 +29,14 @@
             <p class="base-b">
                 <span class="title">股票代码：</span>
                 <span class="base-content">{{base.sharesCode}}</span>
+            </p>
+            <p class="base-b base-big">
+                <span class="title">注册地址：</span>
+                <span class="base-content">{{base.address}}</span>
+            </p>
+            <p class="base-b base-big">
+                <span class="title">官方网站：</span>
+                <span class="base-content">{{base.webSite}}</span>
             </p>
           </div>
 
@@ -73,7 +73,7 @@
                         v-for="(item, index) in securityList"
                         :href="item.href">
               <img class="img-left" :src="item.imgUrl">
-              <div class="con-right">
+              <div class="con-right dis-right">
                 <div class="out-box list-in">
                   <p class="base-b mid-b">
                       <span class="title">产品名称：</span>
@@ -118,7 +118,7 @@ import Tools from '../../utils/tools.js'
 export default {
   data () {
     return {
-      activeName: '所持物业',
+      activeName: '基本信息',
       base: {
         name: '什么什么机构',
         holder: '什么什么',
@@ -255,13 +255,12 @@ export default {
   }
 
   .out-box {
-    padding: 20px 0 20px;
+    padding: 10px 0 50px;
     overflow: hidden;
-    border-top: 1px solid #EFF2F7;
 
     .base-b {
         float: left;
-        width: 270px;
+        width: 360px;
         margin-right: 20px;
 
         .title {
@@ -274,9 +273,45 @@ export default {
 
         .base-content {
             float: right;
-            width: 150px;
+            width: 240px;
             font-size: 16px;
             line-height: 40px;
+            color: #000000;
+        }
+    }
+
+    .base-big {
+        width: 1100px;
+
+        .base-content {
+            width: 980px;
+        }
+    }
+  }
+
+
+  .list-in {
+    overflow: hidden;
+
+    .base-b {
+        float: left;
+        width: 270px;
+        margin-right: 20px;
+        margin-bottom: 10px;
+
+        .title {
+            float: left;
+            width: 120px;
+            font-size: 14px;
+            line-height: 24px;
+            color: #666666;
+        }
+
+        .base-content {
+            float: right;
+            width: 150px;
+            font-size: 14px;
+            line-height: 24px;
             color: #000000;
         }
     }
@@ -295,20 +330,6 @@ export default {
         .base-content {
             width: 260px;
         }
-    }
-  }
-
-  .list-in {
-    padding: 0;
-    border: none;
-
-    .base-b {
-      margin-bottom: 10px;
-
-      .title, .base-content {
-        font-size: 14px;
-        line-height: 24px;
-      }
     }
   }
 
@@ -353,6 +374,10 @@ export default {
         line-height: 24px;
         margin-bottom: 10px;
       }
+    }
+
+    .dis-right {
+      width: 887px;
     }
   }
 
