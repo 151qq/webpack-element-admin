@@ -1,8 +1,16 @@
 <template>
   <section class="header">
     <router-link class="logo-box" to="index/business"><img src="../../assets/images/logo.png"></router-link>
+  
+    <div class="nav-box" v-if="pathName == 'invest'">
+      <router-link :to="{ name: 'invest'}">投资机构</router-link>
+    </div>
 
-    <div class="nav-box">
+    <div class="nav-box" v-if="pathName == 'security'">
+      <router-link :to="{ name: 'security'}">商业地产证券化</router-link>
+    </div>
+
+    <div class="nav-box" v-if="pathName == 'home'">
       <router-link :to="{ name: 'index', params: { type: 'business' }}">商业地产</router-link>
       <router-link :to="{ name: 'index', params: { type: 'house' }}">写字楼</router-link>
       <router-link :to="{ name: 'index', params: { type: 'mall' }}">购物中心</router-link>
@@ -34,7 +42,20 @@
       </el-dropdown>
     </div>
 
-    <!-- <div class="line-box"></div> -->
+    <div class="line-box"></div>
+
+    <el-select v-model="pathName"
+                class="page-box"
+                placeholder="请选择"
+                size="small"
+                @change="pageChange">
+      <el-option
+        v-for="(item, index) in pageDate"
+        :key="index"
+        :label="item.title"
+        :value="item.pathName">
+      </el-option>
+    </el-select>
 
     <!-- <div class="mess-box" v-popover:popover1>
       <i class="el-icon-message"></i>
@@ -99,14 +120,39 @@ export default {
         total: 0,
         pageSize: 2,
         currentPage: 1
-      }
+      },
+      pathName: '',
+      pageDate: [
+          {
+              title: '投资机构数据库',
+              pathName: 'invest'
+          },
+          {
+              title: '商业地产数据库',
+              pathName: 'home'
+          },
+          {
+              title: '商业地产证券化数据库',
+              pathName: 'security'
+          }
+      ]
     }
   },
   created () {
     this.getUserInfo()
+    if (this.$route.name == 'invest') {
+      this.pathName = 'invest'
+    } else if (this.$route.name == 'security') {
+      this.pathName = 'security'
+    } else {
+      this.pathName = 'home'
+    }
     // this.getNotice()
   },
   methods: {
+    pageChange () {
+      this.$router.push({name: this.pathName})
+    },
     getUserInfo () {
       util.request({
         method: 'get',
@@ -198,10 +244,6 @@ export default {
     color: #fff;
     padding: 0 20px;
 
-    .el-input__inner {
-      height: 36px;
-    }
-
     .logo-box {
       float: left;
       margin-top: 10px;
@@ -226,6 +268,10 @@ export default {
       .router-link-active {
         color: #ffffff;
       }
+    }
+
+    .page-box {
+      float: right;
     }
 
     .member-box {

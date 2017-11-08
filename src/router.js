@@ -18,6 +18,30 @@ const routers = [
           })
         }
       }, {
+        path: 'invest',
+        name: 'invest',
+        component (resolve) {
+          require.ensure(['./views/invest/invest.vue'], () => {
+            resolve(require('./views/invest/invest.vue'))
+          })
+        }
+      }, {
+        path: 'investDetail/:id',
+        name: 'invest-detail',
+        component (resolve) {
+          require.ensure(['./views/invest/investDetail.vue'], () => {
+            resolve(require('./views/invest/investDetail.vue'))
+          })
+        }
+      }, {
+        path: 'security',
+        name: 'security',
+        component (resolve) {
+          require.ensure(['./views/security/security.vue'], () => {
+            resolve(require('./views/security/security.vue'))
+          })
+        }
+      }, {
         // 地图检索
         path: 'index/:type/map',
         name: 'map',
@@ -78,6 +102,42 @@ const routers = [
         component (resolve) {
           require.ensure(['./views/notice/notice-detail.vue'], () => {
             resolve(require('./views/notice/notice-detail.vue'))
+          })
+        }
+      }, {
+        // 交易历史
+        path: 'changes/:id',
+        name: 'changes',
+        component (resolve) {
+          require.ensure(['./views/history/changes.vue'], () => {
+            resolve(require('./views/history/changes.vue'))
+          })
+        }
+      }, {
+        // 租金历史
+        path: 'rents/:id',
+        name: 'rents',
+        component (resolve) {
+          require.ensure(['./views/history/rents.vue'], () => {
+            resolve(require('./views/history/rents.vue'))
+          })
+        }
+      }, {
+        // 估值历史
+        path: 'evalues/:id',
+        name: 'evalues',
+        component (resolve) {
+          require.ensure(['./views/history/evalues.vue'], () => {
+            resolve(require('./views/history/evalues.vue'))
+          })
+        }
+      }, {
+        // 置空率历史
+        path: 'rates/:id',
+        name: 'rates',
+        component (resolve) {
+          require.ensure(['./views/history/rates.vue'], () => {
+            resolve(require('./views/history/rates.vue'))
           })
         }
       }

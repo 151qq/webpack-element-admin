@@ -22,31 +22,26 @@
                 </div>
             </section>
             <section class="two">
-                <a v-for="item in reports.slice(0, 3)" @click="showModel(item[0])">
-                    <img :src="item[2]">
-                    <div>
-                        {{item[1]}}
-                        <span>
-                            订阅
-                        </span>
-                    </div>
-                </a>
+                <router-link v-for="item in benchs" target="_blank"
+                            :to="{name: 'benchmark', params: { type: type, id: id + ',' + item.id }}">
+                    <img :src="item.base.housesImg">
+                    <div>{{item.base.name}}</div>
+                </router-link>
             </section>
         </div>
         <div class="right">
-            <p>对标楼盘</p>
-            <router-link v-for="item in benchs" class="bench" target="_blank" :to="{name: 'benchmark', params: { type: type, id: id + ',' + item.id }}">
-                <img :src="item.base.housesImg">
-                <span>{{item.base.name}}</span>
+            <p>历史明细</p>
+            <router-link v-for="item in historyList" class="bench" target="_blank"
+                        :to="{name: item.pathName, params: {id: $route.params.id}}">
+                <img :src="item.imgUrl">
+                <span>{{item.name}}</span>
             </router-link>
         </div>
 
-        <ewm-select :dialog-form-visible="dialogFormVisible" :report-type="reportType"></ewm-select>
         <show-ewm :dialog-visible="dialogVisible" :path="imgPath"></show-ewm>
     </div>
 </template>
 <script>
-import ewmSelect from '../../components/views/ewm-select.vue'
 import showEwm from '../../components/common/show-ewm.vue'
 import Tools from '../../utils/tools.js'
 
@@ -58,13 +53,32 @@ export default {
         value: false
       },
       imgPath: '',
-      dialogFormVisible: {
-        visibleE: false
-      },
       type: '',
       reportType: '',
       id: '',
-      reports: []
+      reports: [],
+      historyList: [
+        {
+            name: '物业交易历史',
+            imgUrl: '/static/images/house1.jpg',
+            pathName: 'changes'
+        },
+        {
+            name: '物业租金历史',
+            imgUrl: '/static/images/house2.jpg',
+            pathName: 'rents'
+        },
+        {
+            name: '物业估值历史',
+            imgUrl: '/static/images/house3.jpg',
+            pathName: 'evalues'
+        },
+        {
+            name: '空置率历史',
+            imgUrl: '/static/images/house4.jpg',
+            pathName: 'rates'
+        }
+      ]
     }
   },
   created () {
@@ -76,10 +90,6 @@ export default {
     showEWM (path) {
       this.imgPath = path
       this.dialogVisible.value = true
-    },
-    showModel (code) {
-      this.reportType = code
-      this.dialogFormVisible.visibleE = true
     },
     getReports () {
       var formData = {
@@ -95,7 +105,6 @@ export default {
     }
   },
   components: {
-    ewmSelect,
     showEwm
   }
 }

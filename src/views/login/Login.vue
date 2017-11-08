@@ -2,13 +2,13 @@
     <div class="wrap">
         <div class="loginBox">
             <div class="l">
-                <swiper :options="swiperOption" ref="mySwiper">
-                  <!-- slides -->
-                  <swiper-slide v-for="item in swiperData"><img :src="item.picUrl"></swiper-slide>
-                  <!-- Optional controls -->
-                </swiper>
-
-                <div class="swiper-pagination swiper-pagination-bullets"></div>
+                <div class="page-box"
+                        :class="item.pathName == pathName ? 'active' : ''"
+                        v-for="item in pageDate"
+                        @click="pathChange(item)">
+                    <img :src="item.imgUrl">
+                    <span>{{item.title}}</span>
+                </div>
             </div>
             <div class="r">
                 <el-form :label-position="'left'" label-width="80px">
@@ -106,32 +106,34 @@
                 enterpriseIndustry: '',
                 userCname: '',
                 userPhone: '',
-                swiperData: [
-                    {picUrl: '/static/images/ip_big1.jpg'},
-                    {picUrl: '/static/images/ip_big2.jpg'},
-                    {picUrl: '/static/images/ip_big4.jpg'},
-                    {picUrl: '/static/images/ip_big3.jpg'}
+                pageDate: [
+                    {
+                        imgUrl: '/static/images/login1.jpg',
+                        title: '投资机构数据库',
+                        pathName: 'invest'
+                    },
+                    {
+                        imgUrl: '/static/images/login2.jpg',
+                        title: '商业地产数据库',
+                        pathName: 'home'
+                    },
+                    {
+                        imgUrl: '/static/images/login3.jpg',
+                        title: '商业地产证券化数据库',
+                        pathName: 'security'
+                    }
                 ],
                 dialogVisible: false,
                 forgetData: {
                     tel: '',
                     password: ''
                 },
-                swiperOption: {
-                    // swiper options 所有的配置同swiper官方api配置
-                    direction: 'horizontal',
-                    mousewheelControl: true,
-                    observeParents: true,
-                    autoplay: 3000,
-                    initialSlide: 1,
-                    loop: true,
-                    pagination: '.swiper-pagination'
-                },
                 codeInput: '',
                 timer: null,
                 seconds: 90,
                 enterPassword: '',
-                isClick: false
+                isClick: false,
+                pathName: 'home'
             }
         },
         mounted() {
@@ -144,8 +146,11 @@
             }, 150)
         },
         methods: {
+            pathChange (item) {
+                this.pathName = item.pathName
+            },
             checkTel () {
-                if (this.forgetData.tel == '' || !(/^1[3|4|5|8][0-9]\d{8}$/).test(this.forgetData.tel.trim())) {
+                 if (this.forgetData.tel == '' || !(/^1[3|4|5|8][0-9]\d{8}$/).test(this.forgetData.tel.trim())) {
                     this.isClick = false
                 } else {
                     this.isClick = true
@@ -246,7 +251,7 @@
                     data: data
                 }).then((res) => {
                     if (res.result.success != '0') {
-                        window.location.href = '/'
+                        this.$router.push({name: this.pathName ? this.pathName : 'home'})
                     } else {
                         this.$message.error(res.result.message)
                     }
@@ -319,7 +324,7 @@ html, body, #app {
 
 .loginBox {
   width: 1160px;
-  overflow: hidden;
+  height: 100%;
   box-sizing: border-box;
   padding: 125px 0 0;
   background: #383a4c;
@@ -327,29 +332,38 @@ html, body, #app {
 
   .l {
     width: 756px;
+    height: 499px;
     overflow: hidden;
     float: left;
-
-    .swiper-pagination {
-      position: static;
-      display: block;
-      margin-top: 20px;
-      text-align: center;
-
-      .swiper-pagination-bullet {
-        display: inline-block;
-        width: 20px;
-        height: 20px;
-        margin: 0 6px;
-        background: #7d7f8a;
-        box-shadow: 0 1px 1px 0 #000000 inset;
+    box-shadow: 0 0 10px 1px #1f1e1e;
+    box-sizing: border-box;
+    padding: 0 18px;
+    
+    .page-box {
+        float: left;
+        width: 220px;
+        margin: 100px 10px;
+        border: 1px solid #f8f8f8;
+        border-radius: 3px;
         cursor: pointer;
-      }
 
-      .swiper-pagination-bullet-active {
-        background: #64a0d7;
-        box-shadow: 0 1px 1px 0 #f0f0f0 inset;
-      }
+        img {
+            display: block;
+            width: 100%;
+            height: 260px;
+        }
+
+        span {
+            display: block;
+            line-height: 36px;
+            color: #ffffff;
+            font-size: 14px;
+            text-align: center;
+        }
+    }
+
+    .active {
+        border-color: #20a0ff;
     }
   }
 
