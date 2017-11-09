@@ -1,20 +1,20 @@
 <template>
     <section class="mid-box">
         <el-table
-                :data="rents"
+                :data="rates"
                 border
                 style="width: 100%">
             <el-table-column
-                    prop="createDate"
+                    prop="date"
                     label="交易日期"
                     width="360">
             </el-table-column>
             <el-table-column
-                    prop="rate"
-                    label="置空率">
+                    prop="vacancyRate"
+                    label="空置率">
             </el-table-column>
             <el-table-column
-                    prop="author"
+                    prop="creater"
                     label="填报人">
             </el-table-column>
         </el-table>

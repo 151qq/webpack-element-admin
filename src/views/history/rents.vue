@@ -5,9 +5,8 @@
                 border
                 style="width: 100%">
             <el-table-column
-                    prop="createDate"
-                    label="交易日期"
-                    width="360">
+                    prop="tenantStartDate"
+                    label="交易日期">
             </el-table-column>
             <el-table-column
                     prop="priceT"
@@ -22,7 +21,7 @@
                     label="低区租金">
             </el-table-column>
             <el-table-column
-                    prop="author"
+                    prop="recordCreater"
                     label="填报人">
             </el-table-column>
         </el-table>

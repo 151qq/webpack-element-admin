@@ -12,7 +12,7 @@
           <base-content :base="base" :record="record"></base-content>
         </el-tab-pane>
         <el-tab-pane class="card-outer" label="楼盘评述" name="楼盘评述">
-          <base-evalute :evaluate="evaluate" :benchs="benchs" :base="base" :author="author"></base-evalute>
+          <base-evalute :benchs="benchs" :base="base" :author="author"></base-evalute>
         </el-tab-pane>
         <el-tab-pane class="card-outer" label="楼盘照片" name="楼盘照片">
           <base-img :imgs="imgs" :big-imgs="bigImgs"></base-img>
@@ -123,12 +123,12 @@ export default {
     },
     // 获取对标物业
     getBenchs () {
-      if (!this.base.benchmark || !this.base.benchmark.length) {
+      if (!this.base.benchmarks || !this.base.benchmarks.length) {
         return false
       }
 
       let formData = {
-        id: this.base.benchmark.join(',')
+        id: this.base.benchmarks.join(',')
       }
 
       Tools.getJson('benchList', formData, (res) => {

@@ -2,17 +2,26 @@
     <section class="mid-box">
         <el-table
                 :data="changes"
-                border
                 style="width: 100%">
+            <el-table-column type="expand">
+              <template scope="props">
+                <el-form label-position="left" inline class="demo-table-expand">
+                  <el-form-item label="交易备注：">
+                    <span>{{ props.row.tenantDesc }}</span>
+                  </el-form-item>
+                  <el-form-item label="评估机构：">
+                    <span>{{ props.row.evalCodes }}</span>
+                  </el-form-item>
+                </el-form>
+              </template>
+            </el-table-column>
             <el-table-column
                     prop="dateString"
-                    label="交易日期"
-                    width="180">
+                    label="交易日期">
             </el-table-column>
             <el-table-column
                     prop="price"
-                    label="价格(万)"
-                    width="180">
+                    label="价格(万)">
             </el-table-column>
             <el-table-column
                     prop="changeA"
@@ -21,6 +30,14 @@
             <el-table-column
                     prop="changeB"
                     label="交易乙方">
+            </el-table-column>
+            <el-table-column
+                    prop="tenantFinanceTool"
+                    label="金融工具">
+            </el-table-column>
+            <el-table-column
+                    prop="recordCreater"
+                    label="填报人">
             </el-table-column>
         </el-table>
         <el-pagination

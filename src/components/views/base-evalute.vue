@@ -3,9 +3,8 @@
         <div class="left">
             <section class="one">
                 <p class="title">{{base.name}}</p>
-                <iframe class="htmlBox" :src="evaluate"></iframe>
-                <!-- <img class="info-big" :src="evaluate.img">
-                <p class="info-con">{{evaluate.des}}</p> -->
+                <img class="info-big" :src="base.housesImg">
+                <p class="info-con">{{base.housesDesc}}</p>
                 <div class="author" v-if="author">
                     <section class="a-left">
                         <img :src="author.userImage">
@@ -46,7 +45,7 @@ import showEwm from '../../components/common/show-ewm.vue'
 import Tools from '../../utils/tools.js'
 
 export default {
-  props: ['evaluate', 'benchs', 'base', 'author'],
+  props: ['benchs', 'base', 'author'],
   data () {
     return {
       dialogVisible: {

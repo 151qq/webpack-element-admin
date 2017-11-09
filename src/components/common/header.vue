@@ -248,6 +248,12 @@ export default {
       float: left;
       margin-top: 10px;
       margin-right: 26px;
+
+      img {
+        display: block;
+        height: 30px;
+        width: auto;
+      }
     }
 
     .nav-box {

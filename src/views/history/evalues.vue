@@ -6,8 +6,7 @@
                 style="width: 100%">
             <el-table-column
                     prop="createDate"
-                    label="交易日期"
-                    width="360">
+                    label="交易日期">
             </el-table-column>
             <el-table-column
                     prop="rentValue"
@@ -26,7 +25,7 @@
                     label="资本化率">
             </el-table-column>
             <el-table-column
-                    prop="author"
+                    prop="recordCreater"
                     label="填报人">
             </el-table-column>
         </el-table>
