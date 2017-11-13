@@ -9,7 +9,7 @@
       对标详情
     </div>
 
-    <banner-benchmark :benchs="benchDatas"></banner-benchmark>
+    <banner-benchmark :benchs="benchDatas" ref="bannerBench"></banner-benchmark>
 
     <div class="mid-box">
       <div v-for="(item, index) in benchDatas" class="left">
@@ -99,32 +99,69 @@
           <span>入驻企业：</span>
           <span>{{item.base.rent}}</span>
         </section>
+      </div>
+      <div class="left">
         <section class="echart-box">
-          <echarts-tar :id-name="'echarI' + index" :echarts-date="item.echarInfo" :ref="'echarI' + index"></echarts-tar>
+          <echarts-tar :id-name="'echartsOne'" :echarts-date="echartsOne" :ref="'echartsOne'"></echarts-tar>
+        </section>       
+      </div>
+      <div class="left">
+        <section class="echart-box">
+          <echarts-tar :id-name="'echartsTwo'" :echarts-date="echartsOne" :ref="'echartsTwo'"></echarts-tar>
         </section>
-        <section class="j-y">
+      </div>
+      <div class="eq-height">
+        <section class="j-y j-l">
           <span>交易记录：</span>
-          <p><echarts-tar :id-name="'echarR' + index" :echarts-date="item.echarRecord" :ref="'echarR' + index"></echarts-tar></p>
+          <p>{{recordOne}}</p>
         </section>
-        <!-- <section class="one">
-          <p class="title">{{item.base.name}}</p>
-          <img class="info-big" :src="item.base.housesImg">
-          <p class="info-con">{{item.base.housesDesc}}</p>
-          <div class="author">
+
+        <section class="j-y j-r">
+          <span>交易记录：</span>
+          <p>{{recordTwo}}</p>
+        </section>
+      </div>
+
+      <div class="eq-height">
+        <section class="one j-l" v-if="benchDatas[0]">
+          <p class="title">{{benchDatas[0].base.name}}</p>
+          <img class="info-big" :src="benchDatas[0].base.housesImg">
+          <p class="info-con">{{benchDatas[0].base.housesDesc}}</p>
+          <div class="author" v-if="authorOne.userLoginName">
               <section class="a-left">
-                  <img :src="authors[index].userImage">
+                  <img :src="authorOne.userImage">
                   <p>
-                      <span class="au-t">{{author[index].userLoginName}}</span>
-                      <span>{{author[0].city}}</span>
-                      <span>{{author[0].userMobile + author[0].userMail}}</span>
+                      <span class="au-t">{{authorOne.userLoginName}}</span>
+                      <span>{{authorOne.city}}</span>
+                      <span>{{authorOne.userMobile + authorOne.userMail}}</span>
                   </p>
               </section>
               <section class="a-right">
-                  <img :src="author[index].qrcode" @click="showEWM(author[index].qrcode)">
+                  <img :src="authorOne.qrcode" @click="showEWM(authorOne.qrcode)">
                         <p>请用微信扫码联系作者</p>
               </section>
           </div>
-        </section> -->
+        </section>
+
+        <section class="one j-r" v-if="benchDatas[1]">
+          <p class="title">{{benchDatas[1].base.name}}</p>
+          <img class="info-big" :src="benchDatas[1].base.housesImg">
+          <p class="info-con">{{benchDatas[1].base.housesDesc}}</p>
+          <div class="author" v-if="authorTwo.userLoginName">
+              <section class="a-left">
+                  <img :src="authorTwo.userImage">
+                  <p>
+                      <span class="au-t">{{authorTwo.userLoginName}}</span>
+                      <span>{{authorTwo.city}}</span>
+                      <span>{{authorTwo.userMobile + authorTwo.userMail}}</span>
+                  </p>
+              </section>
+              <section class="a-right">
+                  <img :src="authorTwo.qrcode" @click="showEWM(authorTwo.qrcode)">
+                        <p>请用微信扫码联系作者</p>
+              </section>
+          </div>
+        </section>
       </div>
     </div>
     <show-ewm :dialog-visible="dialogVisible" :path="imgPath"></show-ewm>
@@ -150,7 +187,13 @@ export default {
         business: '商业地产',
         mall: '购物中心',
         house: '写字楼'
-      }
+      },
+      authorOne: {},
+      authorTwo: {},
+      recordOne: '',
+      recordTwo: '',
+      echartsOne: {},
+      echartsTwo: {}
     }
   },
   created () {
@@ -173,17 +216,25 @@ export default {
         if (res.success == '1') {
           this.benchDatas = res.result
           setTimeout(() => {
-            this.$refs.echarI0[0].setEcharts()
-            this.$refs.echarI1[0].setEcharts()
-            this.$refs.echarR0[0].setEcharts()
-            this.$refs.echarR1[0].setEcharts()
+            console.log(this.$refs)
+            this.$refs.bannerBench.drawMap()
+
+            this.getRecord(this.benchDatas[0].id, 'recordOne')
+            this.getRecord(this.benchDatas[1].id, 'recordTwo')
+
+            this.getAuthor(this.benchDatas[0].base.investor, 'authorOne')
+            this.getAuthor(this.benchDatas[1].base.investor, 'authorTwo')
+
+            this.getEcharts(this.benchDatas[0].id, 'echartsOne')
+            this.getEcharts(this.benchDatas[1].id, 'echartsTwo')
+
           }, 0)
         } else {
           this.$message.error(res.message)
         }
       })
     },
-    getRecord (id) {
+    getRecord (id, key) {
       var formData = {
         id: id
       }
@@ -197,28 +248,45 @@ export default {
 
             record = record + item.date.split(' ')[0] + ' ' + item.changeA + ' -> ' + item.changeB + ' （' + item.price + '万元）'
           })
-          this.record = record
+          this[key] = record
         } else {
           this.$message.error(res.message)
         }
       })
     },
-    getAuthor () {
-      if (!this.base.investor) {
+    getAuthor (investor, key) {
+      if (!investor) {
         return false
       }
       
       var formData = {
-        userCode: this.base.investor
+        userCode: investor
       }
       Tools.getJson('findUserInfoByCode', formData, (res) => {
         if (res.success == '1') {
-          this.author = res.result
+          this[key] = res.result
         } else {
           this.$message.error(res.message)
         }
       })
     },
+    // 获取echarts数据
+    getEcharts (id, key) {
+      var formData = {
+        city: localStorage.getItem('cityCode'),
+        id: id
+      }
+      Tools.getJson('echarts', formData, (res) => {
+        if (res.success === '1') {
+          this[key] = res.result
+          setTimeout(() => {
+            this.$refs[key].setEcharts()
+          }, 0)
+        } else {
+          this.$message.error(res.message)
+        }
+      })
+    }
   },
   components: {
     bannerBenchmark,
@@ -244,6 +312,7 @@ export default {
     box-sizing: border-box;
     border: 1px solid #E0E6ED;
     border-right: none;
+    border-bottom: none;
     overflow: hidden;
 
     .left {
@@ -317,122 +386,139 @@ export default {
           color: #1F2D3D;
         }
       }
-      .j-y {
-        width: 580px;
-        height: 320px;
-        overflow: hidden;
-        line-height: 40px;
-        box-sizing: border-box;
-        border-right: 1px solid #E0E6ED;
-        border-bottom: 1px solid #E0E6ED;
-        overflow: hidden;
-        padding: 20px;
-        box-sizing: border-box;
+    }
+  }
 
-        span {
-          display: block;
-          font-size: 14px;
-          color: #5E6D82;
-          box-sizing: border-box;
-        }
+  .eq-height {
+    width: 1160px;
+    overflow: hidden;
+    display: flex;
+    clear: both;
+    border-bottom: 1px solid #E0E6ED;
 
-        p {
-          display: block;
-          box-sizing: border-box;
-          padding-left: 20px;
-        }
+    .j-y {
+      width: 580px;
+      overflow: hidden;
+      line-height: 40px;
+      box-sizing: border-box;
+      overflow: hidden;
+      padding: 0 20px;
+      background: #F9FAFC;
+      border-right: 1px solid #E0E6ED;
+
+      span {
+        font-size: 14px;
+        color: #5E6D82;
+        box-sizing: border-box;
       }
-      .one {
-        width: 580px;
+
+      p {
+        display: inline-block;
         box-sizing: border-box;
-        padding: 20px;
-        border-right: 1px solid #E0E6ED;
-        border-bottom: 1px solid #E0E6ED;
+      }
+    }
+    
+    
 
-        .title {
-          font-size: 30px;
-          line-height: 32px;
-          color: #000000;
-          text-align: center;
-        }
+    .one {
+      width: 580px;
+      box-sizing: border-box;
+      padding: 20px;
+      border-right: 1px solid #E0E6ED;
 
-        .time {
-          font-size: 14px;
-          line-height: 33px;
-          color: #8492A6;
-          text-align: center;
-        }
+      .title {
+        font-size: 24px;
+        line-height: 32px;
+        color: #000000;
+        text-align: center;
+      }
 
-        .info-big {
-          width: 100%;
-          margin-top: 10px;
-        }
+      .time {
+        font-size: 14px;
+        line-height: 33px;
+        color: #8492A6;
+        text-align: center;
+      }
 
-        .info-con {
-          font-size: 14px;
-          line-height: 30px;
-          margin-top: 20px;
-          color: #1F2D3D;
-        }
+      .info-big {
+        width: 100%;
+        margin-top: 10px;
+      }
 
-        .author {
-          overflow: hidden;
-          padding: 18px 5px;
-          margin-top: 50px;
-          border-top: 1px solid #C0CCDA;
-          border-bottom: 1px solid #C0CCDA;
+      .info-con {
+        font-size: 14px;
+        line-height: 30px;
+        margin-top: 20px;
+        color: #1F2D3D;
+      }
 
-          .a-left {
-            float: left;
-            width: 380px;
-            border-right: 1px solid #C0CCDA;
+      .author {
+        overflow: hidden;
+        padding: 18px 5px;
+        margin-top: 50px;
+        border-top: 1px solid #C0CCDA;
+        border-bottom: 1px solid #C0CCDA;
 
-            img {
-                float: left;
-                width: 65px;
-                height: 65px;
-                border-radius: 50%;
-            }
+        .a-left {
+          float: left;
+          width: 380px;
+          border-right: 1px solid #C0CCDA;
 
-            p {
-              float: right;
-              width: 300px;
-              span {
-                  display: block;
-                  font-size: 12px;
-                  color: #5E6D82;
-                  line-height: 21px;
-              }
-
-              .au-t {
-                  font-size: 16px;
-                  line-height: 26px;
-                  color: #1F2D3D;
-              }
-            }
+          img {
+              float: left;
+              width: 65px;
+              height: 65px;
+              border-radius: 50%;
           }
 
-          .a-right {
-            float: left;
-            width: 146px;
-
-            img {
+          p {
+            float: right;
+            width: 300px;
+            span {
                 display: block;
-                width: 45px;
-                height: 45px;
-                margin: auto;
-                cursor: pointer;
+                font-size: 12px;
+                color: #5E6D82;
+                line-height: 21px;
             }
 
-            p {
-                font-size: 10px;
+            .au-t {
+                font-size: 16px;
                 line-height: 26px;
-                text-align: center;
-                color: #8492A6;
+                color: #1F2D3D;
             }
           }
         }
+
+        .a-right {
+          float: left;
+          width: 146px;
+
+          img {
+              display: block;
+              width: 45px;
+              height: 45px;
+              margin: auto;
+              cursor: pointer;
+          }
+
+          p {
+              font-size: 10px;
+              line-height: 26px;
+              text-align: center;
+              color: #8492A6;
+          }
+        }
       }
+    }
+
+    .j-l {
+      border-right: 1px solid #E0E6ED;
+    }
+
+    .j-r {
+      width: 581px;
+      border-left: 1px solid #E0E6ED;
+      margin-left: -1px;
     }
   }
 }

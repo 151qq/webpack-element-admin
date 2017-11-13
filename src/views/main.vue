@@ -25,6 +25,6 @@ export default {
 
 <style lang="scss">
   .content {
-    min-height: 400px;
+    min-height: 510px;
   }
 </style>

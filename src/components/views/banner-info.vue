@@ -71,7 +71,7 @@ export default {
     getEcharts () {
       var formData = {
         type: this.$route.params.type,
-        city: this.pageInfo.city,
+        city: localStorage.getItem('cityCode'),
         id: this.$route.params.id
       }
       Tools.getJson('echarts', formData, (res) => {

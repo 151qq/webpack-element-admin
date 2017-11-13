@@ -23,19 +23,6 @@
             </section>
             <section class="sec">
                 <label class="t-n">区域:</label>
-                <!-- <div class="s-c">
-                    <p class="area-t">
-                        <a @click="nowIndex = 'all'" :class="nowIndex === 'all' ? 'active' : ''">全部</a>
-                        <a v-for="item in typeData.area" @click="tabChange(item.city)"
-                            :class="item.city === nowIndex ? 'active' : ''">{{item.city}}</a>
-                    </p>
-                    <p v-for="item in typeData.area" class="area-b" v-if="item.city === nowIndex">
-                        <a @click="countyIndex = 'all'" :class="countyIndex === 'all' ? 'active' : ''">全部</a>
-                        <a v-for="o in item.county"
-                            :class="o === countyIndex ? 'active' : ''"
-                            @click="countyIndex = o">{{o}}</a>
-                    </p>
-                </div> -->
                 <div class="s-c">
                     <span>
                       <el-checkbox class="all-c" label="全部" v-model="ischeckA"

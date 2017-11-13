@@ -91,6 +91,7 @@ export default {
       }
       this.pageInfo.city = this.filterCity()
       this.$store.dispatch('setPageInfo', this.pageInfo)
+      localStorage.setItem('cityCode', this.filterCity())
       this.$refs.banner.getData()
     }
   },
@@ -103,6 +104,8 @@ export default {
         type: this.type,
         city: this.filterCity()
       }
+
+      localStorage.setItem('cityCode', this.filterCity())
 
       this.$store.dispatch('setPageInfo', this.pageInfo)
     },

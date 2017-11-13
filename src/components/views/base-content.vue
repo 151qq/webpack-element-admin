@@ -49,18 +49,10 @@
                 <span class="title">产品类型：</span>
                 <span class="base-content">{{base.bondCode}}</span>
             </p>
-        </div>
-        <div class="out-box">
-            <p class="base-b base-big">
-                <span class="title">交易记录：</span>
-                <span class="base-content">{{record}}</span>
-            </p>
             <p class="base-b base-big">
                 <span class="title">现在租户：</span>
                 <span class="base-content">{{base.rent}}</span>
             </p>
-        </div>
-        <div class="out-box">
             <p class="base-b">
                 <span class="title">面积：</span>
                 <span class="base-content">{{base.area}}</span>
@@ -95,7 +87,11 @@
             </p>
             <p class="base-b">
                 <span class="title">网站地址：</span>
-                <span class="base-content">{{base.webSite}}</span>
+                <a class="base-content"
+                        target="_blank" 
+                        :href="base.webSite.indexOf('http') > 0 ? base.webSite : 'http://' + base.webSite">
+                    {{base.webSite}}
+                </a>
             </p>
             <p class="base-b base-big">
                 <span class="title">交通：</span>

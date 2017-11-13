@@ -13,10 +13,6 @@
                     prop="vacancyRate"
                     label="空置率">
             </el-table-column>
-            <el-table-column
-                    prop="creater"
-                    label="填报人">
-            </el-table-column>
         </el-table>
         <el-pagination
             v-if="total"

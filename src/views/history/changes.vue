@@ -35,10 +35,6 @@
                     prop="tenantFinanceTool"
                     label="金融工具">
             </el-table-column>
-            <el-table-column
-                    prop="recordCreater"
-                    label="填报人">
-            </el-table-column>
         </el-table>
         <el-pagination
             v-if="total"

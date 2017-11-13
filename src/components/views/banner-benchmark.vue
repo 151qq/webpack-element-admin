@@ -16,11 +16,6 @@ export default {
       mapList: []
     }
   },
-  watch: {
-    benchs () {
-      this.drawMap()
-    }
-  },
   methods: {
     drawMap () {
       if (!this.benchs.length) {
@@ -28,6 +23,8 @@ export default {
       }
 
       var map = new window.BMap.Map('container2')
+      var point = new window.BMap.Point(116.409, 39.918)
+      map.centerAndZoom(point, 15)
 
       var pointList = []
 
@@ -35,9 +32,7 @@ export default {
         var pointArr = item.base.point.split(',')
         var point = new window.BMap.Point(pointArr[1], pointArr[0])
         // 初始第一个point
-        if (index === 0) {
-          map.centerAndZoom(point, 15)
-        }
+        // map.centerAndZoom(point, 15)
         // 整理显示点，用于自动缩放
         pointList.push(point)
 
@@ -54,8 +49,11 @@ export default {
       })
 
       var view = map.getViewport(pointList)
-      map.setCenter(view.center)
-      map.setZoom(view.zoom)
+      
+      setTimeout(() => {
+        map.setCenter(view.center)
+        map.setZoom(view.zoom)
+      }, 0)
     },
     createTemplate (title) {
       var p = document.createElement('p')
