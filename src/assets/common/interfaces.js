@@ -17,7 +17,7 @@ export default {
 
         changes: platform +'houses/findHousesTrade.json',
         rent: platform +'houses/findHousesRent.json',
-        rates: platform +'houseVacancy/list.json',
+        rates: platform +'houses/vacancyList.json',
         evalues: platform +'houses/findValuationHistory.json',
         /**
            * 图表数据 get

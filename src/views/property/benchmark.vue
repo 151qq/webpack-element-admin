@@ -95,34 +95,33 @@
             <span>{{item.base.traffic}}</span>
           </li>
         </ul>
-        <section class="echart-box">
-          <echarts-tar :id-name="'echarI' + index" :echarts-date="item.echarInfo" :ref="'echarI' + index"></echarts-tar>
-        </section>
         <section class="r-z">
           <span>入驻企业：</span>
           <span>{{item.base.rent}}</span>
+        </section>
+        <section class="echart-box">
+          <echarts-tar :id-name="'echarI' + index" :echarts-date="item.echarInfo" :ref="'echarI' + index"></echarts-tar>
         </section>
         <section class="j-y">
           <span>交易记录：</span>
           <p><echarts-tar :id-name="'echarR' + index" :echarts-date="item.echarRecord" :ref="'echarR' + index"></echarts-tar></p>
         </section>
         <!-- <section class="one">
-          <p class="title">{{item.evaluate.title}}</p>
-          <p class="time">{{item.evaluate.date}}</p>
-          <img class="info-big" src="../../assets/images/info-big.png">
-          <p class="info-con">{{item.evaluate.des}}</p>
+          <p class="title">{{item.base.name}}</p>
+          <img class="info-big" :src="item.base.housesImg">
+          <p class="info-con">{{item.base.housesDesc}}</p>
           <div class="author">
               <section class="a-left">
-                  <img :src="item.evaluate.author.img">
+                  <img :src="authors[index].userImage">
                   <p>
-                      <span class="au-t">{{item.evaluate.author.name}}</span>
-                      <span>{{item.evaluate.author.city}}</span>
-                      <span>{{item.evaluate.author.tel + item.evaluate.author.email}}</span>
+                      <span class="au-t">{{author[index].userLoginName}}</span>
+                      <span>{{author[0].city}}</span>
+                      <span>{{author[0].userMobile + author[0].userMail}}</span>
                   </p>
               </section>
               <section class="a-right">
-                  <img :src="item.evaluate.author.ewm" @click="showEWM(item.evaluate.author.ewm)">
-                  <p>请用微信扫码联系作者</p>
+                  <img :src="author[index].qrcode" @click="showEWM(author[index].qrcode)">
+                        <p>请用微信扫码联系作者</p>
               </section>
           </div>
         </section> -->
@@ -183,7 +182,43 @@ export default {
           this.$message.error(res.message)
         }
       })
-    }
+    },
+    getRecord (id) {
+      var formData = {
+        id: id
+      }
+      Tools.getJson('record', formData, (res) => {
+        if (res.success == '1') {
+          var record = ''
+          res.result.changes.forEach((item, index) => {
+            if (index != 0) {
+              record = '，' + record
+            }
+
+            record = record + item.date.split(' ')[0] + ' ' + item.changeA + ' -> ' + item.changeB + ' （' + item.price + '万元）'
+          })
+          this.record = record
+        } else {
+          this.$message.error(res.message)
+        }
+      })
+    },
+    getAuthor () {
+      if (!this.base.investor) {
+        return false
+      }
+      
+      var formData = {
+        userCode: this.base.investor
+      }
+      Tools.getJson('findUserInfoByCode', formData, (res) => {
+        if (res.success == '1') {
+          this.author = res.result
+        } else {
+          this.$message.error(res.message)
+        }
+      })
+    },
   },
   components: {
     bannerBenchmark,
