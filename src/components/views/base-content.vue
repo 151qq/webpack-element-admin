@@ -41,6 +41,14 @@
                 <span class="title">业主：</span>
                 <span class="base-content">{{base.owner}}</span>
             </p>
+            <p class="base-b">
+                <span class="title">证券类型：</span>
+                <span class="base-content">{{base.bondType}}</span>
+            </p>
+            <p class="base-b">
+                <span class="title">产品类型：</span>
+                <span class="base-content">{{base.bondCode}}</span>
+            </p>
         </div>
         <div class="out-box">
             <p class="base-b base-big">
@@ -84,6 +92,10 @@
             <p class="base-b">
                 <span class="title">物业持有：</span>
                 <span class="base-content">{{base.holding}}</span>
+            </p>
+            <p class="base-b">
+                <span class="title">网站地址：</span>
+                <span class="base-content">{{base.webSite}}</span>
             </p>
             <p class="base-b base-big">
                 <span class="title">交通：</span>

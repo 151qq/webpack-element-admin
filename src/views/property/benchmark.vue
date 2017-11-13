@@ -19,12 +19,20 @@
             <span>{{item.base.name}}</span>
           </li>
           <li class="row old">
-            <span>类型：</span>
+            <span>楼盘类型：</span>
             <span>{{item.base.type}}</span>
           </li>
           <li class="row even">
-            <span>等级：</span>
+            <span>楼盘等级：</span>
             <span>{{item.base.level}}</span>
+          </li>
+          <li class="row old">
+            <span>地址：</span>
+            <span>{{item.base.address}}</span>
+          </li>
+          <li class="row even">
+            <span>地块：</span>
+            <span>{{item.base.massif}}</span>
           </li>
           <li class="row old">
             <span>物业：</span>
@@ -41,6 +49,14 @@
           <li class="row even">
             <span>星标：</span>
             <span>{{item.base.star == '0' ? '否' : '是'}}</span>
+          </li>
+          <li class="row old">
+            <span>证券类型：</span>
+            <span>{{item.base.bondType}}</span>
+          </li>
+          <li class="row even">
+            <span>产品类型：</span>
+            <span>{{item.base.bondCode}}</span>
           </li>
           <li class="row old">
             <span>面积：</span>
@@ -64,7 +80,7 @@
           </li>
           <li class="row even">
             <span>空调：</span>
-            <span>{{item.base.sky}}</span>
+            <span>{{item.base.conditioner}}</span>
           </li>
           <li class="row old">
             <span>地板：</span>

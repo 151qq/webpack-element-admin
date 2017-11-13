@@ -63,7 +63,7 @@ export default {
         }
     },
     mounted () {
-        // this.getChanges()
+        this.getChanges()
         document.title = '交易历史明细'
     },
     methods: {
@@ -96,11 +96,31 @@ export default {
     width: 1000px;
     margin: 30px auto;
 
+    .demo-table-expand {
+        font-size: 0;
+    }
+    .demo-table-expand label {
+        float: left;
+        width: 90px;
+        color: #99a9bf;
+    }
+
+    .demo-table-expand .el-form-item__content {
+        width: 340px;
+        float: left;
+    }
+    .demo-table-expand .el-form-item {
+        margin-right: 0;
+        margin-bottom: 0;
+        width: 50%;
+    }
+
     .el-dialog--small {
-        width: 460px;
+        top: 60px !important;
+        width: 600px;
 
         .input-box {
-            width: 340px;
+            width: 480px;
         }
     }
 

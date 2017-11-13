@@ -41,7 +41,7 @@ export default {
         }
     },
     mounted () {
-        // this.getRents()
+        this.getRents()
         document.title = '置空率历史明细'
     },
     methods: {
@@ -55,7 +55,11 @@ export default {
                     pageNumber: this.pageNumber
                 }
             }).then(res => {
-                this.rates = res.result.result.rates
+                res.result.result.forEach((item) => {
+                    var dateData = item.createDate.split(' ')[0].split('-')
+                    item.createDate = dateData[0] + '-' + dateData[1]
+                })
+                this.rates = res.result.result
                 this.total = this.total ? Number(this.total) : 0
             })
         },

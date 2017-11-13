@@ -21,6 +21,7 @@
                 </div>
             </section>
             <section class="two">
+                <p>对标楼盘</p>
                 <router-link v-for="item in benchs" target="_blank"
                             :to="{name: 'benchmark', params: { type: type, id: id + ',' + item.id }}">
                     <img :src="item.base.housesImg">
@@ -211,6 +212,13 @@ export default {
             margin: 37px 0;
             overflow: hidden;
 
+            p {
+                font-size: 20px;
+                line-height: 28px;
+                color: #000000;
+                margin-bottom: 10px;
+            }
+
             a {
                 float: left;
                 width: 270px;
@@ -230,15 +238,7 @@ export default {
                     overflow: hidden;
                     font-size: 16px;
                     line-height: 50px;
-
-                    span {
-                        float: right;
-                        padding-left: 20px;
-                        background: url(../../assets/images/check-icon.png) left center no-repeat;
-                        font-size: 14px;
-                        line-height: 50px;
-                        color: #5E6D82;
-                    }
+                    color: #000000;
                 }
             }
         }

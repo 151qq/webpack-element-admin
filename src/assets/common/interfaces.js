@@ -14,6 +14,11 @@ export default {
         "sendSmsCode": platform + 'sendSmsCode.json',
         searchHousesKey: platform + 'houses/searchHousesKey.json',
         findUserInfoByCode: platform + 'findUserInfoByCode.json',
+
+        changes: platform +'houses/findHousesTrade.json',
+        rent: platform +'houses/findHousesRent.json',
+        rates: platform +'houseVacancy/list.json',
+        evalues: platform +'houses/findValuationHistory.json',
         /**
            * 图表数据 get
            * type string（business house mall）页面类型

@@ -52,7 +52,7 @@ export default {
         }
     },
     mounted () {
-        // this.getRents()
+        this.getRents()
         document.title = '估值历史明细'
     },
     methods: {
@@ -66,6 +66,10 @@ export default {
                     pageNumber: this.pageNumber
                 }
             }).then(res => {
+                res.result.result.valuation.forEach((item) => {
+                    var dateData = item.createDate.split(' ')[0].split('-')
+                    item.createDate = dateData[0]
+                })
                 this.evalues = res.result.result.valuation
                 this.total = this.total ? Number(this.total) : 0
             })

@@ -48,7 +48,7 @@ export default {
         }
     },
     mounted () {
-        // this.getRents()
+        this.getRents()
         document.title = '租金历史明细'
     },
     methods: {
@@ -62,6 +62,10 @@ export default {
                     pageNumber: this.pageNumber
                 }
             }).then(res => {
+                res.result.result.rents.forEach((item) => {
+                    var dateData = item.tenantStartDate.split(' ')[0].split('-')
+                    item.tenantStartDate = dateData[0] + '-' + dateData[1]
+                })
                 this.rents = res.result.result.rents
                 this.total = this.total ? Number(this.total) : 0
             })
