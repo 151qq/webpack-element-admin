@@ -103,7 +103,7 @@ export default {
     }
   },
   created () {
-    
+    document.title = '投资机构'
   },
   methods: {
     

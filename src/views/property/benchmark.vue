@@ -197,6 +197,7 @@ export default {
     }
   },
   created () {
+    document.title = '对标详情'
     this.type = this.$route.params.type
     this.id = this.$route.params.id
     this.getDatas()

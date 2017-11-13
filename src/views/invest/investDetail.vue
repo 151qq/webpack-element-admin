@@ -196,6 +196,7 @@ export default {
     }
   },
   mounted () {
+    document.title = '机构详情'
     // this.getDatas()
   },
   methods: {

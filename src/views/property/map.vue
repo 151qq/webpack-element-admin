@@ -146,6 +146,7 @@ export default {
     }
   },
   created () {
+    document.title = '地图检索'
     this.setData()
     this.getTypes()
     this.getCitys()

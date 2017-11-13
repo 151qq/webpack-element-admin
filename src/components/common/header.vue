@@ -7,7 +7,7 @@
     </div>
 
     <div class="nav-box" v-if="pathName == 'security'">
-      <router-link :to="{ name: 'security'}">商业地产证券化</router-link>
+      <router-link :to="{ name: 'security'}">商业地产证券</router-link>
     </div>
 
     <div class="nav-box" v-if="pathName == 'home'">

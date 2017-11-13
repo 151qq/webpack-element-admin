@@ -88,6 +88,7 @@ export default {
     }
   },
   created () {
+    document.title = '报告详情'
     this.getReport()
     this.getAds()
   },

@@ -81,6 +81,7 @@ export default {
     }
   },
   created () {
+    document.title = '我的报告'
     this.getTypes()
     this.getReports()
   },

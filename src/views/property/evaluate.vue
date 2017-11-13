@@ -32,6 +32,7 @@ export default {
     }
   },
   created () {
+    document.title = '楼盘股价器'
     this.type = this.$route.params.type
     this.getDatas()
     this.getReports()

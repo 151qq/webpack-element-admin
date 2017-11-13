@@ -39,24 +39,10 @@ const router = new VueRouter({
   routes
 })
 
-const documentTitle = {
-  business: '商业地产',
-  house: '写字楼',
-  mall: '购物中心',
-  report: '我的报告',
-  detail: '报告详情'
-}
-
 // 验证登录
 router.beforeEach((to, from, next) => {
   // 滚动置顶
   window.scrollTo && window.scrollTo(0, 0)
-
-  if (to.params.type) {
-    document.title = documentTitle[to.params.type]
-  } else {
-    document.title = documentTitle[to.name] ? documentTitle[to.name] : '商房云'
-  }
 
   if (to.name === 'home') {
     next({ path: '/index/business' })

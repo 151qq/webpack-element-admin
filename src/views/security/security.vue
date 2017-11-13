@@ -111,7 +111,7 @@ export default {
     }
   },
   created () {
-    
+    document.title = '商业楼盘证券'
   },
   methods: {
     

@@ -44,6 +44,7 @@ export default {
     }
   },
   mounted () {
+    document.title = '楼盘详情'
     this.type = this.$route.params.type
     this.id = this.$route.params.id
     this.getDatas()

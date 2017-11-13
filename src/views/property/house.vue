@@ -74,16 +74,23 @@ export default {
       },
       type: '',
       pageInfo: {},
-      articles: []
+      articles: [],
+      documentTitle: {
+        business: '商业地产',
+        house: '写字楼',
+        mall: '购物中心'
+      }
     }
   },
   created () {
     this.getCitys()
+    document.title = this.documentTitle[this.$route.params.type]
   },
   watch: {
     $route (to, from) {
       this.getCitys()
       this.$refs.banner.getData()
+      document.title = this.documentTitle[this.$route.params.type]
     },
     activeName (value) {
       if (!value || value === '0') {
