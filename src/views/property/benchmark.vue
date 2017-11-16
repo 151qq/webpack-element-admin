@@ -241,15 +241,11 @@ export default {
       }
       Tools.getJson('record', formData, (res) => {
         if (res.success == '1') {
-          var record = ''
+          var recordArr = []
           res.result.changes.forEach((item, index) => {
-            if (index != 0) {
-              record = '，' + record
-            }
-
-            record = record + item.date.split(' ')[0] + ' ' + item.changeA + ' -> ' + item.changeB + ' （' + item.price + '万元）'
+            recordArr.push(item.date.split(' ')[0] + ' ' + item.changeA + ' -> ' + item.changeB + ' （' + item.price + '万元）')
           })
-          this[key] = record
+          this[key] = recordArr.join('，')
         } else {
           this.$message.error(res.message)
         }

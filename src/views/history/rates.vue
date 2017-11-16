@@ -5,7 +5,7 @@
                 border
                 style="width: 100%">
             <el-table-column
-                    prop="date"
+                    prop="createDate"
                     label="交易日期"
                     width="360">
             </el-table-column>
@@ -46,7 +46,7 @@ export default {
                 method: 'get',
                 interface: 'rates',
                 data: {
-                    id: this.$route.params.id,
+                    houseId: this.$route.params.id,
                     pageSize: this.pageSize,
                     pageNumber: this.pageNumber
                 }
