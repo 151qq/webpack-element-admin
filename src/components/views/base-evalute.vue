@@ -2,25 +2,24 @@
     <div class="evalute-box">
         <div class="left">
             <section class="one">
-                <p class="title">{{base.name}}</p>
                 <img class="info-big" :src="base.housesImg">
                 <p class="info-con">{{base.housesDesc}}</p>
             </section>
             <section class="two">
-                <p>对标楼盘</p>
                 <router-link v-for="item in benchs" target="_blank"
                             :to="{name: 'benchmark', params: { type: type, id: id + ',' + item.id }}">
                     <img :src="item.base.housesImg">
-                    <div>{{item.base.name}}</div>
+                    <div class="bg-black"></div>
+                    <div class="title-box">对标 | {{item.base.name}}</div>
                 </router-link>
             </section>
         </div>
         <div class="right">
-            <p>历史明细</p>
             <router-link v-for="item in historyList" class="bench" target="_blank"
                         :to="{name: item.pathName, params: {id: $route.params.id}}">
                 <img :src="item.imgUrl">
-                <span>{{item.name}}</span>
+                <div class="bg-black"></div>
+                <div class="title-box">{{item.name}}</div>
             </router-link>
         </div>
 
@@ -206,25 +205,40 @@ export default {
             }
 
             a {
+                position: relative;
                 float: left;
                 width: 270px;
-                border: 1px solid #D3DCE6;
                 margin-right: 28px;
-                border-radius: 3px;
                 cursor: pointer;
+                height: 180px;
+                overflow: hidden;
 
                 img {
                     width: 270px;
-                    height: 150px;
+                    height: 180px;
                 }
 
-                div {
+                .bg-black {
+                    position: absolute;
+                    left: 0;
+                    bottom: 0;
+                    width: 100%;
+                    height: 40px;
+                    background: #000000;
+                    opacity: 0.6;
+                }
+
+                .title-box {
+                    position: absolute;
+                    left: 0;
+                    bottom: 0;
+                    width: 100%;
+                    height: 40px;
                     padding: 0 14px;
-                    height: 50px;
-                    overflow: hidden;
+                    box-sizing: border-box;
                     font-size: 16px;
-                    line-height: 50px;
-                    color: #000000;
+                    line-height: 40px;
+                    color: #ffffff;
                 }
             }
         }
@@ -242,6 +256,7 @@ export default {
         }
 
         .bench {
+            position: relative;
             display: block;
             margin-bottom: 15px;
 
@@ -251,11 +266,28 @@ export default {
                 border-radius: 3px;
             }
 
-            span {
-                display: block;
+            .bg-black {
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                transform: translate(-50%,-50%);
+                width: 100%;
+                height: 60px;
+                background: #000000;
+                opacity: 0.6;
+            }
+
+            .title-box {
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                transform: translate(-50%,-50%);
+                width: 100%;
+                height: 60px;
+                text-align: center;
                 font-size: 16px;
-                line-height: 30px;
-                color: #4A4A4A;
+                line-height: 60px;
+                color: #ffffff;
             }
         }
     }
