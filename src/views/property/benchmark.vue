@@ -121,48 +121,6 @@
           <p>{{recordTwo}}</p>
         </section>
       </div>
-
-      <div class="eq-height">
-        <section class="one j-l" v-if="benchDatas[0]">
-          <p class="title">{{benchDatas[0].base.name}}</p>
-          <img class="info-big" :src="benchDatas[0].base.housesImg">
-          <p class="info-con">{{benchDatas[0].base.housesDesc}}</p>
-          <div class="author" v-if="authorOne.userLoginName">
-              <section class="a-left">
-                  <img :src="authorOne.userImage">
-                  <p>
-                      <span class="au-t">{{authorOne.userLoginName}}</span>
-                      <span>{{authorOne.city}}</span>
-                      <span>{{authorOne.userMobile + authorOne.userMail}}</span>
-                  </p>
-              </section>
-              <section class="a-right">
-                  <img :src="authorOne.qrcode" @click="showEWM(authorOne.qrcode)">
-                        <p>请用微信扫码联系作者</p>
-              </section>
-          </div>
-        </section>
-
-        <section class="one j-r" v-if="benchDatas[1]">
-          <p class="title">{{benchDatas[1].base.name}}</p>
-          <img class="info-big" :src="benchDatas[1].base.housesImg">
-          <p class="info-con">{{benchDatas[1].base.housesDesc}}</p>
-          <div class="author" v-if="authorTwo.userLoginName">
-              <section class="a-left">
-                  <img :src="authorTwo.userImage">
-                  <p>
-                      <span class="au-t">{{authorTwo.userLoginName}}</span>
-                      <span>{{authorTwo.city}}</span>
-                      <span>{{authorTwo.userMobile + authorTwo.userMail}}</span>
-                  </p>
-              </section>
-              <section class="a-right">
-                  <img :src="authorTwo.qrcode" @click="showEWM(authorTwo.qrcode)">
-                        <p>请用微信扫码联系作者</p>
-              </section>
-          </div>
-        </section>
-      </div>
     </div>
     <show-ewm :dialog-visible="dialogVisible" :path="imgPath"></show-ewm>
   </section>
@@ -223,9 +181,6 @@ export default {
             this.getRecord(this.benchDatas[0].id, 'recordOne')
             this.getRecord(this.benchDatas[1].id, 'recordTwo')
 
-            this.getAuthor(this.benchDatas[0].base.investor, 'authorOne')
-            this.getAuthor(this.benchDatas[1].base.investor, 'authorTwo')
-
             this.getEcharts(this.benchDatas[0].id, 'echartsOne')
             this.getEcharts(this.benchDatas[1].id, 'echartsTwo')
 
@@ -246,22 +201,6 @@ export default {
             recordArr.push(item.date.split(' ')[0] + ' ' + item.changeA + ' -> ' + item.changeB + ' （' + item.price + '万元）')
           })
           this[key] = recordArr.join('，')
-        } else {
-          this.$message.error(res.message)
-        }
-      })
-    },
-    getAuthor (investor, key) {
-      if (!investor) {
-        return false
-      }
-      
-      var formData = {
-        userCode: investor
-      }
-      Tools.getJson('findUserInfoByCode', formData, (res) => {
-        if (res.success == '1') {
-          this[key] = res.result
         } else {
           this.$message.error(res.message)
         }

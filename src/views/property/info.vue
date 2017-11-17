@@ -12,7 +12,7 @@
           <base-content :base="base" :record="record"></base-content>
         </el-tab-pane>
         <el-tab-pane class="card-outer" label="楼盘评述" name="楼盘评述">
-          <base-evalute :benchs="benchs" :base="base" :author="author"></base-evalute>
+          <base-evalute :benchs="benchs" :base="base"></base-evalute>
         </el-tab-pane>
         <el-tab-pane class="card-outer" label="楼盘照片" name="楼盘照片">
           <base-img :imgs="imgs" :big-imgs="bigImgs"></base-img>
@@ -63,7 +63,6 @@ export default {
           this.imgs = res.result.imgs
           this.bigImgs = this.setImgs()
           this.getBenchs()
-          this.getAuthor()
           this.getRecord()
         } else {
           this.$message.error(res.message)
@@ -97,22 +96,6 @@ export default {
             recordArr.push(item.date.split(' ')[0] + ' ' + item.changeA + ' -> ' + item.changeB + ' （' + item.price + '万元）')
           })
           this.record = recordArr.join('，')
-        } else {
-          this.$message.error(res.message)
-        }
-      })
-    },
-    getAuthor () {
-      if (!this.base.investor) {
-        return false
-      }
-      
-      var formData = {
-        userCode: this.base.investor
-      }
-      Tools.getJson('findUserInfoByCode', formData, (res) => {
-        if (res.success == '1') {
-          this.author = res.result
         } else {
           this.$message.error(res.message)
         }

@@ -5,20 +5,6 @@
                 <p class="title">{{base.name}}</p>
                 <img class="info-big" :src="base.housesImg">
                 <p class="info-con">{{base.housesDesc}}</p>
-                <div class="author" v-if="author">
-                    <section class="a-left">
-                        <img :src="author.userImage">
-                        <p>
-                            <span class="au-t">{{author.userLoginName}}</span>
-                            <span>{{author.city}}</span>
-                            <span>{{author.userMobile + author.userMail}}</span>
-                        </p>
-                    </section>
-                    <section class="a-right">
-                        <img :src="author.qrcode" @click="showEWM(author.qrcode)">
-                        <p>请用微信扫码联系作者</p>
-                    </section>
-                </div>
             </section>
             <section class="two">
                 <p>对标楼盘</p>
@@ -46,7 +32,7 @@ import showEwm from '../../components/common/show-ewm.vue'
 import Tools from '../../utils/tools.js'
 
 export default {
-  props: ['benchs', 'base', 'author'],
+  props: ['benchs', 'base'],
   data () {
     return {
       dialogVisible: {
