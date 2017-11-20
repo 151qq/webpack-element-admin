@@ -1,58 +1,65 @@
 <template>
   <section>
-    <banner-house ref="banner"></banner-house>
+    <template v-if="$route.params.type == 'business'">
+      <banner-house ref="bannerHouse"></banner-house>
 
-    <section class="card-list">
+      <section class="card-list">
 
-      <el-button class="set-btn" type="primary" size="small" @click="showModel">
-        设置
-      </el-button>
+        <el-button class="set-btn" type="primary" size="small" @click="showModel">
+          设置
+        </el-button>
 
-      <div class="input-box">
+        <div class="input-box">
 
-        <search-box></search-box>
+          <search-box></search-box>
 
-        <router-link class="map-btn" :to="{ name: 'map', params: { type: type }, query: {city: activeName}}">
-          <img src="../../assets/images/map-icon.png">
-          地图
-        </router-link>
-      </div>
-
-      <el-tabs class="card-box" v-model="activeName">
-        <el-tab-pane
-            class="card-outer"
-            v-for="item in selectedCity"
-            :label="citys[item].title"
-            :name="citys[item].title">
-        </el-tab-pane>
-      </el-tabs>
-
-      <el-row class="el-box">
-        <el-col
-            :class="index % 4 == 0 ? 'card-b clearM' : 'card-b'"
-            :span="6"
-            v-for="(o, index) in articles">
-          <router-link class="linkA" target="_blank" :to="{ name: 'detail', params: { id: o.id }}">
-            <el-card :body-style="{ padding: '0px' }">
-              <img :src="o.imgUrl" class="image">
-              <div style="padding: 14px;">
-                <span>{{ o.title }}</span>
-                <div class="bottom clearfix">
-                  <time class="time">{{ o.date }}</time>
-                </div>
-              </div>
-            </el-card>
+          <router-link class="map-btn" :to="{ name: 'map', params: { type: type }, query: {city: activeName}}">
+            <img src="../../assets/images/map-icon.png">
+            地图
           </router-link>
-        </el-col>
-      </el-row>
-    </section>
+        </div>
 
-    <address-form
-        :citys="citys"
-        :check-list="selectedCity"
-        :dialog-form-visible="dialogFormVisible"
-        @sendD="changeD">
-    </address-form>
+        <el-tabs class="card-box" v-model="activeName">
+          <el-tab-pane
+              class="card-outer"
+              v-for="item in selectedCity"
+              :label="citys[item].title"
+              :name="citys[item].title">
+          </el-tab-pane>
+        </el-tabs>
+
+        <el-row class="el-box">
+          <el-col
+              :class="index % 4 == 0 ? 'card-b clearM' : 'card-b'"
+              :span="6"
+              v-for="(o, index) in articles">
+            <router-link class="linkA" target="_blank" :to="{ name: 'detail', params: { id: o.id }}">
+              <el-card :body-style="{ padding: '0px' }">
+                <img :src="o.imgUrl" class="image">
+                <div style="padding: 14px;">
+                  <span>{{ o.title }}</span>
+                  <div class="bottom clearfix">
+                    <time class="time">{{ o.date }}</time>
+                  </div>
+                </div>
+              </el-card>
+            </router-link>
+          </el-col>
+        </el-row>
+      </section>
+
+      <address-form
+          :citys="citys"
+          :check-list="selectedCity"
+          :dialog-form-visible="dialogFormVisible"
+          @sendD="changeD">
+      </address-form>
+    </template>
+    <template v-else>
+      <div class="null-page-box">
+        暂未开发该功能，敬请期待！
+      </div>
+    </template>
 
   </section>
 </template>
@@ -76,30 +83,41 @@ export default {
       pageInfo: {},
       articles: [],
       documentTitle: {
-        business: '商业地产',
-        house: '写字楼',
-        mall: '购物中心'
+        business: '写字楼',
+        mall: '购物中心',
+        apartment: '租赁公寓',
+        park: '大型园区'
       }
     }
   },
   created () {
-    this.getCitys()
+    if (this.$route.params.type == 'business') {
+      this.getCitys()
+    }
     document.title = this.documentTitle[this.$route.params.type]
   },
   watch: {
     $route (to, from) {
-      this.getCitys()
-      this.$refs.banner.getData()
       document.title = this.documentTitle[this.$route.params.type]
+      if (this.$route.params.type != 'business') {
+        return false
+      }
+      this.getCitys()
+      setTimeout(() => {
+        this.$refs.bannerHouse.getData()
+      }, 0)
     },
     activeName (value) {
+      if (this.$route.params.type != 'business') {
+        return false
+      }
       if (!value || value === '0') {
         return false
       }
       this.pageInfo.city = this.filterCity()
       this.$store.dispatch('setPageInfo', this.pageInfo)
       localStorage.setItem('cityCode', this.filterCity())
-      this.$refs.banner.getData()
+      this.$refs.bannerHouse.getData()
     }
   },
   methods: {
@@ -160,6 +178,13 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+.null-page-box {
+  margin-top: 200px;
+  font-size: 36px;
+  color: #999999;
+  text-align: center;
+}
+
 .card-list {
   position: relative;
   display: block;

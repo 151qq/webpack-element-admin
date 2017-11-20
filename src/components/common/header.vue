@@ -11,9 +11,10 @@
     </div>
 
     <div class="nav-box" v-if="pathName == 'home'">
-      <router-link :to="{ name: 'index', params: { type: 'business' }}">商业地产</router-link>
-      <router-link :to="{ name: 'index', params: { type: 'house' }}">写字楼</router-link>
+      <router-link :to="{ name: 'index', params: { type: 'business' }}">写字楼</router-link>
       <router-link :to="{ name: 'index', params: { type: 'mall' }}">购物中心</router-link>
+      <router-link :to="{ name: 'index', params: { type: 'apartment' }}">租赁公寓</router-link>
+      <router-link :to="{ name: 'index', params: { type: 'park' }}">大型园区</router-link>
       <router-link :to="{ name: 'report'}">我的报告</router-link>
     </div>
 

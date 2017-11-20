@@ -21,31 +21,20 @@ export default {
         },
         grid: {
           left: '6%',
-          right: '0%'
+          right: '6%'
         },
         legend: {
           right: 0,
           data: []
         },
         xAxis: {
+          type: 'category',
+          axisTick: {
+              alignWithLabel: true
+          },
           data: []
         },
-        yAxis: {
-          type: 'value',
-          min: 0,
-          axisLabel: {
-            formatter: '{value}',
-            textStyle: {
-              color: '#999'
-            }
-          },
-          axisLine: {
-            show: false
-          },
-          axisTick: {
-            show: false
-          }
-        },
+        yAxis: [],
         series: []
       },
       colors: ['#1563CA', '#50E3C2', '#F8E71C'],
@@ -74,7 +63,8 @@ export default {
           }
         }
       },
-      pageInfo: {}
+      pageInfo: {},
+      colorNum: 0
     }
   },
   methods: {
@@ -87,10 +77,10 @@ export default {
       this.option.legend.data = datas.legend
       // 设置横轴数据
       this.option.xAxis.data = datas.xAxis
-      // 设置纵轴数据
-      this.option.series = [].concat(this.setStyle(datas.seriesLine, 'lineStyle', this.colors), this.setStyle(datas.seriesBar, 'barStyle'))
 
-      console.log(this.option, 'option')
+      // this.option.xAxis.data.push('12月')
+      // 设置纵轴数据
+      this.option.series = [].concat(this.setStyle(datas.seriesBar, 'barStyle', this.colors), this.setStyle(datas.seriesLine, 'lineStyle', this.colors))
 
       this.drawEchart()
     },
@@ -98,20 +88,43 @@ export default {
       if (!arrs) {
         return false
       }
+
+      console.log(arrs, 'arrs')
+
       var arrList = arrs.map((item, index) => {
-        if (colors) {
+
+        var yAxisOjb = {
+          type: 'value',
+          name: item.name,
+          axisLine: {
+              lineStyle: {
+                  color: colors && colors[this.colorNum] ? colors[this.colorNum] : '#1563CA'
+              }
+          }
+        }
+
+        this.option.yAxis.push(yAxisOjb)
+
+        item.yAxisIndex = this.colorNum
+
+        if (type == 'lineStyle') {
           var itemStyle = {
             type: 'line',
             itemStyle: {
               normal: {
-                color: colors[index]
+                color: colors && colors[this.colorNum] ? colors[this.colorNum] : '#1563CA'
               }
             }
           }
+
           return Object.assign(item, itemStyle)
         }
+
+        this.colorNum++
+
         return Object.assign(item, this[type])
       })
+
       return arrList
     },
     drawEchart () {
@@ -121,7 +134,6 @@ export default {
         var dom = document.getElementById(this.idName)
         this.myChart = echarts.init(dom)
       }
-      console.log(this.option, 'o')
       this.myChart.setOption(this.option)
       this.isInit = true
     }

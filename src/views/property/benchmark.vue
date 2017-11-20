@@ -19,7 +19,7 @@
             <span>{{item.base.name}}</span>
           </li>
           <li class="row old">
-            <span>楼盘类型：</span>
+            <span>物业类型：</span>
             <span>{{item.base.type}}</span>
           </li>
           <li class="row even">
@@ -54,10 +54,10 @@
             <span>证券类型：</span>
             <span>{{item.base.bondType}}</span>
           </li>
-          <li class="row even">
+          <!-- <li class="row even">
             <span>产品类型：</span>
             <span>{{item.base.bondCode}}</span>
-          </li>
+          </li> -->
           <li class="row old">
             <span>面积：</span>
             <span>{{item.base.area}}</span>
@@ -90,14 +90,28 @@
             <span>物业持有：</span>
             <span>{{item.base.holding}}</span>
           </li>
-          <li class="row old">
-            <span>交通：</span>
-            <span>{{item.base.traffic}}</span>
-          </li>
         </ul>
-        <section class="r-z">
+      </div>
+      <div class="eq-height">
+        <section class="j-y j-b j-l">
+          <span>交通：</span>
+          <p>{{benchDatas.length ? benchDatas[0].base.traffic : ''}}</p>
+        </section>
+
+        <section class="j-y j-b j-r">
+          <span>交通：</span>
+          <p>{{benchDatas.length ? benchDatas[1].base.traffic : ''}}</p>
+        </section>
+      </div>
+      <div class="eq-height">
+        <section class="j-y j-l">
           <span>入驻企业：</span>
-          <span>{{item.base.rent}}</span>
+          <p>{{benchDatas.length ? benchDatas[0].base.rent : ''}}</p>
+        </section>
+
+        <section class="j-y j-r">
+          <span>入驻企业：</span>
+          <p>{{benchDatas.length ? benchDatas[1].base.rent : ''}}</p>
         </section>
       </div>
       <div class="left">
@@ -335,10 +349,11 @@ export default {
     .j-y {
       width: 580px;
       overflow: hidden;
-      line-height: 40px;
+      font-size: 14px;
+      line-height: 30px;
       box-sizing: border-box;
       overflow: hidden;
-      padding: 0 20px;
+      padding: 0 20px 10px;
       background: #F9FAFC;
       border-right: 1px solid #E0E6ED;
 
@@ -352,6 +367,10 @@ export default {
         display: inline-block;
         box-sizing: border-box;
       }
+    }
+
+    .j-b {
+      background: #ffffff;
     }
     
     

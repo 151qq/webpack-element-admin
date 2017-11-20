@@ -3,7 +3,7 @@
         <div class="left">
             <section class="one">
                 <img class="info-big" :src="base.housesImg">
-                <p class="info-con">{{base.housesDesc}}</p>
+                <div class="info-con" v-html="base.housesDesc"></div>
             </section>
             <section class="two">
                 <router-link v-for="item in benchs" target="_blank"
@@ -44,9 +44,9 @@ export default {
       reports: [],
       historyList: [
         {
-            name: '物业交易历史',
-            imgUrl: '/static/images/house1.jpg',
-            pathName: 'changes'
+            name: '物业估值历史',
+            imgUrl: '/static/images/house3.jpg',
+            pathName: 'evalues'
         },
         {
             name: '物业租金历史',
@@ -54,9 +54,9 @@ export default {
             pathName: 'rents'
         },
         {
-            name: '物业估值历史',
-            imgUrl: '/static/images/house3.jpg',
-            pathName: 'evalues'
+            name: '物业交易历史',
+            imgUrl: '/static/images/house1.jpg',
+            pathName: 'changes'
         },
         {
             name: '空置率历史',
@@ -94,7 +94,7 @@ export default {
   }
 }
 </script>
-<style lang="scss" scoped>
+<style lang="scss">
 .evalute-box {
     width: 1160px;
     margin: 10px auto;
@@ -128,6 +128,12 @@ export default {
                 line-height: 30px;
                 margin-top: 20px;
                 color: #1F2D3D;
+
+                p {
+                    font-size: 14px;
+                    line-height: 30px;
+                    color: #1F2D3D;
+                }
             }
 
             .author {

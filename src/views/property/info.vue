@@ -3,10 +3,10 @@
     <banner-info :base="base"></banner-info>
 
     <div class="mid-box">
-      <router-link class="eval-btn" target="_blank" :to="{name: 'evaluate', params: { type: type, id: id }}">
+      <!-- <router-link class="eval-btn" target="_blank" :to="{name: 'evaluate', params: { type: type, id: id }}">
         <img src="../../assets/images/eval-icon.png">
         自评估工具
-      </router-link>
+      </router-link> -->
       <el-tabs class="card-box" v-model="activeName">
         <el-tab-pane class="card-outer" label="基本信息" name="基本信息">
           <base-content :base="base" :record="record"></base-content>
