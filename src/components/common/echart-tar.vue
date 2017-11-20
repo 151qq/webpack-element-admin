@@ -72,7 +72,7 @@ export default {
     setEcharts () {
       let datas = this.echartsDate
       // 设置标题
-      this.option.title.text = datas.title
+      // this.option.title.text = datas.title
       // 设置legend
       this.option.legend.data = datas.legend
       // 设置横轴数据
