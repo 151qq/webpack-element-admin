@@ -54,14 +54,14 @@ export default {
             pathName: 'rents'
         },
         {
-            name: '物业交易历史',
-            imgUrl: '/static/images/house1.jpg',
-            pathName: 'changes'
-        },
-        {
             name: '空置率历史',
             imgUrl: '/static/images/house4.jpg',
             pathName: 'rates'
+        },
+        {
+            name: '物业交易历史',
+            imgUrl: '/static/images/house1.jpg',
+            pathName: 'changes'
         }
       ]
     }

@@ -20,7 +20,7 @@ export default {
           }
         },
         grid: {
-          left: '6%',
+          left: '9%',
           right: '6%'
         },
         legend: {
@@ -37,7 +37,8 @@ export default {
         yAxis: [],
         series: []
       },
-      colors: ['#1563CA', '#50E3C2', '#F8E71C'],
+      colors: ['#1563CA', '#33b358', '#50E3C2', '#F8E71C'],
+      perBack: ['元 ㎡/天', '%'],
       barStyle: {
         type: 'bar',
         itemStyle: {
@@ -46,8 +47,8 @@ export default {
               0, 0, 0, 1,
               [
                 {offset: 0, color: '#83bff6'},
-                {offset: 0.5, color: '#188df0'},
-                {offset: 1, color: '#188df0'}
+                {offset: 0.5, color: '#83bff3'},
+                {offset: 1, color: '#83bff0'}
               ]
             )
           },
@@ -55,13 +56,14 @@ export default {
             color: new echarts.graphic.LinearGradient(
               0, 0, 0, 1,
               [
-                {offset: 0, color: '#2378f7'},
-                {offset: 0.7, color: '#2378f7'},
+                {offset: 0, color: '#83bff0'},
+                {offset: 0.7, color: '#83bff3'},
                 {offset: 1, color: '#83bff6'}
               ]
             )
           }
-        }
+        },
+        barWidth: '50%'
       },
       pageInfo: {},
       colorNum: 0
@@ -78,9 +80,11 @@ export default {
       // 设置横轴数据
       this.option.xAxis.data = datas.xAxis
 
-      // this.option.xAxis.data.push('12月')
+      this.option.xAxis.data.push('12月')
       // 设置纵轴数据
       this.option.series = [].concat(this.setStyle(datas.seriesBar, 'barStyle', this.colors), this.setStyle(datas.seriesLine, 'lineStyle', this.colors))
+
+      console.log(this.option)
 
       this.drawEchart()
     },
@@ -95,7 +99,7 @@ export default {
 
         var yAxisOjb = {
           type: 'value',
-          name: item.name,
+          name: item.name + '（' + this.perBack[this.colorNum] + '）',
           axisLine: {
               lineStyle: {
                   color: colors && colors[this.colorNum] ? colors[this.colorNum] : '#1563CA'
@@ -113,6 +117,11 @@ export default {
             itemStyle: {
               normal: {
                 color: colors && colors[this.colorNum] ? colors[this.colorNum] : '#1563CA'
+              }
+            },
+            lineStyle: {
+              normal: {
+                width: 4
               }
             }
           }

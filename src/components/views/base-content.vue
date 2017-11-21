@@ -138,6 +138,8 @@ export default {
 
         .base-content {
             width: 1020px;
+            line-height: 30px;
+            padding: 5px 0;
         }
     }
 }

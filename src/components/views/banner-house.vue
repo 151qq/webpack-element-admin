@@ -108,6 +108,7 @@ export default {
       .right {
         float: right;
         width: 360px;
+        height: 320px;
         box-sizing: border-box;
         border-left: 1px solid #EFF2F7;
         padding-right: 27px;
