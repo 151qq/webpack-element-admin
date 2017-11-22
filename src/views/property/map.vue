@@ -148,6 +148,10 @@ export default {
   created () {
     document.title = '地图检索'
     this.setData()
+
+    this.formData.key = this.cityName
+    this.getMap()
+
     this.getTypes()
     this.getCitys()
   },
@@ -183,6 +187,9 @@ export default {
         city: this.cityName
       }
 
+      this.formData.key = this.cityName
+      this.getMap()
+
       Tools.getJson('searchHousesKey', formData, (res) => {
         if (res.success == '1') {
           this.typeData = res.result
@@ -206,7 +213,8 @@ export default {
           this.$store.dispatch('setMapInfo', res.result.result)
           this.drawMap()
         } else {
-          this.$message.error(res.result.message)
+          this.$store.dispatch('setMapInfo', [])
+          this.drawMap()
         }
       })
     },

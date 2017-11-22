@@ -13,7 +13,9 @@
 
           <search-box></search-box>
 
-          <router-link class="map-btn" :to="{ name: 'map', params: { type: type }, query: {city: activeName}}">
+          <router-link class="map-btn"
+            target="_blank"
+            :to="{ name: 'map', params: { type: type }, query: {city: activeName}}">
             <img src="../../assets/images/map-icon.png">
             地图
           </router-link>

@@ -27,6 +27,7 @@ export default {
            * echarts: '/static/api/property/echarts.json',
         */
         echarts: platform + 'houses/houseCharts.json',
+        valueEcharts: platform + 'houses/houseValueCharts.json',
 
         /**
            * 首页租金信息 get

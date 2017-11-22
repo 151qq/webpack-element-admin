@@ -20,25 +20,25 @@ export default {
           }
         },
         grid: {
-          left: '9%',
-          right: '6%'
+          left: '6%',
+          right: '10%'
         },
         legend: {
           right: 0,
           data: []
         },
-        xAxis: {
+        yAxis: {
           type: 'category',
           axisTick: {
               alignWithLabel: true
           },
           data: []
         },
-        yAxis: [],
+        xAxis: [],
         series: []
       },
       colors: ['#1563CA', '#33b358', '#50E3C2', '#F8E71C'],
-      perBack: ['元 ㎡/天', '%'],
+      perBack: ['万元', '%'],
       barStyle: {
         type: 'bar',
         itemStyle: {
@@ -72,18 +72,29 @@ export default {
   methods: {
     // 获取echarts数据
     setEcharts () {
+      console.log(this.echartsDate, 'echartsDate')
+
       let datas = this.echartsDate
+      // let datas = {
+      //   "legend" : [ "估值率" ],
+      //   "xAxis" : [ "1月", "2月", "3月", "4月", "5月"],
+      //   "seriesBar" : [
+      //     {
+      //       "name" : "估值率",
+      //       "data" : [1, 2, 3, 4, 5]
+      //     }
+      //   ],
+      //   "seriesLine" : []
+      // }
       // 设置标题
       // this.option.title.text = datas.title
       // 设置legend
       this.option.legend.data = datas.legend
       // 设置横轴数据
-      this.option.xAxis.data = datas.xAxis
+      this.option.yAxis.data = datas.xAxis
 
       // 设置纵轴数据
       this.option.series = [].concat(this.setStyle(datas.seriesBar, 'barStyle', this.colors), this.setStyle(datas.seriesLine, 'lineStyle', this.colors))
-
-      console.log(this.option)
 
       this.drawEchart()
     },
@@ -96,15 +107,18 @@ export default {
 
         var yAxisOjb = {
           type: 'value',
-          name: item.name + '（' + this.perBack[this.colorNum] + '）',
+          name: item.name,
           axisLine: {
               lineStyle: {
                   color: colors && colors[this.colorNum] ? colors[this.colorNum] : '#1563CA'
               }
+          },
+          axisLabel: {
+              formatter: '{value} ' + this.perBack[this.colorNum]
           }
         }
 
-        this.option.yAxis.push(yAxisOjb)
+        this.option.xAxis.push(yAxisOjb)
 
         item.yAxisIndex = this.colorNum
 

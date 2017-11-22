@@ -121,7 +121,7 @@
       </div>
       <div class="left">
         <section class="echart-box">
-          <echarts-tar :id-name="'echartsTwo'" :echarts-date="echartsOne" :ref="'echartsTwo'"></echarts-tar>
+          <echarts-tar :id-name="'echartsTwo'" :echarts-date="echartsTwo" :ref="'echartsTwo'"></echarts-tar>
         </section>
       </div>
       <div class="eq-height">
@@ -135,6 +135,16 @@
           <p>{{recordTwo}}</p>
         </section>
       </div>
+      <div class="left">
+        <section class="echart-box">
+          <echarts-ver :id-name="'echartsVerOne'" :echarts-date="echartsVerOne" :ref="'echartsVerOne'"></echarts-ver>
+        </section>       
+      </div>
+      <div class="left">
+        <section class="echart-box">
+          <echarts-ver :id-name="'echartsVerTwo'" :echarts-date="echartsVerTwo" :ref="'echartsVerTwo'"></echarts-ver>
+        </section>
+      </div>
     </div>
     <show-ewm :dialog-visible="dialogVisible" :path="imgPath"></show-ewm>
   </section>
@@ -142,6 +152,7 @@
 <script>
 import bannerBenchmark from '../../components/views/banner-benchmark.vue'
 import echartsTar from '../../components/common/echart-tar.vue'
+import echartsVer from '../../components/common/echart-ver.vue'
 import showEwm from '../../components/common/show-ewm.vue'
 import Tools from '../../utils/tools.js'
 
@@ -165,7 +176,9 @@ export default {
       recordOne: '',
       recordTwo: '',
       echartsOne: {},
-      echartsTwo: {}
+      echartsTwo: {},
+      echartsVerOne: {},
+      echartsVerTwo: {}
     }
   },
   created () {
@@ -197,6 +210,9 @@ export default {
 
             this.getEcharts(this.benchDatas[0].id, 'echartsOne')
             this.getEcharts(this.benchDatas[1].id, 'echartsTwo')
+
+            this.getValueEcharts(this.benchDatas[0].id, 'echartsVerOne')
+            this.getValueEcharts(this.benchDatas[1].id, 'echartsVerTwo')
 
           }, 0)
         } else {
@@ -236,11 +252,29 @@ export default {
           this.$message.error(res.message)
         }
       })
+    },
+    // 获取echarts数据
+    getValueEcharts (id, key) {
+      var formData = {
+        city: localStorage.getItem('cityCode'),
+        id: id
+      }
+      Tools.getJson('valueEcharts', formData, (res) => {
+        if (res.success === '1') {
+          this[key] = res.result
+          setTimeout(() => {
+            this.$refs[key].setEcharts()
+          }, 0)
+        } else {
+          this.$message.error(res.message)
+        }
+      })
     }
   },
   components: {
     bannerBenchmark,
     echartsTar,
+    echartsVer,
     showEwm
   }
 }
@@ -336,6 +370,10 @@ export default {
           color: #1F2D3D;
         }
       }
+    }
+
+    .bg-color {
+      background: #F9FAFC;
     }
   }
 
