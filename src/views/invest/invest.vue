@@ -1,24 +1,7 @@
 <template>
   <section class="invest-list-box">
     <div class="search-select-box">
-      <el-input placeholder="请输入内容"
-                class="search-key"
-                v-model="input5"
-                size="small">
-        <el-button slot="append" icon="search">搜索</el-button>
-      </el-input>
-
-      <el-select v-model="searchTypeName"
-                  placeholder="请选择"
-                  class="search-type"
-                  size="small">
-        <el-option
-          v-for="(item, index) in searchType"
-          :key="index"
-          :label="item.label"
-          :value="item.value">
-        </el-option>
-      </el-select>
+      <search-invest></search-invest>
     </div>
     <el-row class="el-box">
       <el-col
@@ -39,24 +22,11 @@
 </template>
 <script>
 import Tools from '../../utils/tools.js'
+import searchInvest from '../../components/common/search-invest.vue'
 
 export default {
   data () {
     return {
-      searchType: [
-        {
-          label: '机构名称',
-          value: '1'
-        },
-        {
-          label: '物业名称',
-          value: '2'
-        },
-        {
-          label: '证券名称',
-          value: '3'
-        }
-      ],
       investList : [
         {
           id: 0,
@@ -107,6 +77,9 @@ export default {
   },
   methods: {
     
+  },
+  components: {
+    searchInvest
   }
 }
 </script>
@@ -117,19 +90,6 @@ export default {
 
   .search-select-box {
     text-align: center;
-
-    .el-input__inner {
-      height: 36px;
-    }
-
-    .search-key {
-      width: 600px;
-      height: 36px;
-    }
-
-    .search-type {
-      display: inline-block;
-    }
   }
 
   .el-box {

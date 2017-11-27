@@ -1,26 +1,9 @@
 <template>
   <section class="sec-list-box">
     <div class="search-select-box">
-      <el-input placeholder="请输入内容"
-                class="search-key"
-                v-model="input5"
-                size="small">
-        <el-button slot="append" icon="search">搜索</el-button>
-      </el-input>
-
-      <el-select v-model="searchTypeName"
-                  placeholder="请选择"
-                  class="search-type"
-                  size="small">
-        <el-option
-          v-for="(item, index) in searchType"
-          :key="index"
-          :label="item.label"
-          :value="item.value">
-        </el-option>
-      </el-select>
+      <search-security></search-security>
     </div>
-    <div class="list-box">
+    <!-- <div class="list-box">
       <a class="list-card"
                   v-for="(item, index) in securityList"
                   :href="item.href">
@@ -58,11 +41,27 @@
           </div>
         </div>
       </a>
-    </div>
+    </div> -->
+    <el-row class="el-box">
+      <el-col
+          :class="index % 4 == 0 ? 'card-b clearM' : 'card-b'"
+          :span="6"
+          v-for="(o, index) in securityList">
+        <router-link class="linkA" target="_blank" :to="{ name: 'security-detail', params: { id: o.id }}">
+          <el-card :body-style="{ padding: '0px' }">
+            <img :src="o.imgUrl" class="image">
+            <div style="padding: 14px;">
+              <span>{{ o.title }}</span>
+            </div>
+          </el-card>
+        </router-link>
+      </el-col>
+    </el-row>
   </section>
 </template>
 <script>
 import Tools from '../../utils/tools.js'
+import searchSecurity from '../../components/common/search-security.vue'
 
 export default {
   data () {
@@ -84,28 +83,44 @@ export default {
       securityList: [
         {
           id: 0,
-          imgUrl: '/static/images/bench1.png',
-          name: '第一证券',
-          code: '2243433',
-          property: '第一物业',
-          address: '北京市朝阳区soho大厦',
-          publish: '伦敦交易所',
-          status: 1,
-          value: 1223,
-          href: 'www.baidu.com'
+          imgUrl: '/static/images/detial1.png',
+          title: '证券一'
         },
         {
           id: 1,
-          imgUrl: '/static/images/bench1.png',
-          name: '第一证券',
-          code: '2243433',
-          property: '第一物业',
-          address: '北京市朝阳区soho大厦',
-          publish: '伦敦交易所',
-          status: 1,
-          value: 1223,
-          href: 'www.baidu.com'
+          imgUrl: '/static/images/detial1.png',
+          title: '证券二'
         },
+        {
+          id: 2,
+          imgUrl: '/static/images/detial1.png',
+          title: '证券三'
+        },
+        {
+          id: 3,
+          imgUrl: '/static/images/detial1.png',
+          title: '证券四'
+        },
+        {
+          id: 4,
+          imgUrl: '/static/images/detial1.png',
+          title: '证券五'
+        },
+        {
+          id: 5,
+          imgUrl: '/static/images/detial1.png',
+          title: '证券六'
+        },
+        {
+          id: 5,
+          imgUrl: '/static/images/detial1.png',
+          title: '证券七'
+        },
+        {
+          id: 7,
+          imgUrl: '/static/images/detial1.png',
+          title: '证券一'
+        }
       ],
       searchTypeName: '1'
     }
@@ -115,6 +130,9 @@ export default {
   },
   methods: {
     
+  },
+  components: {
+    searchSecurity
   }
 }
 </script>
@@ -125,86 +143,65 @@ export default {
 
   .search-select-box {
     text-align: center;
-
-    .el-input__inner {
-      height: 36px;
-    }
-
-    .search-key {
-      width: 600px;
-      height: 36px;
-    }
-
-    .search-type {
-      display: inline-block;
-    }
   }
 
-  .list-box {
+  .el-box {
     margin-top: 30px;
   }
 
-  .list-card {
+  .card-b {
+    width: 269px;
+    margin-left: 28px;
+    margin-bottom: 20px;
+  }
+
+  .clearM {
+    margin-left: 0;
+  }
+
+  .linkA {
     display: block;
-    padding-bottom: 15px;
-    margin-top: 15px;
-    overflow: hidden;
-    border-bottom: 1px solid #EFF2F7;
 
-    .img-left {
-      width: 200px;
-      height: 130px;
-      float: left;
-    }
-
-    .con-right {
-      width: 887px;
-      float: right;
-      height: 130px;
+    span {
+      display: block;
+      font-size: 16px;
+      color: #000000;
+      white-space:nowrap;
+      text-overflow:ellipsis;
+      -o-text-overflow:ellipsis;
+      overflow:hidden;
     }
   }
 
-  .out-box {
-    overflow: hidden;
+  .time {
+    font-size: 13px;
+    color: #999;
+  }
 
-    .base-b {
-        float: left;
-        width: 270px;
-        margin-right: 20px;
-        margin-bottom: 10px;
+  .bottom {
+    margin-top: 13px;
+    line-height: 12px;
+  }
 
-        .title {
-            float: left;
-            width: 120px;
-            font-size: 14px;
-            line-height: 24px;
-            color: #666666;
-        }
+  .button {
+    padding: 0;
+    float: right;
+  }
 
-        .base-content {
-            float: right;
-            width: 150px;
-            font-size: 14px;
-            line-height: 24px;
-            color: #000000;
-        }
-    }
+  .image {
+    width: 100%;
+    height: 248px;
+    display: block;
+  }
 
-    .big-b {
-        width: 740px;
+  .clearfix:before,
+  .clearfix:after {
+      display: table;
+      content: "";
+  }
 
-        .base-content {
-            width: 620px;
-        }
-    }
-
-    .mid-b {
-        width: 380px;
-
-        .base-content {
-            width: 260px;
-        }
-    }
+  .clearfix:after {
+      clear: both
   }
 }
 </style>

@@ -42,6 +42,14 @@ const routers = [
           })
         }
       }, {
+        path: 'securityDetail/:id',
+        name: 'security-detail',
+        component (resolve) {
+          require.ensure(['./views/security/securityDetail.vue'], () => {
+            resolve(require('./views/security/securityDetail.vue'))
+          })
+        }
+      }, {
         // 地图检索
         path: 'index/:type/map',
         name: 'map',

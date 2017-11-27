@@ -157,16 +157,16 @@ export default {
   .input-box {
     display: block;
     width: 1160px;
-    height: 30px;
-    margin: 10px auto 20px;
+    height: 50px;
+    margin: 0 auto 20px;
 
     .el-input {
       float: left;
-      height: 30px;
+      height: 50px;
 
       input {
         font-size: 12px;
-        height: 30px;
+        height: 50px;
       }
     }
 
@@ -176,7 +176,7 @@ export default {
       margin-left: -10px;
       border-top-left-radius: 0;
       border-bottom-left-radius: 0;
-      height: 30px;
+      height: 50px;
       font-size: 16px;
       padding: 0 23px;
     }
@@ -196,31 +196,32 @@ export default {
       .card-b {
         display: block;
         overflow: hidden;
-        padding-bottom: 30px;
+        padding-bottom: 20px;
         border-bottom: 1px solid #C0CCDA;
-        margin-bottom: 30px;
+        margin-bottom: 20px;
 
         .i-t {
           float: left;
-          width: 200px;
-          height: 240px;
+          width: 160px;
+          height: 190px;
         }
 
         .card {
           float: right;
-          width: 654px;
+          width: 680px;
 
           .title {
             font-size: 20px;
             line-height: 30px;
             color: #000000;
+            margin-bottom: 10px;
           }
 
           .cont {
             font-size: 14px;
             line-height: 30px;
             color: #475669;
-            height: 180px;
+            height: 150px;
             overflow: hidden;
           }
         }
