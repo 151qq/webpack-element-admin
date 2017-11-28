@@ -8,16 +8,24 @@
           :class="index % 4 == 0 ? 'card-b clearM' : 'card-b'"
           :span="6"
           v-for="(o, index) in investList">
-        <router-link class="linkA" target="_blank" :to="{ name: 'invest-detail', params: { id: o.id }}">
+        <router-link class="linkA" target="_blank"
+                    :to="{ name: 'invest-detail', params: { id: o.enterpriseCode }}">
           <el-card :body-style="{ padding: '0px' }">
-            <img :src="o.imgUrl" class="image">
+            <img :src="o.enterpriseLogoUrl" class="image">
             <div style="padding: 14px;">
-              <span>{{ o.title }}</span>
+              <span>{{ o.enterpriseNameReg }}</span>
             </div>
           </el-card>
         </router-link>
       </el-col>
     </el-row>
+    <el-pagination
+      v-if="total > pageSize"
+      layout="prev, pager, next"
+      @current-change="pageChange"
+      :page-size="pageSize"
+      :total="total">
+    </el-pagination>
   </section>
 </template>
 <script>
@@ -27,56 +35,36 @@ import searchInvest from '../../components/common/search-invest.vue'
 export default {
   data () {
     return {
-      investList : [
-        {
-          id: 0,
-          imgUrl: '/static/images/detial1.png',
-          title: '投资机构一'
-        },
-        {
-          id: 1,
-          imgUrl: '/static/images/detial1.png',
-          title: '投资机构二'
-        },
-        {
-          id: 2,
-          imgUrl: '/static/images/detial1.png',
-          title: '投资机构三'
-        },
-        {
-          id: 3,
-          imgUrl: '/static/images/detial1.png',
-          title: '投资机构四'
-        },
-        {
-          id: 4,
-          imgUrl: '/static/images/detial1.png',
-          title: '投资机构五'
-        },
-        {
-          id: 5,
-          imgUrl: '/static/images/detial1.png',
-          title: '投资机构六'
-        },
-        {
-          id: 5,
-          imgUrl: '/static/images/detial1.png',
-          title: '投资机构七'
-        },
-        {
-          id: 7,
-          imgUrl: '/static/images/detial1.png',
-          title: '投资机构一'
-        }
-      ],
-      searchTypeName: '1'
+      investList : [],
+      pageSize: 1,
+      pageNumber: 1,
+      total: 0
     }
   },
   created () {
     document.title = '投资机构'
+    this.getInvestList()
   },
   methods: {
-    
+    getInvestList () {
+      var formData = {
+        pageSize: this.pageSize,
+        pageNumber: this.pageNumber
+      }
+
+      Tools.getJson('getInvestList', formData, (res) => {
+        if (res.success === '1') {
+          this.investList = res.result
+          this.total = Number(res.total)
+        } else {
+          this.$message.error(res.message)
+        }
+      })
+    },
+    pageChange (size) {
+      this.pageNumber = size
+      this.getInvestList()
+    }
   },
   components: {
     searchInvest

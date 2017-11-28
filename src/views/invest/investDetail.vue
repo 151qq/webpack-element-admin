@@ -4,57 +4,116 @@
 
     <div class="mid-box">
       <el-tabs class="card-box" v-model="activeName">
-        <el-tab-pane class="card-outer" label="基本信息" name="基本信息">
+        <el-tab-pane label="基本信息" name="基本信息">
           <div class="out-box">
-            <p class="base-b">
+            <p class="base-b base-big">
                 <span class="title">投资机构名称：</span>
-                <span class="base-content">{{base.name}}</span>
+                <span class="base-content">{{base.enterpriseCname}}</span>
             </p>
             <p class="base-b">
-                <span class="title">投资机构法人：</span>
-                <span class="base-content">{{base.holder}}</span>
+                <span class="title">机构简称：</span>
+                <span class="base-content">{{base.enterpriseNameReg}}</span>
+            </p>
+            <p class="base-b">
+                <span class="title">主体评级：</span>
+                <span class="base-content">{{base.enterpriseCreditLevel}}</span>
+            </p>
+            <p class="base-b">
+                <span class="title">公司官网：</span>
+                <span class="base-content">{{base.enterpriseWebLink}}</span>
+            </p>
+            <p class="base-b">
+                <span class="title">机构法人：</span>
+                <span class="base-content">{{base.enterpriseLegalPerson}}</span>
+            </p>
+            <p class="base-b">
+                <span class="title">组织机构代码：</span>
+                <span class="base-content">{{base.enterpriseCode}}</span>
             </p>
             <p class="base-b">
                 <span class="title">成立时间：</span>
-                <span class="base-content">{{base.createDate}}</span>
+                <span class="base-content">{{base.enterpriseOpenTime}}</span>
             </p>
             <p class="base-b">
-                <span class="title">是否上市：</span>
-                <span class="base-content">{{base.isList ? '是' : '否'}}</span>
+                <span class="title">企业类型：</span>
+                <span class="base-content">{{base.enterpriseIndustry}}</span>
             </p>
             <p class="base-b">
-                <span class="title">上市地点：</span>
-                <span class="base-content">{{base.listCity}}</span>
+                <span class="title">注册地址：</span>
+                <span class="base-content">{{base.enterpriseRegPlace}}</span>
+            </p>
+            <p class="base-b">
+                <span class="title">办公地点：</span>
+                <span class="base-content">{{base.enterpriseLogisticCity}}</span>
+            </p>
+            <p class="base-b">
+                <span class="title">邮编：</span>
+                <span class="base-content">{{base.enterpriseLogisticZipcode}}</span>
+            </p>
+            <p class="base-b">
+                <span class="title">上市机构：</span>
+                <span class="base-content">{{base.enterpriseStockSite}}</span>
             </p>
             <p class="base-b">
                 <span class="title">股票代码：</span>
-                <span class="base-content">{{base.sharesCode}}</span>
+                <span class="base-content">{{base.enterpriseStockCode}}</span>
             </p>
             <p class="base-b base-big">
-                <span class="title">注册地址：</span>
-                <span class="base-content">{{base.address}}</span>
+                <span class="title">详细地址：</span>
+                <span class="base-content">{{base.enterpriseLogisticAddr}}</span>
             </p>
-            <p class="base-b base-big">
-                <span class="title">官方网站：</span>
-                <span class="base-content">{{base.webSite}}</span>
+            <p class="base-b">
+                <span class="title">总资产(万)：</span>
+                <span class="base-content">{{base.enterpriseTotalAsset}}</span>
+            </p>
+            <p class="base-b">
+                <span class="title">资产负债率：</span>
+                <span class="base-content">{{base.enterpriseAssetLiabilityRatio}}</span>
+            </p>
+            <p class="base-b">
+                <span class="title">资本充足率：</span>
+                <span class="base-content">{{base.enterpriseCapitalAdequacyRatio}}</span>
+            </p>
+            <p class="base-b">
+                <span class="title">核心资本充足率：</span>
+                <span class="base-content">{{base.enterpriseCoreCapitialAdequacyRatio}}</span>
+            </p>
+            <p class="base-b">
+                <span class="title">存贷款比：</span>
+                <span class="base-content">{{base.enterpriseDepositLoanRatio}}</span>
+            </p>
+            <p class="base-b">
+                <span class="title">不良贷款率：</span>
+                <span class="base-content">{{base.enterpriseNplRatio}}</span>
+            </p>
+            <p class="base-b">
+                <span class="title">拨备覆盖率：</span>
+                <span class="base-content">{{base.enterpriseProvisionCoverage}}</span>
+            </p>
+            <p class="base-b">
+                <span class="title">资产收益率：</span>
+                <span class="base-content">{{base.enterpriseAssetsReturn}}</span>
             </p>
           </div>
 
-          <el-row class="el-box">
-            <el-col
-                :class="index % 4 == 0 ? 'card-b clearM' : 'card-b'"
-                :span="6"
-                v-for="(o, index) in publicList">
-              <router-link class="linkA" target="_blank" :to="{ name: 'invest-detail', params: { id: o.id }}">
-                <el-card :body-style="{ padding: '0px' }">
-                  <img :src="o.imgUrl" class="image">
-                  <div style="padding: 14px;">
-                    <span>{{ o.title }}</span>
-                  </div>
-                </el-card>
-              </router-link>
-            </el-col>
-          </el-row>
+          <div class="invest-des-box">
+              <div class="left">
+                  <section class="one">
+                      <img class="info-big" :src="base.enterpriseLogoUrl">
+                      <div class="info-con" v-html="base.enterpriseDesc"></div>
+                  </section>
+              </div>
+              <div class="right">
+                  <a v-for="item in publicList" class="bench"
+                      @click="showEwm(item.ewmUrl)">
+                      <img :src="item.imgUrl">
+                      <div class="bg-black"></div>
+                      <div class="title-box">{{item.name}}</div>
+                  </a>
+              </div>
+
+              <show-ewm :dialog-visible="dialogVisible" :path="imgPath"></show-ewm>
+          </div>
         </el-tab-pane>
         <el-tab-pane class="card-outer" label="所持物业" name="所持物业">
           <router-link class="list-card"
@@ -62,57 +121,46 @@
                         :to="{name: 'info', params: {type: 'business', id: item.id}}">
               <img class="img-left" :src="item.imgUrl">
               <div class="con-right">
-                <span class="title-name">{{item.name}}</span>
-                <span class="address">地址：{{item.address}}</span>
-                <span class="changes">交易：{{item.changes}}</span>
+                <span class="content-list">名称：{{item.name}}</span>
+                <span class="content-list">地址：{{item.address}}</span>
+                <span class="content-list">业务：{{item.business}}</span>
+                <span class="link-list" @click.prevent="showChanges(item.id)">交易详情 ></span>
               </div>
           </router-link>
         </el-tab-pane>
-        <el-tab-pane class="card-outer" label="证券产品" name="证券产品">
-          <a class="list-card"
-                        v-for="(item, index) in securityList"
-                        :href="item.href">
-              <img class="img-left" :src="item.imgUrl">
-              <div class="con-right dis-right">
-                <div class="out-box list-in">
-                  <p class="base-b mid-b">
-                      <span class="title">产品名称：</span>
-                      <span class="base-content">{{item.name}}</span>
-                  </p>
-                  <p class="base-b mid-b">
-                      <span class="title">证券代码：</span>
-                      <span class="base-content">{{item.code}}</span>
-                  </p>
-                  <p class="base-b mid-b">
-                      <span class="title">相关物业：</span>
-                      <span class="base-content">{{item.property}}</span>
-                  </p>
-                  <p class="base-b mid-b">
-                      <span class="title">地址：</span>
-                      <span class="base-content">{{item.address}}</span>
-                  </p>
-                  <p class="base-b big-b">
-                      <span class="title">发行机构：</span>
-                      <span class="base-content">{{item.publish}}</span>
-                  </p>
-                  <p class="base-b mid-b">
-                      <span class="title">状态：</span>
-                      <span class="base-content">{{item.isList ? '已上市' : '未上市'}}</span>
-                  </p>
-                  <p class="base-b mid-b">
-                      <span class="title">最新市值：</span>
-                      <span class="base-content">{{item.value}}万元</span>
-                  </p>
-                </div>
-              </div>
-          </a>
-        </el-tab-pane>
       </el-tabs>
     </div>
+
+    <el-dialog title="交易详情" :visible.sync="dialogFormVisible">
+          <el-form :label-position="'left'" label-width="100px" :model="curentData">
+              <el-form-item label="交易日期：">
+                  {{curentData.dateString}}
+              </el-form-item>
+              <el-form-item label="价格(万)：">
+                  {{curentData.price}}
+              </el-form-item>
+              <el-form-item label="交易甲方：">
+                  {{curentData.changeA}}
+              </el-form-item>
+              <el-form-item label="交易乙方：">
+                  {{curentData.changeB}}
+              </el-form-item>
+              <el-form-item label="评估机构：">
+                  {{curentData.evalCodes}}
+              </el-form-item>
+              <el-form-item label="咨询机构：">
+                  {{curentData.tenantFinanceTool}}
+              </el-form-item>
+              <el-form-item label="交易备注：">
+                  {{curentData.tenantDesc}}
+              </el-form-item>
+          </el-form>
+      </el-dialog>
   </section>
 </template>
 <script>
 import bannerInvest from '../../components/views/banner-invest.vue'
+import showEwm from '../../components/common/show-ewm.vue'
 import Tools from '../../utils/tools.js'
 
 export default {
@@ -120,78 +168,111 @@ export default {
     return {
       activeName: '基本信息',
       base: {
-        name: '什么什么机构',
-        holder: '什么什么',
-        address: '北京市朝阳区soho大厦',
-        webSite: 'http://www.shenmeshenme.com',
-        createDate: '2017-09-09',
-        isList: 1,
-        listCity: '伦敦交易所',
-        sharesCode: '229873'
+          id: '',
+          enterpriseCname: '',
+          enterpriseNameReg: '',
+          enterpriseCode: '',
+          enterpriseOpenTime: '',
+          enterpriseType: '',
+          enterpriseLevel: '',
+          enterpriseRegPlace: '',
+          enterpriseLogisticCity: '',
+          enterpriseLogisticZipcode: '',
+          enterpriseLogisticAddr: '',
+          enterpriseStockSite: '',
+          enterpriseStockCode: '',
+          enterpriseWebLink: '',
+          enterpriseLogoUrl: '/static/images/bench1.png',
+          enterpriseDesc: '我送送送送送哦宋宋宋宋宋宋宋',
+          enterpriseIndustry: '',
+          enterpriseEntprisewechatQrcode: '',
+          enterpriseTwitterQrcode: '',
+          enterpriseFacebookQrcode: '',
+          enterpriseSinamicroblogQrcode: '',
+          enterprisePubwechatAccount: '',
+          enterpriseFacebookAccount: '',
+          enterprisePubwechatAccount: '',
+          enterpriseSinamicorblogAccount: '',
+          enterpriseCreditLevel: '',
+          enterpriseTotalAsset: '',
+          enterpriseAssetLiabilityRatio: '',
+          enterpriseCapitalAdequacyRatio: '',
+          enterpriseCoreCapitialAdequacyRatio: '',
+          enterpriseDepositLoanRatio: '',
+          enterpriseNplRatio: '',
+          enterpriseProvisionCoverage: '',
+          enterpriseAssetsReturn: ''
       },
       publicList : [
         {
           id: 0,
-          imgUrl: '/static/images/ewm.png',
-          title: '微信公众号'
+          imgUrl: '/static/images/house1.jpg',
+          ewmUrl: '/static/images/ewm.png',
+          name: '微信公众号'
         },
         {
           id: 1,
-          imgUrl: '/static/images/ewm.png',
-          title: 'twitter账号'
+          imgUrl: '/static/images/house2.jpg',
+          ewmUrl: '/static/images/ewm.png',
+          name: 'twitter账号'
         },
         {
           id: 2,
-          imgUrl: '/static/images/ewm.png',
-          title: 'facebook账号'
+          imgUrl: '/static/images/house3.jpg',
+          ewmUrl: '/static/images/ewm.png',
+          name: 'facebook账号'
         },
         {
           id: 3,
-          imgUrl: '/static/images/ewm.png',
-          title: '微博账号'
+          imgUrl: '/static/images/house4.jpg',
+          ewmUrl: '/static/images/ewm.png',
+          name: '微博账号'
         }
       ],
+      dialogVisible: {
+        value: false
+      },
+      imgPath: '',
+      dialogFormVisible: false,
+      curentData: {
+          id: '',
+          dateString: '北京市朝阳区soho大厦',
+          price: '北京市朝阳区soho大厦',
+          changeA: '北京市朝阳区soho大厦',
+          changeB: '北京市朝阳区soho大厦',
+          tenantDesc: '北京市朝阳区soho大厦',
+          tenantFinanceTool: '北京市朝阳区soho大厦',
+          evalCodes: '北京市朝阳区soho大厦'
+      },
       propertyList: [
         {
           id: 0,
           imgUrl: '/static/images/bench1.png',
           name: '第一物业',
           address: '北京市朝阳区soho大厦',
-          changes: '2017-09-09 甲方 -> 乙方（10万元），2017-09-09 甲方 -> 乙方（10万元）'
+          business: '持有 售出 参与评估 交易咨'
         },
         {
           id: 1,
           imgUrl: '/static/images/bench1.png',
           name: '第一物业',
           address: '北京市朝阳区soho大厦',
-          changes: '2017-09-09 甲方 -> 乙方（10万元），2017-09-09 甲方 -> 乙方（10万元）'
-        }
-      ],
-      securityList: [
+          business: '持有 售出 参与评估 交易咨'
+        },
         {
           id: 0,
           imgUrl: '/static/images/bench1.png',
-          name: '第一证券',
-          code: '2243433',
-          property: '第一物业',
+          name: '第一物业',
           address: '北京市朝阳区soho大厦',
-          publish: '伦敦交易所',
-          status: 1,
-          value: 1223,
-          href: 'www.baidu.com'
+          business: '持有 售出 参与评估 交易咨'
         },
         {
           id: 1,
           imgUrl: '/static/images/bench1.png',
-          name: '第一证券',
-          code: '2243433',
-          property: '第一物业',
+          name: '第一物业',
           address: '北京市朝阳区soho大厦',
-          publish: '伦敦交易所',
-          status: 1,
-          value: 1223,
-          href: 'www.baidu.com'
-        },
+          business: '持有 售出 参与评估 交易咨'
+        }
       ]
     }
   },
@@ -219,15 +300,119 @@ export default {
           this.$message.error(res.message)
         }
       })
+    },
+    showEwm (path) {
+      this.imgPath = path
+      this.dialogVisible.value = true
+    },
+    showChanges () {
+      this.dialogFormVisible = true
     }
   },
   components: {
-    bannerInvest
+    bannerInvest,
+    showEwm
   }
 }
 </script>
-<style lang="scss" scoped>
+<style lang="scss">
+.invest-des-box {
+    width: 1160px;
+    margin: 10px auto 50px;
+    overflow: hidden;
+
+    .left {
+        float: left;
+        width: 867px;
+
+        .one {
+
+            .htmlBox {
+                width: 100%;
+                height: auto;
+                min-height: 500px;
+            }
+
+            .title {
+                font-size: 20px;
+                line-height: 28px;
+                color: #000000;
+                margin-bottom: 10px;
+            }
+
+            .info-big {
+                width: 100%;
+            }
+
+            .info-con {
+                font-size: 14px;
+                line-height: 30px;
+                margin-top: 20px;
+                color: #1F2D3D;
+
+                p {
+                    font-size: 14px;
+                    line-height: 30px;
+                    color: #1F2D3D;
+                }
+            }
+        }
+    }
+
+    .right {
+        float: right;
+        width: 260px;
+
+        p {
+            font-size: 20px;
+            line-height: 28px;
+            color: #000000;
+            margin-bottom: 10px;
+        }
+
+        .bench {
+            position: relative;
+            display: block;
+            margin-bottom: 15px;
+
+            img {
+                width: 260px;
+                height: 180px;
+                border-radius: 3px;
+            }
+
+            .bg-black {
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                transform: translate(-50%,-50%);
+                width: 100%;
+                height: 60px;
+                background: #000000;
+                opacity: 0.6;
+            }
+
+            .title-box {
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                transform: translate(-50%,-50%);
+                width: 100%;
+                height: 60px;
+                text-align: center;
+                font-size: 16px;
+                line-height: 60px;
+                color: #ffffff;
+            }
+        }
+    }
+}
+
 .invest-detail-con {
+  .el-dialog--small {
+      width: 480px;
+  }
+
   .mid-box {
     position: relative;
     width: 1160px;
@@ -256,7 +441,7 @@ export default {
   }
 
   .out-box {
-    padding: 10px 0 50px;
+    padding: 10px 0 10px;
     overflow: hidden;
 
     .base-b {
@@ -266,7 +451,7 @@ export default {
 
         .title {
             float: left;
-            width: 120px;
+            width: 130px;
             font-size: 16px;
             line-height: 40px;
             color: #666666;
@@ -274,7 +459,7 @@ export default {
 
         .base-content {
             float: right;
-            width: 240px;
+            width: 230px;
             font-size: 16px;
             line-height: 40px;
             color: #000000;
@@ -290,95 +475,48 @@ export default {
     }
   }
 
-
-  .list-in {
-    overflow: hidden;
-
-    .base-b {
-        float: left;
-        width: 270px;
-        margin-right: 20px;
-        margin-bottom: 10px;
-
-        .title {
-            float: left;
-            width: 120px;
-            font-size: 14px;
-            line-height: 24px;
-            color: #666666;
-        }
-
-        .base-content {
-            float: right;
-            width: 150px;
-            font-size: 14px;
-            line-height: 24px;
-            color: #000000;
-        }
-    }
-
-    .big-b {
-        width: 740px;
-
-        .base-content {
-            width: 620px;
-        }
-    }
-
-    .mid-b {
-        width: 380px;
-
-        .base-content {
-            width: 260px;
-        }
-    }
+  .card-outer {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      margin-bottom: 30px;
   }
 
   .list-card {
-    display: block;
-    padding-bottom: 15px;
-    margin-top: 15px;
+    display: flex;
+    width: 570px;
+    padding-bottom: 20px;
+    margin-top: 20px;
     overflow: hidden;
     border-bottom: 1px solid #EFF2F7;
 
     .img-left {
       width: 200px;
       height: 130px;
-      float: left;
     }
 
     .con-right {
-      width: 940px;
-      float: right;
+      flex: 1;
+      position: relative;
+      margin-left: 20px;
       height: 130px;
-
-
-      .title-name {
+      
+      .content-list {
         display: block;
-        color: #000000;
-        font-size: 18px;
-        margin-bottom: 15px;
-      }
-
-      .address {
-        display: block;
-        color: #000000;
-        font-size: 16px;
+        font-size: 14px;
+        color: #1f2d3d;
         line-height: 24px;
-        margin-bottom: 10px;
+        margin: 3px 0;
       }
-
-      .changes {
-        display: block;
-        color: #000000;
-        font-size: 16px;
-        line-height: 24px;
-        margin-bottom: 10px;
+      
+      .link-list {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        font-size: 14px;
+        color: #20a0ff;
+        text-align: right;
       }
-    }
-
-    .dis-right {
-      width: 887px;
     }
   }
 

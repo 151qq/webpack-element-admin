@@ -2,19 +2,11 @@
   <div class="banner-box">
     <img class="img-box" src="../../assets/images/banner-bg.jpg">
     <section class="banner-f">
-      <div class="left">
-        <el-carousel :interval="4000" type="card" height="310px" @change="bannerChange">
-          <el-carousel-item v-for="(item, index) in bannerData" :key="index">
-            <img class="img-invest" :src="item.imgUrl">
-          </el-carousel-item>
-        </el-carousel>
-      </div>
-      <div class="right">
-        <p>描述</p>
-        <div>
-          {{bannerData[currentIndex].des}}
-        </div>
-      </div>
+      <el-carousel :interval="4000" type="card" height="310px">
+        <el-carousel-item v-for="(item, index) in bannerData" :key="index">
+          <img class="img-invest" :src="item.imgUrl">
+        </el-carousel-item>
+      </el-carousel>
     </section>
   </div>
 </template>
@@ -62,9 +54,6 @@ export default {
       this.getEcharts()
       this.getDatas()
     },
-    bannerChange (index) {
-        this.currentIndex = index
-    },
     // 获取资金排名数据
     getDatas () {
       this.pageInfo = this.$store.getters.getPageInfo
@@ -109,40 +98,8 @@ export default {
     overflow: hidden;
     background: #ffffff;
 
-    .left {
-      float: left;
-      width: 800px;
-      height: 370px;
-
-      .el-carousel {
-        margin-top: 20px;
-      }
-
-      .swiper-container {
-        width: 800px;
-        height: 370px;
-        overflow: hidden;
-      }
-
-      .img-invest {
-        width: 100%;
-        min-height: 310px;
-      }
-    }
-
-    .right {
-      float: right;
-      width: 360px;
-      height: 240px;
-      box-sizing: border-box;
-      padding: 15px;
-
-      p {
-        font-size: 16px;
-        color: #000000;
-        margin-bottom: 10px;
-        font-weight: bold;
-      }
+    .el-carousel {
+      margin-top: 20px;
     }
   }
 }

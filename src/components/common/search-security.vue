@@ -60,7 +60,8 @@ export default {
           label: '证券名称',
           value: '3'
         }
-      ]
+      ],
+      searchTypeName: ''
     }
   },
   created () {

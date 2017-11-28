@@ -114,6 +114,8 @@ export default {
            * hold: 'all' 同level
            * measure: 'all'  同level
         */
-        searchMap: platform + 'houses/searchHousesFileter.json'
+        searchMap: platform + 'houses/searchHousesFileter.json',
+        getSecurityList: platform + 'financeProduct/selectCodeLogoAndCnamer.json',
+        getInvestList: platform + 'enterprise/searchAllEnterpriseInfo.json'
     }
 }

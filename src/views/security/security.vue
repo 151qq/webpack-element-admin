@@ -3,60 +3,29 @@
     <div class="search-select-box">
       <search-security></search-security>
     </div>
-    <!-- <div class="list-box">
-      <a class="list-card"
-                  v-for="(item, index) in securityList"
-                  :href="item.href">
-        <img class="img-left" :src="item.imgUrl">
-        <div class="con-right">
-          <div class="out-box list-in">
-            <p class="base-b mid-b">
-                <span class="title">产品名称：</span>
-                <span class="base-content">{{item.name}}</span>
-            </p>
-            <p class="base-b mid-b">
-                <span class="title">证券代码：</span>
-                <span class="base-content">{{item.code}}</span>
-            </p>
-            <p class="base-b mid-b">
-                <span class="title">相关物业：</span>
-                <span class="base-content">{{item.property}}</span>
-            </p>
-            <p class="base-b mid-b">
-                <span class="title">地址：</span>
-                <span class="base-content">{{item.address}}</span>
-            </p>
-            <p class="base-b big-b">
-                <span class="title">发行机构：</span>
-                <span class="base-content">{{item.publish}}</span>
-            </p>
-            <p class="base-b mid-b">
-                <span class="title">状态：</span>
-                <span class="base-content">{{item.isList ? '已上市' : '未上市'}}</span>
-            </p>
-            <p class="base-b mid-b">
-                <span class="title">最新市值：</span>
-                <span class="base-content">{{item.value}}万元</span>
-            </p>
-          </div>
-        </div>
-      </a>
-    </div> -->
     <el-row class="el-box">
       <el-col
           :class="index % 4 == 0 ? 'card-b clearM' : 'card-b'"
           :span="6"
           v-for="(o, index) in securityList">
-        <router-link class="linkA" target="_blank" :to="{ name: 'security-detail', params: { id: o.id }}">
+        <router-link class="linkA" target="_blank"
+                    :to="{ name: 'security-detail', params: { id: o.productCode }}">
           <el-card :body-style="{ padding: '0px' }">
-            <img :src="o.imgUrl" class="image">
+            <img :src="o.productLogo" class="image">
             <div style="padding: 14px;">
-              <span>{{ o.title }}</span>
+              <span>{{ o.productCame }}</span>
             </div>
           </el-card>
         </router-link>
       </el-col>
     </el-row>
+    <el-pagination
+      v-if="total > pageSize"
+      layout="prev, pager, next"
+      @current-change="pageChange"
+      :page-size="pageSize"
+      :total="total">
+    </el-pagination>
   </section>
 </template>
 <script>
@@ -80,56 +49,36 @@ export default {
           value: '3'
         }
       ],
-      securityList: [
-        {
-          id: 0,
-          imgUrl: '/static/images/detial1.png',
-          title: '证券一'
-        },
-        {
-          id: 1,
-          imgUrl: '/static/images/detial1.png',
-          title: '证券二'
-        },
-        {
-          id: 2,
-          imgUrl: '/static/images/detial1.png',
-          title: '证券三'
-        },
-        {
-          id: 3,
-          imgUrl: '/static/images/detial1.png',
-          title: '证券四'
-        },
-        {
-          id: 4,
-          imgUrl: '/static/images/detial1.png',
-          title: '证券五'
-        },
-        {
-          id: 5,
-          imgUrl: '/static/images/detial1.png',
-          title: '证券六'
-        },
-        {
-          id: 5,
-          imgUrl: '/static/images/detial1.png',
-          title: '证券七'
-        },
-        {
-          id: 7,
-          imgUrl: '/static/images/detial1.png',
-          title: '证券一'
-        }
-      ],
-      searchTypeName: '1'
+      securityList: [],
+      pageSize: 12,
+      pageNumber: 1,
+      total: 0
     }
   },
   created () {
     document.title = '商业楼盘证券'
+    this.getSecurityList()
   },
   methods: {
-    
+    getSecurityList () {
+      var formData = {
+        pageSize: this.pageSize,
+        pageNumber: this.pageNumber
+      }
+
+      Tools.getJson('getSecurityList', formData, (res) => {
+        if (res.success === '1') {
+          this.securityList = res.result
+          this.total = Number(res.total)
+        } else {
+          this.$message.error(res.message)
+        }
+      })
+    },
+    pageChange (size) {
+      this.pageNumber = size
+      this.getSecurityList()
+    }
   },
   components: {
     searchSecurity
