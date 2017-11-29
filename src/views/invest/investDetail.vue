@@ -1,6 +1,6 @@
 <template>
   <section class="invest-detail-con">
-    <banner-invest :base="base"></banner-invest>
+    <banner-security :banner-list="bannerList" ref="bannerBox"></banner-security>
 
     <div class="mid-box">
       <el-tabs class="card-box" v-model="activeName">
@@ -115,15 +115,15 @@
               <show-ewm :dialog-visible="dialogVisible" :path="imgPath"></show-ewm>
           </div>
         </el-tab-pane>
-        <el-tab-pane class="card-outer" label="所持物业" name="所持物业">
-          <router-link class="list-card"
+        <el-tab-pane class="card-outer" label="物业交易" name="物业交易">
+          <router-link class="list-card" target="_blank"
                         v-for="(item, index) in propertyList"
-                        :to="{name: 'info', params: {type: 'business', id: item.id}}">
-              <img class="img-left" :src="item.imgUrl">
+                        :to="{name: 'info', params: {type: 'business', id: item.housesId}}">
+              <img class="img-left" :src="item.housesInfo.housesImg">
               <div class="con-right">
-                <span class="content-list">名称：{{item.name}}</span>
-                <span class="content-list">地址：{{item.address}}</span>
-                <span class="content-list">业务：{{item.business}}</span>
+                <span class="content-list">名称：{{item.housesInfo.housesDesc}}</span>
+                <span class="content-list">地址：{{item.housesInfo.housesAddr}}</span>
+                <span class="content-list">业务：{{item.houseTradeType}}</span>
                 <span class="link-list" @click.prevent="showChanges(item.id)">交易详情 ></span>
               </div>
           </router-link>
@@ -134,32 +134,35 @@
     <el-dialog title="交易详情" :visible.sync="dialogFormVisible">
           <el-form :label-position="'left'" label-width="100px" :model="curentData">
               <el-form-item label="交易日期：">
-                  {{curentData.dateString}}
+                  {{curentData.houseTradeDate}}
               </el-form-item>
               <el-form-item label="价格(万)：">
-                  {{curentData.price}}
+                  {{curentData.houseRradePrice}}
               </el-form-item>
               <el-form-item label="交易甲方：">
-                  {{curentData.changeA}}
+                  {{curentData.houseTradeACode}}
               </el-form-item>
               <el-form-item label="交易乙方：">
-                  {{curentData.changeB}}
+                  {{curentData.houseTradeBCode}}
               </el-form-item>
               <el-form-item label="评估机构：">
-                  {{curentData.evalCodes}}
+                  {{curentData.houseTradeEvaluationOrg}}
               </el-form-item>
               <el-form-item label="咨询机构：">
-                  {{curentData.tenantFinanceTool}}
+                  {{curentData.houseTradeConsultingOrg}}
+              </el-form-item>
+              <el-form-item label="交易类型：">
+                  {{curentData.houseTradeType}}
               </el-form-item>
               <el-form-item label="交易备注：">
-                  {{curentData.tenantDesc}}
+                  {{curentData.houseTradeDesc}}
               </el-form-item>
           </el-form>
       </el-dialog>
   </section>
 </template>
 <script>
-import bannerInvest from '../../components/views/banner-invest.vue'
+import bannerSecurity from '../../components/views/banner-security.vue'
 import showEwm from '../../components/common/show-ewm.vue'
 import Tools from '../../utils/tools.js'
 
@@ -182,8 +185,8 @@ export default {
           enterpriseStockSite: '',
           enterpriseStockCode: '',
           enterpriseWebLink: '',
-          enterpriseLogoUrl: '/static/images/bench1.png',
-          enterpriseDesc: '我送送送送送哦宋宋宋宋宋宋宋',
+          enterpriseLogoUrl: '',
+          enterpriseDesc: '',
           enterpriseIndustry: '',
           enterpriseEntprisewechatQrcode: '',
           enterpriseTwitterQrcode: '',
@@ -191,7 +194,6 @@ export default {
           enterpriseSinamicroblogQrcode: '',
           enterprisePubwechatAccount: '',
           enterpriseFacebookAccount: '',
-          enterprisePubwechatAccount: '',
           enterpriseSinamicorblogAccount: '',
           enterpriseCreditLevel: '',
           enterpriseTotalAsset: '',
@@ -203,29 +205,29 @@ export default {
           enterpriseProvisionCoverage: '',
           enterpriseAssetsReturn: ''
       },
-      publicList : [
+      publicList: [
         {
           id: 0,
           imgUrl: '/static/images/house1.jpg',
-          ewmUrl: '/static/images/ewm.png',
+          ewmUrl: 'enterpriseEntprisewechatQrcode',
           name: '微信公众号'
         },
         {
           id: 1,
           imgUrl: '/static/images/house2.jpg',
-          ewmUrl: '/static/images/ewm.png',
+          ewmUrl: 'enterpriseTwitterQrcode',
           name: 'twitter账号'
         },
         {
           id: 2,
           imgUrl: '/static/images/house3.jpg',
-          ewmUrl: '/static/images/ewm.png',
+          ewmUrl: 'enterpriseFacebookQrcode',
           name: 'facebook账号'
         },
         {
           id: 3,
           imgUrl: '/static/images/house4.jpg',
-          ewmUrl: '/static/images/ewm.png',
+          ewmUrl: 'enterpriseSinamicroblogQrcode',
           name: '微博账号'
         }
       ],
@@ -236,81 +238,97 @@ export default {
       dialogFormVisible: false,
       curentData: {
           id: '',
-          dateString: '北京市朝阳区soho大厦',
-          price: '北京市朝阳区soho大厦',
-          changeA: '北京市朝阳区soho大厦',
-          changeB: '北京市朝阳区soho大厦',
-          tenantDesc: '北京市朝阳区soho大厦',
-          tenantFinanceTool: '北京市朝阳区soho大厦',
-          evalCodes: '北京市朝阳区soho大厦'
+          housesId: '',
+          houseTradeDate: '',
+          houseRradePrice: '',
+          houseTradeACode: '',
+          houseTradeBCode: '',
+          houseTradeDesc: '',
+          houseTradeType: '',
+          houseTradeConsultingOrg: '',
+          houseTradeEvaluationOrg: ''
       },
-      propertyList: [
-        {
-          id: 0,
-          imgUrl: '/static/images/bench1.png',
-          name: '第一物业',
-          address: '北京市朝阳区soho大厦',
-          business: '持有 售出 参与评估 交易咨'
-        },
-        {
-          id: 1,
-          imgUrl: '/static/images/bench1.png',
-          name: '第一物业',
-          address: '北京市朝阳区soho大厦',
-          business: '持有 售出 参与评估 交易咨'
-        },
-        {
-          id: 0,
-          imgUrl: '/static/images/bench1.png',
-          name: '第一物业',
-          address: '北京市朝阳区soho大厦',
-          business: '持有 售出 参与评估 交易咨'
-        },
-        {
-          id: 1,
-          imgUrl: '/static/images/bench1.png',
-          name: '第一物业',
-          address: '北京市朝阳区soho大厦',
-          business: '持有 售出 参与评估 交易咨'
-        }
-      ]
+      propertyList: [],
+      bannerList: []
     }
   },
   mounted () {
     document.title = '机构详情'
-    // this.getDatas()
+    this.getBase()
+    this.getHouses()
   },
   methods: {
-    getDatas () {
+    getBase () {
       let formData = {
-        type: this.type,
-        id: this.$route.params.id
+        enterpriseCode: this.$route.params.id
       }
 
-      Tools.getJson('info', formData, (res) => {
+      Tools.getJson('showEnterpriseInfo', formData, (res) => {
         if (res.success == '1') {
-          this.base = res.result.base
-          this.evaluate = res.result.evaluate
-          this.imgs = res.result.imgs
-          this.bigImgs = this.setImgs()
-          this.getBenchs()
-          this.getAuthor()
-          this.getRecord()
+          if (res.result.enterpriseOpenTime) {
+            res.result.enterpriseOpenTime = res.result.enterpriseOpenTime.split(' ')[0]
+          }
+
+          this.base = res.result
         } else {
           this.$message.error(res.message)
         }
       })
     },
-    showEwm (path) {
-      this.imgPath = path
+    getHouses () {
+      let formData = {
+        enterpriseCode: this.$route.params.id
+      }
+
+      Tools.getJson('findHouseByEnterpriseCode', formData, (res) => {
+        if (res.success == '1') {
+          res.result.forEach((item) => {
+            if (item.housesInfo && item.housesInfo.housesImg) {
+              this.bannerList.push(item.housesInfo.housesImg)
+            }
+          })
+
+          setTimeout(() => {
+            this.$refs.bannerBox.setData()
+          }, 0)
+
+          this.propertyList = res.result
+        } else {
+          this.$message.error(res.message)
+        }
+      })
+    },
+    showHouseTradeDetail (id) {
+      let formData = {
+        id: id
+      }
+
+      Tools.getJson('showHouseTradeDetail', formData, (res) => {
+        if (res.success == '1') {
+          this.curentData = res.result
+          this.dialogFormVisible = true
+        } else {
+          this.$message.error(res.message)
+        }
+      })
+    },
+    showEwm (type) {
+      this.imgPath = this.base[type]
+      if (!this.imgPath) {
+        this.$message({
+            message: '暂无二维码！',
+            type: 'warning'
+        })
+        return false
+      }
       this.dialogVisible.value = true
     },
-    showChanges () {
-      this.dialogFormVisible = true
+    showChanges (id) {
+      this.showHouseTradeDetail(id)
     }
   },
   components: {
-    bannerInvest,
+    bannerSecurity,
     showEwm
   }
 }
@@ -416,6 +434,7 @@ export default {
   .mid-box {
     position: relative;
     width: 1160px;
+    min-height: 360px;
     margin: 10px auto;
   }
 
@@ -470,7 +489,7 @@ export default {
         width: 1100px;
 
         .base-content {
-            width: 980px;
+            width: 970px;
         }
     }
   }

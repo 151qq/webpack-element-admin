@@ -36,7 +36,7 @@ export default {
   data () {
     return {
       investList : [],
-      pageSize: 1,
+      pageSize: 12,
       pageNumber: 1,
       total: 0
     }

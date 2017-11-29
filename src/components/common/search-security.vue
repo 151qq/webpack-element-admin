@@ -9,12 +9,12 @@
         >
       </el-input>
 
-      <el-button class="search-btn" type="primary" icon="search" @click.stop="goMap">
+      <!-- <el-button class="search-btn" type="primary" icon="search">
         搜索
-      </el-button>
+      </el-button> -->
     </section>
 
-    <el-select v-model="searchTypeName"
+   <!--  <el-select v-model="searchTypeName"
                 placeholder="请选择">
       <el-option
         v-for="(item, index) in searchType"
@@ -22,10 +22,13 @@
         :label="item.label"
         :value="item.value">
       </el-option>
-    </el-select>
+    </el-select> -->
 
     <div class="mess-box" v-show="messDate.length !== 0 && isShow">
-      <router-link v-for="item in messDate" class="nav-r" target="_blank" :to="{name: 'info', params: {type: pageInfo.type, id: item.housesId}}">{{ item.housesDesc }}</router-link>
+      <router-link v-for="item in messDate" class="nav-r" target="_blank"
+                  :to="{ name: 'security-detail', params: { id: item.productCode }}">
+        {{ item.productCame }}
+      </router-link>
     </div>
   </div>
 </template>
@@ -34,12 +37,6 @@ import $ from 'Jquery'
 import util from '../../assets/common/util.js'
 
 export default {
-  props: {
-    isPage: {
-      type: Boolean,
-      default: false
-    }
-  },
   data () {
     return {
       isShow: false,
@@ -80,15 +77,13 @@ export default {
       // 记录被调用序号
       var count = this.count
 
-      this.pageInfo = this.$store.getters.getPageInfo
-
       let formData = {
         key: this.keyValue
       }
 
       util.request({
         method: 'post',
-        interface: 'searchMap',
+        interface: 'searchHousesFileter',
         data: formData
       }).then(res => {
         if (res.result.success == '1') {
@@ -102,15 +97,9 @@ export default {
       })
     },
     getMess () {
-      if (this.isPage) {
-        return false
-      }
-
       if (this.keyValue === '') {
         this.isShow = false
         return false
-      } else if (this.keyValue.split('，').length > 20) {
-        this.$message.error('最多支持20个关键字搜索')
       }
       // getMess
       this.isShow = true
@@ -119,34 +108,6 @@ export default {
     },
     showModel () {
       this.isShow = true
-    },
-    hideMess (e) {
-      this.isShow = false
-    },
-    goMap () {
-      if (this.keyValue === '') {
-        this.$message.error('请输入搜索关键字')
-        return false
-      }
-
-      this.$store.dispatch('setMapInfo', this.messDate)
-      if (this.isPage) {
-        this.isShow = false
-        this.$emit('mapChange', this.keyValue)
-        return false
-      }
-
-      var url = {
-        name: 'map',
-        params: {
-          type: this.pageInfo.type
-        },
-        query: {
-          key: this.keyValue
-        }
-      }
-      this.isShow = false
-      this.$router.push(url)
     }
   }
 }

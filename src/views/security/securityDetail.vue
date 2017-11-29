@@ -1,6 +1,6 @@
 <template>
   <section class="security-detail-con">
-    <banner-invest :base="base"></banner-invest>
+    <banner-security :banner-list="bannerList" ref="bannerBox"></banner-security>
 
     <div class="mid-box">
       <el-tabs class="card-box" v-model="activeName">
@@ -12,11 +12,11 @@
             </p>
             <p class="base-b">
                 <span class="title">发行机构：</span>
-                <span class="base-content">{{base.productPublishOrg}}</span>
+                <span class="base-content">{{base.productPublishOrgName}}</span>
             </p>
             <p class="base-b">
                 <span class="title">上市地点：</span>
-                <span class="base-content">{{base.productIpoSite}}</span>
+                <span class="base-content">{{base.productIpoSiteName}}</span>
             </p>
             <p class="base-b">
                 <span class="title">发行时间：</span>
@@ -32,19 +32,19 @@
             </p>
             <p class="base-b">
                 <span class="title">承销机构：</span>
-                <span class="base-content">{{base.productSalesOrg}}</span>
+                <span class="base-content">{{base.productSalesOrgName}}</span>
             </p>
             <p class="base-b">
                 <span class="title">评估机构：</span>
-                <span class="base-content">{{base.productEvaluationOrg}}</span>
+                <span class="base-content">{{base.productEvaluationOrgName}}</span>
             </p>
             <p class="base-b">
                 <span class="title">评级机构：</span>
-                <span class="base-content">{{base.productRatingOrg}}</span>
+                <span class="base-content">{{base.productRatingOrgName}}</span>
             </p>
             <p class="base-b">
                 <span class="title">现金流预测机构：</span>
-                <span class="base-content">{{base.productCashflowConsultingOrg}}</span>
+                <span class="base-content">{{base.productCashflowConsultingOrgName}}</span>
             </p>
             <p class="base-b">
                 <span class="title">证券代码：</span>
@@ -56,113 +56,107 @@
             </p>
             <p class="base-b">
                 <span class="title">产品类型：</span>
-                <span class="base-content">{{base.productType}}</span>
+                <span class="base-content">{{base.productTypeName}}</span>
             </p>
             <p class="base-b">
                 <span class="title">产品链接：</span>
                 <span class="base-content">{{base.productInfoLink}}</span>
             </p>
-            <p class="base-b base-big">
-                <span class="title">兑付和收益：</span>
-                <span class="base-content">
-                  <el-table
-                    :data="publicList"
-                    border
-                    style="width: 100%">
-                    <el-table-column
-                      prop="layered"
-                      label="分层"
-                      width="80">
-                    </el-table-column>
-                    <el-table-column
-                      prop="proportion"
-                      label="比例"
-                      width="80">
-                    </el-table-column>
-                    <el-table-column
-                      prop="securitiesCode"
-                      label="证券代码">
-                    </el-table-column>
-                    <el-table-column
-                      prop="residualPrincipal"
-                      label="剩余本金面额(元)">
-                    </el-table-column>
-                    <el-table-column
-                      prop="stockPrice"
-                      label="证券净价(元)"
-                      width="120">
-                    </el-table-column>
-                    <el-table-column
-                      prop="stockFullPrice"
-                      label="证券全价(元)"
-                      width="120">
-                    </el-table-column>
-                    <el-table-column
-                      prop="stockExpectedYield"
-                      label="证券预期收益率">
-                    </el-table-column>
-                    <el-table-column
-                      prop="weightedLife"
-                      label="加权年限"
-                      width="120">
-                    </el-table-column>
-                  </el-table>
-                </span>
-            </p>
-            <p class="base-b base-big">
-                <span class="title">基金结构：</span>
-                <span class="base-content">
-                  <img :src="base.productArcUrl">
-                </span>
-            </p>
+            <div class="clear"></div>
+            <el-table
+              :data="publicList"
+              class="floorBox"
+              border
+              style="width: 100%">
+              <el-table-column
+                prop="layered"
+                label="分层"
+                width="80">
+              </el-table-column>
+              <el-table-column
+                prop="fundLevelRatio"
+                label="比例"
+                width="80">
+              </el-table-column>
+              <el-table-column
+                prop="fundLevelCode"
+                label="证券代码">
+              </el-table-column>
+              <el-table-column
+                prop="fundLevelResidualPrincipal"
+                label="剩余本金面额(元)">
+              </el-table-column>
+              <el-table-column
+                prop="fundLevelNetPrice"
+                label="证券净价(元)"
+                width="120">
+              </el-table-column>
+              <el-table-column
+                prop="fundLevelTotalPrice"
+                label="证券全价(元)"
+                width="120">
+              </el-table-column>
+              <el-table-column
+                prop="fundLevelForcastPayback"
+                label="证券预期收益率">
+              </el-table-column>
+              <el-table-column
+                prop="fundLevelWeightingPeriod"
+                label="加权年限"
+                width="120">
+              </el-table-column>
+            </el-table>
+            <img class="big-img" :src="base.productArcUrl">
           </div>
         </el-tab-pane>
-        <el-tab-pane class="card-outer" label="所持物业" name="所持物业">
+        <el-tab-pane class="card-outer" label="相关物业" name="相关物业">
           <template v-for="(item, index) in propertyList">
               <div class="line-sper" v-if="index"></div>
-
-              <router-link class="asset-money"
-                          :to="{name: 'info', params: {type: 'business', id: item.id}}">
-                  <img class="cover-img" :src="item.imgUrl">
+              
+              <router-link class="asset-money" target="_blank"
+                        :to="{name: 'info', params: {type: 'business', id: item.houseId}}">
+                  <img class="cover-img" :src="item.housesInfo.housesImg">
                   <div class="right-content">
-                      <div>物业名称：{{item.name}}</div>
-                      <div>物业地址：{{item.address}}</div>
-                      <div>基金占比：{{item.changes}}</div>
+                      <div>物业名称：{{item.housesInfo.housesDesc}}</div>
+                      <div>物业地址：{{item.housesInfo.housesAddr}}</div>
+                      <div>基金占比：{{item.productHouseRate}}</div>
                   </div>
               </router-link>
 
-              <div class="money-box" v-if="propertyList.length">
-                  <section class="label-box">
-                      <div class="cell-box title-box">&nbsp;</div>
-                      <div class="cell-box">预测现金流</div>
-                      <div class="cell-box">保底现金流</div>
-                      <div class="cell-box">真实现金流</div>
-                      <div class="cell-box">优先级</div>
-                      <div class="cell-box">夹层</div>
-                      <div class="cell-box">劣后</div>
-                  </section>
-                  <section class="value-box" v-for="(item, index) in propertyList">
-                      <div class="cell-box title-box">{{item.name}}</div>
-                      <div class="cell-box">
-                          {{item.name}}
-                      </div>
-                      <div class="cell-box">
-                          {{item.name}}
-                      </div>
-                      <div class="cell-box">
-                          {{item.name}}
-                      </div>
-                      <div class="cell-box">
-                          {{item.name}}
-                      </div>
-                      <div class="cell-box">
-                          {{item.name}}
-                      </div>
-                      <div class="cell-box">
-                          {{item.name}}
-                      </div>
-                  </section>
-              </div>
+              <el-table
+                  :data="item.cashflowList"
+                  class="cashBox"
+                  border
+                  style="width: 100%">
+                  <el-table-column
+                    prop="year"
+                    label="年">
+                  </el-table-column>
+                  <el-table-column
+                    prop="houseForcastCashflow"
+                    label="预测现金流">
+                  </el-table-column>
+                  <el-table-column
+                    prop="houseGuaranteeCashflow"
+                    label="保底现金流">
+                  </el-table-column>
+                  <el-table-column
+                    prop="houseRealCashflow"
+                    label="真实现金流">
+                  </el-table-column>
+                  <el-table-column
+                    prop="fundPriorityLevelPayback"
+                    label="优先级">
+                  </el-table-column>
+                  <el-table-column
+                    prop="fundMiddleLevelPayback"
+                    label="夹层">
+                  </el-table-column>
+                  <el-table-column
+                    prop="fundLastLevelPayback"
+                    label="劣后">
+                  </el-table-column>
+              </el-table>
           </template>
         </el-tab-pane>
       </el-tabs>
@@ -170,7 +164,7 @@
   </section>
 </template>
 <script>
-import bannerInvest from '../../components/views/banner-invest.vue'
+import bannerSecurity from '../../components/views/banner-security.vue'
 import Tools from '../../utils/tools.js'
 
 export default {
@@ -180,97 +174,140 @@ export default {
       base: {
           id: '',
           productCame: '',
-          productPublishOrg: '',
-          productIpoSite: '',
+          productPublishOrgName: '',
+          productIpoSiteName: '',
           productPublishTime: '',
           productMarketCode: '',
           productState: '',
           productInfoLink: '',
           productLogo: '',
           productDesc: '',
-          productType: '',
+          productTypeName: '',
           productHouseRate: [],
           productEndTime: '',
           productQuotation: '',
-          productSalesOrg: '',
-          productEvaluationOrg: '',
-          productRatingOrg: '',
-          productCashflowConsultingOrg: '',
-          productArcUrl: '/static/images/bench1.png'
+          productSalesOrgName: '',
+          productEvaluationOrgName: '',
+          productRatingOrgName: '',
+          productCashflowConsultingOrgName: '',
+          productArcUrl: ''
       },
-      publicList : [
+      publicList: [
         {
-          id: 0,
+          id: '',
           layered: '优先级',
-          proportion: '0.12',
-          securitiesCode: '2342342',
-          residualPrincipal: 22,
-          stockPrice: 33,
-          stockFullPrice: 55,
-          stockExpectedYield: 1,
-          weightedLife: 2017
+          fundLevelCode: '',
+          fundLevelRatio: '',
+          financeProductCode: '',
+          fundLevelResidualPrincipal: '',
+          fundLevelNetPrice: '',
+          fundLevelTotalPrice: '',
+          fundLevelForcastPayback: '',
+          fundLevelWeightingPeriod: ''
         },
         {
-          id: 1,
+          id: '',
           layered: '夹层',
-          proportion: '0.12',
-          securitiesCode: '2342342',
-          residualPrincipal: 22,
-          stockPrice: 33,
-          stockFullPrice: 55,
-          stockExpectedYield: 1,
-          weightedLife: 2017
+          fundLevelCode: '',
+          fundLevelRatio: '',
+          financeProductCode: '',
+          fundLevelResidualPrincipal: '',
+          fundLevelNetPrice: '',
+          fundLevelTotalPrice: '',
+          fundLevelForcastPayback: '',
+          fundLevelWeightingPeriod: ''
         },
         {
-          id: 2,
+          id: '',
           layered: '劣后级',
-          proportion: '0.12',
-          securitiesCode: '2342342',
-          residualPrincipal: 22,
-          stockPrice: 33,
-          stockFullPrice: 55,
-          stockExpectedYield: 1,
-          weightedLife: 2017
+          fundLevelCode: '',
+          fundLevelRatio: '',
+          financeProductCode: '',
+          fundLevelResidualPrincipal: '',
+          fundLevelNetPrice: '',
+          fundLevelTotalPrice: '',
+          fundLevelForcastPayback: '',
+          fundLevelWeightingPeriod: ''
         }
       ],
-      propertyList: [
-        {
-          id: 0,
-          imgUrl: '/static/images/bench1.png',
-          name: '第一物业',
-          address: '北京市朝阳区soho大厦',
-          changes: '2017-09-09 甲方 -> 乙方（10万元），2017-09-09 甲方 -> 乙方（10万元）'
-        },
-        {
-          id: 1,
-          imgUrl: '/static/images/bench1.png',
-          name: '第一物业',
-          address: '北京市朝阳区soho大厦',
-          changes: '2017-09-09 甲方 -> 乙方（10万元），2017-09-09 甲方 -> 乙方（10万元）'
-        }
-      ]
+      propertyList: [],
+      bannerList: []
     }
   },
   mounted () {
-    document.title = '机构详情'
-    // this.getDatas()
+    document.title = '证券详情'
+    this.getBase()
+    this.getCashflow()
   },
   methods: {
-    getDatas () {
+    getBase () {
       let formData = {
-        type: this.type,
-        id: this.$route.params.id
+        productCode: this.$route.params.id
       }
 
-      Tools.getJson('info', formData, (res) => {
+      Tools.getJson('findByProductInfo', formData, (res) => {
         if (res.success == '1') {
-          this.base = res.result.base
-          this.evaluate = res.result.evaluate
-          this.imgs = res.result.imgs
-          this.bigImgs = this.setImgs()
-          this.getBenchs()
-          this.getAuthor()
-          this.getRecord()
+          var result = res.result
+          if (result.productPublishTime) {
+            result.productPublishTime = result.productPublishTime.split(' ')[0]
+          }
+
+          if (result.productEndTime) {
+            result.productEndTime = result.productEndTime.split(' ')[0]
+          }
+
+          this.base = result
+
+          setTimeout(() => {
+            this.getDetail()
+          }, 0)
+        } else {
+          this.$message.error(res.message)
+        }
+      })
+    },
+    getDetail () {
+      let formData = {
+        financeProductCode: this.$route.params.id
+      }
+
+      Tools.getJson('findDetail', formData, (res) => {
+        if (res.success == '1') {
+          var arr = this.publicList.concat([])
+          res.result.forEach((item) => {
+              if (item.fundLevelCode == this.base.productMarketCode + '1') {
+                  arr[0] = Object.assign(arr[0], item)
+              } else if (item.fundLevelCode == this.base.productMarketCode + '2') {
+                  arr[1] = Object.assign(arr[1], item)
+              } else if (item.fundLevelCode == this.base.productMarketCode + '3') {
+                  arr[2] = Object.assign(arr[2], item)
+              }
+          })
+
+          this.publicList = arr
+        } else {
+          this.$message.error(res.message)
+        }
+      })
+    },
+    getCashflow () {
+      let formData = {
+        productCode: this.$route.params.id
+      }
+
+      Tools.getJson('fundCashflow', formData, (res) => {
+        if (res.success == '1') {
+          res.result.forEach((item) => {
+            if (item.housesInfo && item.housesInfo.housesImg) {
+              this.bannerList.push(item.housesInfo.housesImg)
+            }
+          })
+
+          setTimeout(() => {
+            this.$refs.bannerBox.setData()
+          }, 0)
+
+          this.propertyList = res.result
         } else {
           this.$message.error(res.message)
         }
@@ -278,7 +315,7 @@ export default {
     }
   },
   components: {
-    bannerInvest
+    bannerSecurity
   }
 }
 </script>
@@ -291,6 +328,24 @@ export default {
   .line-sper {
       border-top: 1px solid #99A9BF;
       margin: 20px 0;
+  }
+
+  .big-img {
+    display: block;
+    max-width: 100%;
+    margin-top: 20px;
+  }
+
+  .cashBox {
+      margin-top: 20px;
+  }
+
+  .floorBox {
+      margin-top: 10px;
+  }
+
+  .clear {
+    clear: both;
   }
 
   .asset-money {
@@ -323,47 +378,11 @@ export default {
         }
     }
 
-    .money-box {
-      display: flex;
-      border: 1px solid #dfe6ec;
-      border-bottom: none;
-      border-right: none;
-      margin-top: 20px;
-
-      section {
-          .title-box {
-              text-align: center;
-              background: #eef1f6;
-              font-weight: bold;
-          }
-
-          .cell-box {
-              font-size: 14px;
-              color: #1f2d3d;
-              padding: 5px 18px;
-              line-height: 30px;
-              border-right: 1px solid #dfe6ec;
-              border-bottom: 1px solid #dfe6ec;
-
-              .el-input__inner {
-                  height: 30px;
-              }
-          }
-      }
-
-      .value-box {
-          flex: 1;
-      }
-
-      .label-box {
-          width: 120px;
-      }
-  }
-
   .mid-box {
     position: relative;
     width: 1160px;
     margin: 10px auto;
+    min-height: 360px;
   }
 
   .out-box {

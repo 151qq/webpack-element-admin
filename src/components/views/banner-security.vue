@@ -1,37 +1,26 @@
 <template>
-  <div class="banner-box">
+  <div class="banner-security">
     <img class="img-box" src="../../assets/images/banner-bg.jpg">
     <section class="banner-f">
-      <el-carousel :interval="4000" type="card" height="310px">
-        <el-carousel-item v-for="(item, index) in bannerData" :key="index">
-          <img class="img-invest" :src="item.imgUrl">
-        </el-carousel-item>
-      </el-carousel>
+        <el-carousel :interval="4000" type="card" height="310px">
+          <el-carousel-item v-for="(item, index) in bannerData" :key="index">
+            <img class="img-invest" :src="item">
+          </el-carousel-item>
+        </el-carousel>
     </section>
   </div>
 </template>
 <script>
-import Tools from '../../utils/tools.js'
-import { swiper, swiperSlide } from 'vue-awesome-swiper'
 
 export default {
-  props: ['base'],
+  props: ['bannerList'],
   data () {
     return {
       listDatas: [],
       bannerData: [
-        {
-            imgUrl: '/static/images/ip_big1.jpg',
-            des: '投资机构数据库'
-        },
-        {
-            imgUrl: '/static/images/ip_big2.jpg',
-            des: '商业地产数据库'
-        },
-        {
-            imgUrl: '/static/images/ip_big3.jpg',
-            des: '商业地产证券化数据库'
-        }
+        '/static/images/ip_big1.jpg',
+        '/static/images/ip_big2.jpg',
+        '/static/images/ip_big3.jpg'
       ],
       currentIndex: 0,
       swiperOption: {
@@ -48,33 +37,15 @@ export default {
       }
     }
   },
-  created () {
-  },
   methods: {
-    getData () {
-      this.getEcharts()
-      this.getDatas()
-    },
-    // 获取资金排名数据
-    getDatas () {
-      this.pageInfo = this.$store.getters.getPageInfo
-      Tools.getJson('rents', this.pageInfo, (res) => {
-        if (res.success === '1') {
-          this.listDatas = res.result
-        } else {
-          this.$message.error(res.message)
-        }
-      })
+    setData () {
+      this.bannerData = this.bannerList.concat(this.bannerData).splice(0, 3)
     }
-  },
-  components: {
-    swiper,
-    swiperSlide
   }
 }
 </script>
 <style lang="scss">
-.banner-box {
+.banner-security {
   position: relative;
   width: 100%;
   height: 450px;

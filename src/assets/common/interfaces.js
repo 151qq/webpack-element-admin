@@ -116,6 +116,15 @@ export default {
         */
         searchMap: platform + 'houses/searchHousesFileter.json',
         getSecurityList: platform + 'financeProduct/selectCodeLogoAndCnamer.json',
-        getInvestList: platform + 'enterprise/searchAllEnterpriseInfo.json'
+        getInvestList: platform + 'enterprise/searchAllEnterpriseInfo.json',
+        selectEntByNameOrNameReg: platform + 'enterprise/selectEntByNameOrNameReg.json',
+        findHouseByEnterpriseCode: platform + 'enterprise/findHouseByEnterpriseCode.json',
+        showEnterpriseInfo: platform + 'enterprise/showEnterpriseInfo.json',
+        showHouseTradeDetail: platform + 'houseTradeDetail/showHouseTradeDetail.json',
+
+        searchHousesFileter: platform + 'financeProduct/searchHousesFileter.json',
+        findByProductInfo: platform + 'financeProduct/findByProductInfo.json',
+        findDetail: platform + 'financeProduct/findDetail.json',
+        fundCashflow: platform + 'financeProduct/fundCashflow.json'
     }
 }
