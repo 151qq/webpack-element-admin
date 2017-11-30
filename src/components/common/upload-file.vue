@@ -2,7 +2,8 @@
   <el-dialog title="头像更改" v-model="dialogFormVisible.visibleF" size="tiny">
     <div class="el-upload file-container">
       <div class="el-dragger">
-        <img class="preview-img" :src="imgPath" v-show="imgPath" />
+        <img v-if="imgPath" class="preview-img" :src="imgPath"/>
+        <img v-else class="preview-img" src="../../assets/images/default-avatar.png"/>
         <input class="btn_file" type="file" @change="fileChange"/>
       </div>
       {{remark}}

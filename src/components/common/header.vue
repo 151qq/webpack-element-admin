@@ -19,7 +19,10 @@
     </div>
 
     <div class="member-box">
-      <a class="img-box" @click="editImgUrl"><img :src="userInfo.iconUrl"></a>
+      <a class="img-box" @click="editImgUrl">
+        <img v-if="userInfo.iconUrl" :src="userInfo.iconUrl">
+        <img v-else src="../../assets/images/default-avatar.png">
+      </a>
       <el-dropdown>
         <span class="el-dropdown-link">
           您好
