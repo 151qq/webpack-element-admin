@@ -7,33 +7,41 @@
               <template scope="props">
                 <el-form label-position="left" inline class="demo-table-expand">
                   <el-form-item label="交易备注：">
-                    <span>{{ props.row.tenantDesc }}</span>
+                    <span>{{ props.row.houseTradeDesc }}</span>
                   </el-form-item>
                   <el-form-item label="评估机构：">
-                    <span>{{ props.row.evalCodes }}</span>
+                    <span>{{ props.row.houseTradeConsultingOrg }}</span>
+                  </el-form-item>
+                  <el-form-item label="咨询机构：">
+                    <span>{{ props.row.houseTradeEvaluationOrg }}</span>
+                  </el-form-item>
+                  <el-form-item label="交易类型：">
+                    <span>{{ props.row.houseTradeType }}</span>
                   </el-form-item>
                 </el-form>
               </template>
             </el-table-column>
             <el-table-column
-                    prop="dateString"
+                    prop="houseTradeDate"
                     label="交易日期">
             </el-table-column>
             <el-table-column
-                    prop="price"
+                    prop="houseRradePrice"
                     label="价格(万)">
             </el-table-column>
             <el-table-column
-                    prop="changeA"
+                    prop="houseTradeACode"
+                    width="240"
                     label="交易甲方">
             </el-table-column>
             <el-table-column
-                    prop="changeB"
+                    prop="houseTradeBCode"
+                    width="240"
                     label="交易乙方">
             </el-table-column>
             <el-table-column
-                    prop="tenantFinanceTool"
-                    label="金融工具">
+                    prop="recordCreater"
+                    label="填报人">
             </el-table-column>
         </el-table>
         <el-pagination
@@ -68,13 +76,13 @@ export default {
                 method: 'get',
                 interface: 'changes',
                 data: {
-                    id: this.$route.params.id,
+                    housesId: this.$route.params.id,
                     pageSize: this.pageSize,
                     pageNumber: this.pageNumber
                 }
             }).then(res => {
                 res.result.result.changes.forEach((item) => {
-                    item.dateString = item.date.split(' ')[0]
+                    item.houseTradeDate = item.houseTradeDate.split(' ')[0]
                 })
                 this.changes = res.result.result.changes
                 this.total = this.total ? Number(this.total) : 0

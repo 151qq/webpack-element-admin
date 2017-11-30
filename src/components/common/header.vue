@@ -15,7 +15,7 @@
       <router-link :to="{ name: 'index', params: { type: 'mall' }}">购物中心</router-link>
       <router-link :to="{ name: 'index', params: { type: 'apartment' }}">租赁公寓</router-link>
       <router-link :to="{ name: 'index', params: { type: 'park' }}">大型园区</router-link>
-      <router-link :to="{ name: 'report'}">我的报告</router-link>
+      <!-- <router-link :to="{ name: 'report'}">我的报告</router-link> -->
     </div>
 
     <div class="member-box">

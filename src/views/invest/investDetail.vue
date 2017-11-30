@@ -305,6 +305,9 @@ export default {
 
       Tools.getJson('showHouseTradeDetail', formData, (res) => {
         if (res.success == '1') {
+          if (res.result.houseTradeDate) {
+            res.result.houseTradeDate = res.result.houseTradeDate.split(' ')[0]
+          }
           this.curentData = res.result
           this.dialogFormVisible = true
         } else {

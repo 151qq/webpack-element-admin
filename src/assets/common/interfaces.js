@@ -1,3 +1,4 @@
+
 const platform = "/e2-site-api/";
 // const platform = "http://192.168.2.105:8080/";
 
@@ -15,7 +16,7 @@ export default {
         searchHousesKey: platform + 'houses/searchHousesKey.json',
         findUserInfoByCode: platform + 'findUserInfoByCode.json',
 
-        changes: platform +'houses/findHousesTrade.json',
+        changes: platform +'houseTradeDetail/showHouseTradeDetailByHousesId.json',
         rent: platform +'houses/findHousesRent.json',
         rates: platform +'houses/vacancyList.json',
         evalues: platform +'houses/findValuationHistory.json',
