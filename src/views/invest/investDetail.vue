@@ -36,7 +36,7 @@
             </p>
             <p class="base-b">
                 <span class="title">企业类型：</span>
-                <span class="base-content">{{base.enterpriseIndustry}}</span>
+                <span class="base-content">{{base.enterpriseIndustryName}}</span>
             </p>
             <p class="base-b">
                 <span class="title">注册地址：</span>
@@ -123,8 +123,15 @@
               <div class="con-right">
                 <span class="content-list">名称：{{item.housesInfo.housesDesc}}</span>
                 <span class="content-list">地址：{{item.housesInfo.housesAddr}}</span>
-                <span class="content-list">业务：{{item.houseTradeType}}</span>
-                <span class="link-list" @click.prevent="showChanges(item.id)">交易详情 ></span>
+                <span class="content-list" v-if="base.enterpriseIndustry != 'propertys_agent_type_4'">
+                    业务：{{item.houseTradeType}}
+                </span>
+                <span class="content-list" v-else>
+                    业务：物业管理
+                </span>
+                <span class="link-list"
+                      v-if="base.enterpriseIndustry != 'propertys_agent_type_4'"
+                      @click.prevent="showChanges(item.id)">交易详情 ></span>
               </div>
           </router-link>
         </el-tab-pane>
@@ -255,7 +262,6 @@ export default {
   mounted () {
     document.title = '机构详情'
     this.getBase()
-    this.getHouses()
   },
   methods: {
     getBase () {
@@ -270,6 +276,10 @@ export default {
           }
 
           this.base = res.result
+
+          setTimeout(() => {
+            this.getHouses()
+          }, 0)
         } else {
           this.$message.error(res.message)
         }
@@ -277,7 +287,8 @@ export default {
     },
     getHouses () {
       let formData = {
-        enterpriseCode: this.$route.params.id
+        enterpriseCode: this.$route.params.id,
+        type: this.base.enterpriseIndustry
       }
 
       Tools.getJson('findHouseByEnterpriseCode', formData, (res) => {
