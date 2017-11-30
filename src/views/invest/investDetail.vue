@@ -15,7 +15,7 @@
                 <span class="base-content">{{base.enterpriseNameReg}}</span>
             </p>
             <p class="base-b">
-                <span class="title">主体评级：</span>
+                <span class="title">信用评级：</span>
                 <span class="base-content">{{base.enterpriseCreditLevel}}</span>
             </p>
             <p class="base-b">
