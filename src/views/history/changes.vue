@@ -6,17 +6,17 @@
             <el-table-column type="expand">
               <template scope="props">
                 <el-form label-position="left" inline class="demo-table-expand">
-                  <el-form-item label="交易备注：">
-                    <span>{{ props.row.houseTradeDesc }}</span>
-                  </el-form-item>
                   <el-form-item label="评估机构：">
-                    <span>{{ props.row.houseTradeConsultingOrg }}</span>
+                    <span>{{ props.row.houseTradeEvaluationOrg }}</span>
                   </el-form-item>
                   <el-form-item label="咨询机构：">
-                    <span>{{ props.row.houseTradeEvaluationOrg }}</span>
+                    <span>{{ props.row.houseTradeConsultingOrg }}</span>
                   </el-form-item>
                   <el-form-item label="交易类型：">
                     <span>{{ props.row.houseTradeType }}</span>
+                  </el-form-item>
+                  <el-form-item label="交易备注：">
+                    <span>{{ props.row.houseTradeDesc }}</span>
                   </el-form-item>
                 </el-form>
               </template>
@@ -116,7 +116,7 @@ export default {
     .demo-table-expand .el-form-item {
         margin-right: 0;
         margin-bottom: 0;
-        width: 50%;
+        width: 100%;
     }
 
     .el-dialog--small {
