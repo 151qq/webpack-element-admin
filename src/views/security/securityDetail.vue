@@ -149,19 +149,19 @@
                   style="width: 100%">
                   <el-table-column
                     prop="year"
-                    label="年">
+                    label="年(现金流 万)">
                   </el-table-column>
                   <el-table-column
                     prop="houseForcastCashflow"
-                    label="预测现金流">
+                    label="预测">
                   </el-table-column>
                   <el-table-column
                     prop="houseGuaranteeCashflow"
-                    label="保底现金流">
+                    label="保底">
                   </el-table-column>
                   <el-table-column
                     prop="houseRealCashflow"
-                    label="真实现金流">
+                    label="真实">
                   </el-table-column>
                   <el-table-column
                     prop="fundPriorityLevelPayback"
