@@ -58,10 +58,6 @@
                 <span class="title">产品类型：</span>
                 <span class="base-content">{{base.productTypeName}}</span>
             </p>
-            <p class="base-b">
-                <span class="title">产品链接：</span>
-                <span class="base-content">{{base.productInfoLink}}</span>
-            </p>
             <div class="clear"></div>
             <el-table
               :data="publicList"
@@ -98,7 +94,7 @@
               </el-table-column>
               <el-table-column
                 prop="fundLevelForcastPayback"
-                label="证券预期收益率">
+                label="证券预期收益率(%)">
               </el-table-column>
               <el-table-column
                 prop="fundLevelWeightingPeriod"
@@ -106,7 +102,30 @@
                 width="120">
               </el-table-column>
             </el-table>
-            <img class="big-img" :src="base.productArcUrl">
+          </div>
+        </el-tab-pane>
+        <el-tab-pane class="card-outer" label="证券描述" name="证券描述">
+          <div class="invest-des-box">
+              <div class="left">
+                  <section class="one">
+                      <img class="info-big" :src="base.productLogo">
+                      <div class="info-con" v-html="base.productDesc"></div>
+                  </section>
+              </div>
+              <div class="right">
+                  <a v-for="item in imgList" class="bench"
+                      @click="showProductArcUrl(item.showImg)">
+                      <img :src="item.imgUrl">
+                      <div class="bg-black"></div>
+                      <div class="title-box">{{item.name}}</div>
+                  </a>
+                  <a v-for="item in linkList" class="bench" target="_blank" 
+                      :href="item.href">
+                      <img :src="item.imgUrl">
+                      <div class="bg-black"></div>
+                      <div class="title-box">{{item.name}}</div>
+                  </a>
+              </div>
           </div>
         </el-tab-pane>
         <el-tab-pane class="card-outer" label="相关物业" name="相关物业">
@@ -161,6 +180,9 @@
         </el-tab-pane>
       </el-tabs>
     </div>
+    <el-dialog class="product-url-box" title="证券结构图" :visible.sync="dialogFormVisible">
+          <img class="big-img-box" :src="nowImg">
+    </el-dialog>
   </section>
 </template>
 <script>
@@ -231,7 +253,25 @@ export default {
         }
       ],
       propertyList: [],
-      bannerList: []
+      bannerList: [],
+      dialogFormVisible: false,
+      nowImg: '',
+      imgList: [
+        {
+          id: 0,
+          imgUrl: '/static/images/jg-img.jpg',
+          showImg: '',
+          name: '证券结构图'
+        }
+      ],
+      linkList: [
+        {
+          id: 0,
+          imgUrl: '/static/images/zq-img.jpg',
+          href: '',
+          name: '产品链接'
+        }
+      ]
     }
   },
   mounted () {
@@ -256,6 +296,9 @@ export default {
             result.productEndTime = result.productEndTime.split(' ')[0]
           }
 
+          this.imgList[0].showImg = result.productArcUrl
+          this.linkList[0].href = result.productInfoLink
+
           this.base = result
 
           setTimeout(() => {
@@ -265,6 +308,17 @@ export default {
           this.$message.error(res.message)
         }
       })
+    },
+    showProductArcUrl (imgUrl) {
+      this.nowImg = imgUrl
+      if (!imgUrl) {
+        this.$message({
+            message: '暂无证券结构图！',
+            type: 'warning'
+        })
+        return false
+      }
+      this.dialogFormVisible = true
     },
     getDetail () {
       let formData = {
@@ -319,7 +373,32 @@ export default {
   }
 }
 </script>
-<style lang="scss" scoped>
+<style lang="scss">
+.product-url-box {
+  .el-dialog--small {
+    top: 10% !important;
+    width: 600px;
+    
+    .big-img-box {
+      width: 100%;
+      min-height: 300px;
+
+      div {
+        font-size: 20px;
+        line-height: 300px;
+        text-align: center;
+        color: #999999;
+        font-weight: bold;
+      }
+
+      img {
+        display: block;
+        width: 100%;
+      }
+    }
+  }
+}
+
 .security-detail-con {
   .card-outer {
     margin-bottom: 50px;
@@ -348,12 +427,104 @@ export default {
     clear: both;
   }
 
+  .invest-des-box {
+    width: 1160px;
+    margin: 10px auto 50px;
+    overflow: hidden;
+
+    .left {
+        float: left;
+        width: 867px;
+
+        .one {
+
+            .htmlBox {
+                width: 100%;
+                height: auto;
+                min-height: 500px;
+            }
+
+            .title {
+                font-size: 20px;
+                line-height: 28px;
+                color: #000000;
+                margin-bottom: 10px;
+            }
+
+            .info-big {
+                width: 100%;
+            }
+
+            .info-con {
+                font-size: 14px;
+                line-height: 30px;
+                margin-top: 20px;
+                color: #1F2D3D;
+
+                p {
+                    font-size: 14px;
+                    line-height: 30px;
+                    color: #1F2D3D;
+                }
+            }
+        }
+    }
+
+    .right {
+        float: right;
+        width: 260px;
+
+        p {
+            font-size: 20px;
+            line-height: 28px;
+            color: #000000;
+            margin-bottom: 10px;
+        }
+
+        .bench {
+            position: relative;
+            display: block;
+            margin-bottom: 15px;
+
+            img {
+                width: 260px;
+                height: 180px;
+                border-radius: 3px;
+            }
+
+            .bg-black {
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                transform: translate(-50%,-50%);
+                width: 100%;
+                height: 60px;
+                background: #000000;
+                opacity: 0.6;
+            }
+
+            .title-box {
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                transform: translate(-50%,-50%);
+                width: 100%;
+                height: 60px;
+                text-align: center;
+                font-size: 16px;
+                line-height: 60px;
+                color: #ffffff;
+            }
+        }
+    }
+  }
+
   .asset-money {
         display: flex;
 
         .cover-img {
             width: 200px;
-            height: 160px;
+            height: 120px;
         }
 
         .right-content {

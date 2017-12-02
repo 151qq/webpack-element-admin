@@ -95,7 +95,8 @@
                 <span class="base-content">{{base.enterpriseAssetsReturn}}</span>
             </p>
           </div>
-
+        </el-tab-pane>
+        <el-tab-pane class="card-outer" label="机构描述" name="机构描述">
           <div class="invest-des-box">
               <div class="left">
                   <section class="one">
@@ -129,16 +130,18 @@
                 <span class="content-list" v-else>
                     业务：物业管理
                 </span>
-                <span class="link-list"
+                <div class="link-list">
+                  <el-button size="small" type="primary"
                       v-if="base.enterpriseIndustry != 'propertys_agent_type_4'"
-                      @click.prevent="showChanges(item.id)">交易详情 ></span>
+                      @click.prevent="showChanges(item.id)">交易详情</el-button>
+                </div>
               </div>
           </router-link>
         </el-tab-pane>
       </el-tabs>
     </div>
 
-    <el-dialog title="交易详情" :visible.sync="dialogFormVisible">
+    <el-dialog class="trade-form" title="交易详情" :visible.sync="dialogFormVisible">
           <el-form :label-position="'left'" label-width="100px" :model="curentData">
               <el-form-item label="交易日期：">
                   {{curentData.houseTradeDate}}
@@ -215,25 +218,13 @@ export default {
       publicList: [
         {
           id: 0,
-          imgUrl: '/static/images/house1.jpg',
+          imgUrl: '/static/images/wx-img.jpg',
           ewmUrl: 'enterpriseEntprisewechatQrcode',
           name: '微信公众号'
         },
         {
-          id: 1,
-          imgUrl: '/static/images/house2.jpg',
-          ewmUrl: 'enterpriseTwitterQrcode',
-          name: 'twitter账号'
-        },
-        {
-          id: 2,
-          imgUrl: '/static/images/house3.jpg',
-          ewmUrl: 'enterpriseFacebookQrcode',
-          name: 'facebook账号'
-        },
-        {
           id: 3,
-          imgUrl: '/static/images/house4.jpg',
+          imgUrl: '/static/images/wb-img.jpg',
           ewmUrl: 'enterpriseSinamicroblogQrcode',
           name: '微博账号'
         }
@@ -348,6 +339,16 @@ export default {
 }
 </script>
 <style lang="scss">
+.trade-form {
+  .el-dialog--small {
+    top: 10% !important;
+
+    .el-form-item {
+      margin-bottom: 10px;
+    }
+  }
+}
+
 .invest-des-box {
     width: 1160px;
     margin: 10px auto 50px;
@@ -474,7 +475,7 @@ export default {
   }
 
   .out-box {
-    padding: 10px 0 10px;
+    padding: 10px 0 30px;
     overflow: hidden;
 
     .base-b {
@@ -546,9 +547,10 @@ export default {
         position: absolute;
         right: 0;
         bottom: 0;
-        font-size: 14px;
-        color: #20a0ff;
-        text-align: right;
+
+        .el-button--small {
+          width: auto;
+        }
       }
     }
   }

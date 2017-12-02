@@ -18,7 +18,7 @@ const routers = [
           })
         }
       }, {
-        path: 'invest',
+        path: 'invest/:type',
         name: 'invest',
         component (resolve) {
           require.ensure(['./views/invest/invest.vue'], () => {
@@ -26,7 +26,7 @@ const routers = [
           })
         }
       }, {
-        path: 'investDetail/:id',
+        path: 'invest/:type/investDetail/:id',
         name: 'invest-detail',
         component (resolve) {
           require.ensure(['./views/invest/investDetail.vue'], () => {
@@ -34,7 +34,7 @@ const routers = [
           })
         }
       }, {
-        path: 'security',
+        path: 'security/:type',
         name: 'security',
         component (resolve) {
           require.ensure(['./views/security/security.vue'], () => {
@@ -42,7 +42,7 @@ const routers = [
           })
         }
       }, {
-        path: 'securityDetail/:id',
+        path: 'security/:type/securityDetail/:id',
         name: 'security-detail',
         component (resolve) {
           require.ensure(['./views/security/securityDetail.vue'], () => {

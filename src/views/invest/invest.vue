@@ -9,7 +9,7 @@
           :span="6"
           v-for="(o, index) in investList">
         <router-link class="linkA" target="_blank"
-                    :to="{ name: 'invest-detail', params: { id: o.enterpriseCode }}">
+                    :to="{ name: 'invest-detail', params: { id: o.enterpriseCode, type: $route.params.type }}">
           <el-card :body-style="{ padding: '0px' }">
             <img :src="o.enterpriseLogoUrl" class="image">
             <div style="padding: 14px;">
@@ -42,14 +42,21 @@ export default {
     }
   },
   created () {
-    document.title = '投资机构'
+    document.title = '机构列表'
     this.getInvestList()
+  },
+  watch: {
+    $route () {
+      this.getInvestList()
+      this.pageNumber = 1
+    }
   },
   methods: {
     getInvestList () {
       var formData = {
         pageSize: this.pageSize,
-        pageNumber: this.pageNumber
+        pageNumber: this.pageNumber,
+        types: this.$route.params.type
       }
 
       Tools.getJson('getInvestList', formData, (res) => {

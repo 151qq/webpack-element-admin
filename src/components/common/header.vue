@@ -2,15 +2,22 @@
   <section class="header">
     <router-link class="logo-box" to="index/business"><img src="../../assets/images/logo.png"></router-link>
   
-    <div class="nav-box" v-if="pathName == 'invest'">
-      <router-link :to="{ name: 'invest'}">投资机构</router-link>
+    <div class="nav-box" v-if="$route.name == 'invest'">
+      <router-link :to="{ name: 'invest', params: {type: 'finance_org_type_1'}}">物业投资机构</router-link>
+      <router-link :to="{ name: 'invest', params: {type: 'propertys_agent_type_4'}}">物业管理机构</router-link>
+      <router-link
+          :to="{ name: 'invest', params: {type: 'propertys_agent_type_1,propertys_agent_type_3'}}">
+          物业咨询机构
+      </router-link>
     </div>
 
-    <div class="nav-box" v-if="pathName == 'security'">
-      <router-link :to="{ name: 'security'}">商业地产证券</router-link>
+    <div class="nav-box" v-if="$route.name == 'security'">
+      <router-link :to="{ name: 'security', params: {type: 'finance_product_type_1'}}">类REITs证券</router-link>
+      <router-link :to="{ name: 'security', params: {type: 'finance_product_type_2'}}">股权REITs证券</router-link>
+      <router-link :to="{ name: 'security', params: {type: 'finance_product_type_3'}}">CMBS证券</router-link>
     </div>
 
-    <div class="nav-box" v-if="pathName == 'home'">
+    <div class="nav-box" v-if="$route.name == 'index'">
       <router-link :to="{ name: 'index', params: { type: 'business' }}">写字楼</router-link>
       <router-link :to="{ name: 'index', params: { type: 'mall' }}">购物中心</router-link>
       <router-link :to="{ name: 'index', params: { type: 'apartment' }}">租赁公寓</router-link>
@@ -48,7 +55,7 @@
 
     <div class="line-box"></div>
 
-    <el-select v-model="pathName"
+    <el-select v-model="pathIndex"
                 class="page-box"
                 placeholder="请选择"
                 size="small"
@@ -57,7 +64,7 @@
         v-for="(item, index) in pageDate"
         :key="index"
         :label="item.title"
-        :value="item.pathName">
+        :value="index">
       </el-option>
     </el-select>
 
@@ -125,19 +132,22 @@ export default {
         pageSize: 2,
         currentPage: 1
       },
-      pathName: '',
+      pathIndex: '',
       pageDate: [
           {
               title: '投资机构数据库',
-              pathName: 'invest'
+              pathName: 'invest',
+              type: 'finance_org_type_1'
           },
           {
               title: '商业地产数据库',
-              pathName: 'home'
+              pathName: 'home',
+              type: 'business'
           },
           {
               title: '商业地产证券化数据库',
-              pathName: 'security'
+              pathName: 'security',
+              type: 'finance_product_type_1'
           }
       ]
     }
@@ -145,17 +155,23 @@ export default {
   created () {
     this.getUserInfo()
     if (this.$route.name == 'invest' || this.$route.name == 'invest-detail') {
-      this.pathName = 'invest'
+      this.pathIndex = 0
     } else if (this.$route.name == 'security') {
-      this.pathName = 'security'
+      this.pathIndex = 2
     } else {
-      this.pathName = 'home'
+      this.pathIndex = 1
     }
     // this.getNotice()
   },
   methods: {
     pageChange () {
-      this.$router.push({name: this.pathName})
+      var path = {
+        name: this.pageDate[this.pathIndex].pathName,
+        params: {
+          type: this.pageDate[this.pathIndex].type
+        }
+      }
+      this.$router.push(path)
     },
     getUserInfo () {
       util.request({

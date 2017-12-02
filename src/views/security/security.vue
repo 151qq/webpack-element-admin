@@ -9,7 +9,7 @@
           :span="6"
           v-for="(o, index) in securityList">
         <router-link class="linkA" target="_blank"
-                    :to="{ name: 'security-detail', params: { id: o.productCode }}">
+                    :to="{ name: 'security-detail', params: { id: o.productCode, type: $route.params.type }}">
           <el-card :body-style="{ padding: '0px' }">
             <img :src="o.productLogo" class="image">
             <div style="padding: 14px;">
@@ -56,14 +56,20 @@ export default {
     }
   },
   created () {
-    document.title = '商业楼盘证券'
+    document.title = '证券列表'
     this.getSecurityList()
+  },
+  watch: {
+    $route () {
+      this.getSecurityList()
+    }
   },
   methods: {
     getSecurityList () {
       var formData = {
         pageSize: this.pageSize,
-        pageNumber: this.pageNumber
+        pageNumber: this.pageNumber,
+        types: this.$route.params.type
       }
 
       Tools.getJson('getSecurityList', formData, (res) => {

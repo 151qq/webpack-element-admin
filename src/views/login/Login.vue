@@ -3,7 +3,7 @@
         <div class="loginBox">
             <div class="l">
                 <div class="page-box"
-                        :class="item.pathName == pathName ? 'active' : ''"
+                        :class="item.pathName.name == pathName.name ? 'active' : ''"
                         v-for="item in pageDate"
                         @click="pathChange(item)">
                     <img :src="item.imgUrl">
@@ -110,17 +110,32 @@
                     {
                         imgUrl: '/static/images/login1.jpg',
                         title: '投资机构数据库',
-                        pathName: 'invest'
+                        pathName: {
+                            name: 'invest',
+                            params: {
+                                type: 'finance_org_type_1'
+                            }
+                        }
                     },
                     {
                         imgUrl: '/static/images/login2.jpg',
                         title: '商业地产数据库',
-                        pathName: 'home'
+                        pathName: {
+                            name: 'home',
+                            params: {
+                                type: 'business'
+                            }
+                        }
                     },
                     {
                         imgUrl: '/static/images/login3.jpg',
                         title: '商业地产证券化数据库',
-                        pathName: 'security'
+                        pathName: {
+                            name: 'security',
+                            params: {
+                                type: 'finance_product_type_1'
+                            }
+                        }
                     }
                 ],
                 dialogVisible: false,
@@ -133,7 +148,12 @@
                 seconds: 90,
                 enterPassword: '',
                 isClick: false,
-                pathName: 'home'
+                pathName: {
+                    name: 'home',
+                    params: {
+                        type: 'business'
+                    }
+                }
             }
         },
         mounted() {
@@ -251,7 +271,7 @@
                     data: data
                 }).then((res) => {
                     if (res.result.success != '0') {
-                        this.$router.push({name: this.pathName ? this.pathName : 'home'})
+                        this.$router.push(this.pathName)
                     } else {
                         this.$message.error(res.result.message)
                     }
