@@ -29,13 +29,13 @@
 
     <div class="member-box">
       <a class="img-box" @click="editImgUrl">
-        <img v-if="userInfo.iconUrl" :src="userInfo.iconUrl">
+        <img v-if="userInfo.memberImage" :src="userInfo.memberImage">
         <img v-else src="../../assets/images/default-avatar.png">
       </a>
       <el-dropdown>
         <span class="el-dropdown-link">
           您好
-          <span>{{userInfo.userCnName}}</span>
+          <span>{{userInfo.memberCname}}</span>
           <i class="el-icon-caret-bottom el-icon--right"></i>
         </span>
         <el-dropdown-menu slot="dropdown">
@@ -107,7 +107,7 @@
         </div>
       </el-popover> -->
     </div>
-    <upload-file :path="userInfo.iconUrl" :dialog-form-visible="dialogFormVisible" @imgChange="changeImg"></upload-file>
+    <upload-file :path="userInfo.memberImage" :dialog-form-visible="dialogFormVisible" @imgChange="changeImg"></upload-file>
     <password :dialog-form-visible="dialogFormVisible"></password>
   </section>
 </template>
@@ -121,8 +121,8 @@ export default {
     return {
       origin: window._SettingOrigin,
       userInfo: {
-        name: '',
-        iconUrl: ''
+        memberCname: '',
+        memberImage: ''
       },
       noticeList: [],
       dialogFormVisible: {
@@ -223,7 +223,7 @@ export default {
       this.$router.push({name: 'notice', params: {id: id}})
     },
     changeImg (path) {
-      this.userInfo.iconUrl = path
+      this.userInfo.memberImage = path
     },
     editImgUrl () {
       this.dialogFormVisible.visibleF = true

@@ -4,10 +4,10 @@ const platform = "/e2-site-api/";
 
 export default {
     interfaces: {
-        "authentication": platform + "authentication.json",     // 登录
+        "authentication": platform + "memberLogin.json",     // 登录
         "resetPassword": platform + "resetPassword.json",  // 重置密码
-        "getUserInfo": platform + "getUserInfo.json",
-        "logout": platform + 'logout.json',
+        "getUserInfo": platform + "findMemberInfoById.json",
+        "logout": platform + 'memberLogout.json',
         "uploadArticleAreaImage": platform + "siteEdit/uploadArticleAreaImage.json",   //图片上传接口
         "changePassword": platform + "changePassword.json",         //修改密码
         "notice": platform + "/task/list.json",
