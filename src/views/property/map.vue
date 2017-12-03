@@ -22,7 +22,7 @@
                 </div>
             </section>
             <section class="sec">
-                <label class="t-n">区域:</label>
+                <label class="t-n">商圈:</label>
                 <div class="s-c">
                     <span>
                       <el-checkbox class="all-c" label="全部" v-model="ischeckA"

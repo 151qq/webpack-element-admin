@@ -29,20 +29,23 @@
                 <div class="dased-border"></div>
 
                 <el-form :label-position="'left'" label-width="80px">
-                    <el-form-item label="公司名称">
+                    <el-form-item label="企业名称">
                         <el-input v-model="enterpriseCname"></el-input>
                         <div class="message-box">
-                            请填写公司的工商注册名称，填写不正确或填写公司简称等都会影响贵公司体验的申请。
+                            请填写工商注册名称/企业简称。
                         </div>
                     </el-form-item>
-                    <el-form-item label="申请人名">
+                    <el-form-item label="用户名称">
                         <el-input v-model="userCname"></el-input>
                     </el-form-item>
-                    <el-form-item label="注册手机">
+                    <el-form-item label="用户密码">
                         <el-input v-model="userPhone"></el-input>
+                        <div class="forget-p" @click="dialogVisible = true">
+                            忘记密码
+                        </div>
                     </el-form-item>
                     <el-form-item>
-                        <el-button type="primary" @click="regBtn">申请体验</el-button>
+                        <el-button type="primary" @click="regBtn">企业管理员登录</el-button>
                     </el-form-item>
                 </el-form>
             </div>
@@ -352,7 +355,7 @@ html, body, #app {
 
   .l {
     width: 756px;
-    height: 499px;
+    height: 489px;
     overflow: hidden;
     float: left;
     box-shadow: 0 0 10px 1px #1f1e1e;
@@ -429,7 +432,7 @@ html, body, #app {
     }
 
     .message-box {
-      font-size: 12px;
+      font-size: 13px;
       color: #75778d;
       line-height: 20px;
       margin-top: 8px;

@@ -126,6 +126,13 @@ export default {
         searchHousesFileter: platform + 'financeProduct/searchHousesFileter.json',
         findByProductInfo: platform + 'financeProduct/findByProductInfo.json',
         findDetail: platform + 'financeProduct/findDetail.json',
-        fundCashflow: platform + 'financeProduct/fundCashflow.json'
+        fundCashflow: platform + 'financeProduct/fundCashflow.json',
+
+
+        getCitys: '/static/api/common/city.json',
+        saveInvestBase: platform + 'enterprise/updateEnterpriseInfo.json',
+        getInvestBase: platform + 'enterprise/showEnterpriseInfoOfCode.json',
+        investTypes: platform + 'enterprise/disOfEnterpriseInfo.json',
+        findDictionaryByType: platform + 'enterprise/findDictionaryByType.json'
     }
 }

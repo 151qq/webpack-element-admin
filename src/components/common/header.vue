@@ -25,6 +25,8 @@
       <!-- <router-link :to="{ name: 'report'}">我的报告</router-link> -->
     </div>
 
+    
+
     <div class="member-box">
       <a class="img-box" @click="editImgUrl">
         <img v-if="userInfo.iconUrl" :src="userInfo.iconUrl">
