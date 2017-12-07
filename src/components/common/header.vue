@@ -17,7 +17,7 @@
       <router-link :to="{ name: 'security', params: {type: 'finance_product_type_3'}}">CMBS证券</router-link>
     </div>
 
-    <div class="nav-box" v-if="$route.name == 'index'">
+    <div class="nav-box" v-if="$route.name != 'invest' && $route.name != 'security'">
       <router-link :to="{ name: 'index', params: { type: 'business' }}">写字楼</router-link>
       <router-link :to="{ name: 'index', params: { type: 'mall' }}">购物中心</router-link>
       <router-link :to="{ name: 'index', params: { type: 'apartment' }}">租赁公寓</router-link>

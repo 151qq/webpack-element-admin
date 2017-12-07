@@ -5,13 +5,13 @@ const platform = "/e2-site-api/";
 export default {
     interfaces: {
         "authentication": platform + "memberLogin.json",     // 登录
-        "resetPassword": platform + "resetPassword.json",  // 重置密码
+        "resetPassword": platform + "memberResetPassword.json",  // 重置密码
         "getUserInfo": platform + "findMemberInfoById.json",
         "logout": platform + 'memberLogout.json',
         "uploadArticleAreaImage": platform + "siteEdit/uploadArticleAreaImage.json",   //图片上传接口
-        "changePassword": platform + "changePassword.json",         //修改密码
+        "changePassword": platform + "memberChangePassword.json",         //修改密码
         "notice": platform + "/task/list.json",
-        "headImage": platform + "headImage.json",
+        "headImage": platform + "memberHeadImage.json",
         "sendSmsCode": platform + 'sendSmsCode.json',
         searchHousesKey: platform + 'houses/searchHousesKey.json',
         findUserInfoByCode: platform + 'findUserInfoByCode.json',
@@ -29,6 +29,7 @@ export default {
         */
         echarts: platform + 'houses/houseCharts.json',
         valueEcharts: platform + 'houses/houseValueCharts.json',
+        findFinanceProductById: platform + 'houses/findFinanceProductById.json',
 
         /**
            * 首页租金信息 get

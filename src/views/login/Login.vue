@@ -17,7 +17,7 @@
                     </el-form-item>
                     <el-form-item label="会员密码">
                         <el-input v-model="password" type="password"></el-input>
-                        <div class="forget-p" @click="dialogVisible = true">
+                        <div class="forget-p" @click="showForget">
                             忘记密码
                         </div>
                     </el-form-item>
@@ -147,6 +147,16 @@
         methods: {
             pathChange (item) {
                 this.pathName = item.pathName
+            },
+            showForget () {
+                this.forgetData = {
+                    tel: '',
+                    password: ''
+                }
+                this.codeInput = ''
+                this.enterPassword = ''
+
+                this.dialogVisible = true
             },
             checkTel () {
                  if (this.forgetData.tel == '' || !(/^1[3|4|5|8][0-9]\d{8}$/).test(this.forgetData.tel.trim())) {

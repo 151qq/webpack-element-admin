@@ -43,8 +43,14 @@ export default {
     fileChange (event) {
       var data = {
         url: 'headImage',
-        event: event
+        event: event,
+        data: {
+          fileCode: '',
+          catalogCode: '',
+          deleteUrl: this.imgPath
+        }
       }
+
       util.uploadFile(data).then(res => {
         this.imgPath = res.result.result.headImg
         this.$message({

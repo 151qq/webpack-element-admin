@@ -21,6 +21,12 @@
                 <div class="bg-black"></div>
                 <div class="title-box">{{item.name}}</div>
             </router-link>
+            <router-link v-if="securityData.financeProductType" class="bench" target="_blank"
+                        :to="{name: 'security-detail', params: {type: securityData.financeProductType, id: securityData.financeProductCode}}">
+                <img :src="securityData.imgUrl">
+                <div class="bg-black"></div>
+                <div class="title-box">{{securityData.name}}</div>
+            </router-link>
         </div>
 
         <show-ewm :dialog-visible="dialogVisible" :path="imgPath"></show-ewm>
@@ -63,18 +69,39 @@ export default {
             imgUrl: '/static/images/house1.jpg',
             pathName: 'changes'
         }
-      ]
+      ],
+      securityData: {
+        name: '物业相关证券',
+        imgUrl: '/static/images/zq-img.jpg',
+        financeProductCode: '',
+        financeProductType: ''
+    }
     }
   },
   created () {
     this.type = this.$route.params.type
     this.id = this.$route.params.id
-    this.getReports()
+    // this.getReports()
+    this.findFinanceProductById()
   },
   methods: {
     showEWM (path) {
       this.imgPath = path
       this.dialogVisible.value = true
+    },
+    findFinanceProductById () {
+        var formData = {
+            id: this.$route.params.id
+        }
+
+        Tools.getJson('findFinanceProductById', formData, (res) => {
+        if (res.success === '1') {
+          this.securityData.financeProductCode = res.result.financeProductCode
+          this.securityData.financeProductType = res.result.financeProductType
+        } else {
+          this.$message.error(res.message)
+        }
+      })
     },
     getReports () {
       var formData = {
