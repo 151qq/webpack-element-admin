@@ -16,7 +16,7 @@
         </div>
         <div class="right">
             <router-link v-for="item in historyList" class="bench" target="_blank"
-                        :to="{name: item.pathName, params: {id: $route.params.id}}">
+                        :to="{name: item.pathName, params: {id: $route.params.id}, query: {point: base.point, houseName: base.name}}">
                 <img :src="item.imgUrl">
                 <div class="bg-black"></div>
                 <div class="title-box">{{item.name}}</div>

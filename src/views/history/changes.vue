@@ -1,61 +1,62 @@
 <template>
-    <section class="mid-box">
-        <el-table
-                :data="changes"
-                style="width: 100%">
-            <el-table-column type="expand">
-              <template scope="props">
-                <el-form label-position="left" inline class="demo-table-expand">
-                  <el-form-item label="评估机构：">
-                    <span>{{ props.row.houseTradeEvaluationOrg }}</span>
-                  </el-form-item>
-                  <el-form-item label="咨询机构：">
-                    <span>{{ props.row.houseTradeConsultingOrg }}</span>
-                  </el-form-item>
-                  <el-form-item label="交易类型：">
-                    <span>{{ props.row.houseTradeType }}</span>
-                  </el-form-item>
-                  <el-form-item label="交易备注：">
-                    <span>{{ props.row.houseTradeDesc }}</span>
-                  </el-form-item>
-                </el-form>
-              </template>
-            </el-table-column>
-            <el-table-column
-                    prop="houseTradeDate"
-                    label="交易日期">
-            </el-table-column>
-            <el-table-column
-                    prop="houseRradePrice"
-                    label="价格(万)">
-            </el-table-column>
-            <el-table-column
-                    prop="houseTradeACode"
-                    width="240"
-                    label="交易甲方">
-            </el-table-column>
-            <el-table-column
-                    prop="houseTradeBCode"
-                    width="240"
-                    label="交易乙方">
-            </el-table-column>
-            <el-table-column
-                    prop="recordCreater"
-                    label="填报人">
-            </el-table-column>
-        </el-table>
-        <el-pagination
-            v-if="total"
-            class="page-box"
-            layout="prev, pager, next"
-            @current-change="pageChange"
-            :page-sizes="pageSize"
-            :total="total">
-        </el-pagination>
+    <section>
+        <banner-changes :point="$route.query.point"
+                        :house-name="$route.query.houseName"></banner-changes>
+        <section class="mid-box">
+            <el-table
+                    :data="changes"
+                    style="width: 100%">
+                <el-table-column type="expand">
+                  <template scope="props">
+                    <el-form label-position="left" inline class="demo-table-expand">
+                      <el-form-item label="评估机构：">
+                        <span>{{ props.row.houseTradeEvaluationOrg }}</span>
+                      </el-form-item>
+                      <el-form-item label="咨询机构：">
+                        <span>{{ props.row.houseTradeConsultingOrg }}</span>
+                      </el-form-item>
+                      <el-form-item label="交易类型：">
+                        <span>{{ props.row.houseTradeType }}</span>
+                      </el-form-item>
+                      <el-form-item label="交易备注：">
+                        <span>{{ props.row.houseTradeDesc }}</span>
+                      </el-form-item>
+                    </el-form>
+                  </template>
+                </el-table-column>
+                <el-table-column
+                        prop="houseTradeDate"
+                        label="交易日期"
+                        width="160">
+                </el-table-column>
+                <el-table-column
+                        prop="houseRradePrice"
+                        label="价格(万)"
+                        width="160">
+                </el-table-column>
+                <el-table-column
+                        prop="houseTradeACode"
+                        label="交易甲方">
+                </el-table-column>
+                <el-table-column
+                        prop="houseTradeBCode"
+                        label="交易乙方">
+                </el-table-column>
+            </el-table>
+            <el-pagination
+                v-if="total"
+                class="page-box"
+                layout="prev, pager, next"
+                @current-change="pageChange"
+                :page-sizes="pageSize"
+                :total="total">
+            </el-pagination>
+        </section>
     </section>
 </template>
 <script>
 import util from '../../assets/common/util'
+import bannerChanges from '../../components/views/banner-changes.vue'
 
 export default {
     data () {
@@ -92,6 +93,9 @@ export default {
             this.pageNumber++
             this.getChanges()
         }
+    },
+    components: {
+        bannerChanges
     }
 }
 </script>
