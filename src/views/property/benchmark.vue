@@ -14,29 +14,29 @@
     <div class="mid-box">
       <div v-for="(item, index) in benchDatas" class="left">
         <ul class="table">
-          <li class="row title">
-            <span>名称：</span>
+          <li class="row even">
+            <span>楼盘名字：</span>
             <span>{{item.base.name}}</span>
           </li>
           <li class="row old">
-            <span>物业类型：</span>
-            <span>{{item.base.type}}</span>
+            <span>所在城市：</span>
+            <span>{{item.base.city}}</span>
+          </li>
+          <li class="row even">
+            <span>所属商圈：</span>
+            <span>{{item.base.mall}}</span>
+          </li>
+          <li class="row old">
+            <span>星标：</span>
+            <span>{{item.base.star == '0' ? '否' : '是'}}</span>
           </li>
           <li class="row even">
             <span>楼盘等级：</span>
             <span>{{item.base.level}}</span>
           </li>
           <li class="row old">
-            <span>地址：</span>
+            <span>楼盘地址：</span>
             <span>{{item.base.address}}</span>
-          </li>
-          <li class="row even">
-            <span>地块：</span>
-            <span>{{item.base.massif}}</span>
-          </li>
-          <li class="row old">
-            <span>物业：</span>
-            <span>{{item.base.owner}}</span>
           </li>
           <li class="row even">
             <span>剩余年限：</span>
@@ -46,20 +46,34 @@
             <span>容积率：</span>
             <span>{{item.base.ratio}}</span>
           </li>
+          <li class="row old">
+            <span>网站地址：</span>
+            <span>
+              <a class="base-content"
+                      target="_blank" 
+                      :href="item.base.webSite.indexOf('http') > 0 ? item.base.webSite : 'http://' + item.base.webSite">
+                  {{item.base.webSite}}
+              </a>
+            </span>
+          </li>
+          <li class="row old">
+            <span>物业信息：</span>
+            <span>{{item.base.property}}</span>
+          </li>
+          <li class="row old">
+            <span>物业持有：</span>
+            <span>{{item.base.holding}}</span>
+          </li>
+          <li class="row old">
+            <span>楼盘类型：</span>
+            <span>{{item.base.type}}</span>
+          </li>
           <li class="row even">
-            <span>星标：</span>
-            <span>{{item.base.star == '0' ? '否' : '是'}}</span>
+            <span>所属地块：</span>
+            <span>{{item.base.massif}}</span>
           </li>
           <li class="row old">
-            <span>证券类型：</span>
-            <span>{{item.base.bondType}}</span>
-          </li>
-          <!-- <li class="row even">
-            <span>产品类型：</span>
-            <span>{{item.base.bondCode}}</span>
-          </li> -->
-          <li class="row old">
-            <span>面积：</span>
+            <span>面积(m²)：</span>
             <span>{{item.base.area}}</span>
           </li>
           <li class="row even">
@@ -67,30 +81,48 @@
             <span>{{item.base.plies}}</span>
           </li>
           <li class="row old">
-            <span>层高：</span>
+            <span>层高(m)：</span>
             <span>{{item.base.height}}</span>
-          </li>
-          <li class="row even">
-            <span>电梯：</span>
-            <span>{{item.base.elevator}}</span>
           </li>
           <li class="row old">
             <span>车位：</span>
             <span>{{item.base.park}}</span>
           </li>
           <li class="row even">
-            <span>空调：</span>
+            <span>电梯数：</span>
+            <span>{{item.base.elevator}}</span>
+          </li>
+          <li class="row even">
+            <span>空调数：</span>
             <span>{{item.base.conditioner}}</span>
           </li>
           <li class="row old">
-            <span>地板：</span>
+            <span>地板类型：</span>
             <span>{{item.base.floor}}</span>
           </li>
-          <li class="row even">
-            <span>物业持有：</span>
-            <span>{{item.base.holding}}</span>
-          </li>
         </ul>
+      </div>
+      <div class="eq-height">
+        <section class="j-y j-b j-l">
+          <span>业主信息：</span>
+          <p>{{benchDatas.length ? benchDatas[0].base.owner : ''}}</p>
+        </section>
+
+        <section class="j-y j-b j-r">
+          <span>业主信息：</span>
+          <p>{{benchDatas.length ? benchDatas[1].base.owner : ''}}</p>
+        </section>
+      </div>
+      <div class="eq-height">
+        <section class="j-y j-l">
+          <span>现在租户：</span>
+          <p>{{benchDatas.length ? benchDatas[0].base.rent : ''}}</p>
+        </section>
+
+        <section class="j-y j-r">
+          <span>现在租户：</span>
+          <p>{{benchDatas.length ? benchDatas[1].base.rent : ''}}</p>
+        </section>
       </div>
       <div class="eq-height">
         <section class="j-y j-b j-l">
@@ -101,27 +133,6 @@
         <section class="j-y j-b j-r">
           <span>交通：</span>
           <p>{{benchDatas.length ? benchDatas[1].base.traffic : ''}}</p>
-        </section>
-      </div>
-      <div class="eq-height">
-        <section class="j-y j-l">
-          <span>入驻企业：</span>
-          <p>{{benchDatas.length ? benchDatas[0].base.rent : ''}}</p>
-        </section>
-
-        <section class="j-y j-r">
-          <span>入驻企业：</span>
-          <p>{{benchDatas.length ? benchDatas[1].base.rent : ''}}</p>
-        </section>
-      </div>
-      <div class="left">
-        <section class="echart-box">
-          <echarts-tar :id-name="'echartsOne'" :echarts-date="echartsOne" :ref="'echartsOne'"></echarts-tar>
-        </section>       
-      </div>
-      <div class="left">
-        <section class="echart-box">
-          <echarts-tar :id-name="'echartsTwo'" :echarts-date="echartsTwo" :ref="'echartsTwo'"></echarts-tar>
         </section>
       </div>
       <div class="eq-height">
@@ -137,12 +148,32 @@
       </div>
       <div class="left">
         <section class="echart-box">
-          <echarts-ver :id-name="'echartsVerOne'" :echarts-date="echartsVerOne" :ref="'echartsVerOne'"></echarts-ver>
+          <echarts-ver :id-name="'echartsOne'" :echarts-date="echartsOne" :ref="'echartsOne'"></echarts-ver>
         </section>       
       </div>
       <div class="left">
         <section class="echart-box">
-          <echarts-ver :id-name="'echartsVerTwo'" :echarts-date="echartsVerTwo" :ref="'echartsVerTwo'"></echarts-ver>
+          <echarts-ver :id-name="'echartsTwo'" :echarts-date="echartsTwo" :ref="'echartsTwo'"></echarts-ver>
+        </section>
+      </div>
+      <div class="left j-gray">
+        <section class="echart-box">
+          <echarts-ver :id-name="'echartsOneBar'" :echarts-date="echartsOneBar" :ref="'echartsOneBar'"></echarts-ver>
+        </section>       
+      </div>
+      <div class="left j-gray">
+        <section class="echart-box">
+          <echarts-ver :id-name="'echartsTwoBar'" :echarts-date="echartsTwoBar" :ref="'echartsTwoBar'"></echarts-ver>
+        </section>
+      </div>
+      <div class="left">
+        <section class="echart-box">
+          <echarts-ver :id-name="'echartsOneVer'" :echarts-date="echartsOneVer" :ref="'echartsOneVer'"></echarts-ver>
+        </section>       
+      </div>
+      <div class="left">
+        <section class="echart-box">
+          <echarts-ver :id-name="'echartsTwoVer'" :echarts-date="echartsTwoVer" :ref="'echartsTwoVer'"></echarts-ver>
         </section>
       </div>
     </div>
@@ -151,7 +182,6 @@
 </template>
 <script>
 import bannerBenchmark from '../../components/views/banner-benchmark.vue'
-import echartsTar from '../../components/common/echart-tar.vue'
 import echartsVer from '../../components/common/echart-ver.vue'
 import showEwm from '../../components/common/show-ewm.vue'
 import Tools from '../../utils/tools.js'
@@ -177,8 +207,10 @@ export default {
       recordTwo: '',
       echartsOne: {},
       echartsTwo: {},
-      echartsVerOne: {},
-      echartsVerTwo: {}
+      echartsOneBar: {},
+      echartsTwoBar: {},
+      echartsOneVer: {},
+      echartsTwoVer: {}
     }
   },
   created () {
@@ -202,7 +234,6 @@ export default {
         if (res.success == '1') {
           this.benchDatas = res.result
           setTimeout(() => {
-            console.log(this.$refs)
             this.$refs.bannerBench.drawMap()
 
             this.getRecord(this.benchDatas[0].id, 'recordOne')
@@ -210,9 +241,6 @@ export default {
 
             this.getEcharts(this.benchDatas[0].id, 'echartsOne')
             this.getEcharts(this.benchDatas[1].id, 'echartsTwo')
-
-            this.getValueEcharts(this.benchDatas[0].id, 'echartsVerOne')
-            this.getValueEcharts(this.benchDatas[1].id, 'echartsVerTwo')
 
           }, 0)
         } else {
@@ -227,8 +255,12 @@ export default {
       Tools.getJson('record', formData, (res) => {
         if (res.success == '1') {
           var recordArr = []
+          if (!res.result.changes.length) {
+            this[key] = ''
+            return false
+          }
           res.result.changes.forEach((item, index) => {
-            recordArr.push(item.date.split(' ')[0] + ' ' + item.changeA + ' -> ' + item.changeB + ' （' + item.price + '万元）')
+            recordArr.push(item.houseTradeDate.split(' ')[0] + ' ' + item.houseTradeACode + ' -> ' + item.houseTradeBCode + ' （' + item.houseRradePrice + '万元）')
           })
           this[key] = recordArr.join('，')
         } else {
@@ -244,9 +276,33 @@ export default {
       }
       Tools.getJson('echarts', formData, (res) => {
         if (res.success === '1') {
-          this[key] = res.result
+          var objOne = {
+            legend: ['租金'],
+            seriesBar: res.result.seriesBar,
+            xAxis: res.result.xAxis
+          }
+
+          var objTwo = {
+            legend: ['空置率'],
+            seriesBar: res.result.seriesLine,
+            xAxis: res.result.xAxis
+          }
+
+          var objThree = {
+            legend: ['估值'],
+            seriesBar: res.result.capRateBar,
+            xAxis: res.result.capRateYear
+          }
+
+          
+
+          this[key] = objOne
+          this[key + 'Bar'] = objTwo
+          this[key + 'Ver'] = objThree
           setTimeout(() => {
             this.$refs[key].setEcharts()
+            this.$refs[key + 'Bar'].setEcharts()
+            this.$refs[key + 'Ver'].setEcharts()
           }, 0)
         } else {
           this.$message.error(res.message)
@@ -273,7 +329,6 @@ export default {
   },
   components: {
     bannerBenchmark,
-    echartsTar,
     echartsVer,
     showEwm
   }
@@ -283,6 +338,10 @@ export default {
 .bench-con {
   .echar-box {
     height: 270px;
+  }
+
+  .j-gray {
+    background: #F9FAFC;
   }
 
   .marg-auto {
@@ -385,24 +444,26 @@ export default {
     border-bottom: 1px solid #E0E6ED;
 
     .j-y {
+      display: flex;
       width: 580px;
       overflow: hidden;
       font-size: 14px;
-      line-height: 30px;
+      line-height: 24px;
       box-sizing: border-box;
       overflow: hidden;
-      padding: 0 20px 10px;
+      padding: 8px 20px;
       background: #F9FAFC;
       border-right: 1px solid #E0E6ED;
 
       span {
+        width: 80px;
         font-size: 14px;
         color: #5E6D82;
         box-sizing: border-box;
       }
 
       p {
-        display: inline-block;
+        flex: 1;
         box-sizing: border-box;
       }
     }

@@ -20,7 +20,7 @@ export default {
           }
         },
         grid: {
-          left: '6%',
+          left: '11%',
           right: '10%'
         },
         legend: {
@@ -72,8 +72,6 @@ export default {
   methods: {
     // 获取echarts数据
     setEcharts () {
-      console.log(this.echartsDate, 'echartsDate')
-
       let datas = this.echartsDate
       // let datas = {
       //   "legend" : [ "估值率" ],

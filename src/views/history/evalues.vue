@@ -3,7 +3,7 @@
         <banner-history :point="$route.query.point"
                         :echarts-data="echartsData"
                         :house-name="$route.query.houseName"
-                        :echarts-name="'echarts-rents'"></banner-history>
+                        :echarts-name="'echarts-values'"></banner-history>
         <section class="mid-box">
             <el-table
                     :data="evalues"
@@ -76,8 +76,8 @@ export default {
                 if (res.result.success === '1') {
                     var objs = {
                         legend: ['估值'],
-                        xAxis: res.result.result.xAxis,
-                        seriesBar: res.result.result.seriesLine
+                        xAxis: res.result.result.capRateYear,
+                        seriesBar: res.result.result.capRateBar
                     }
                   this.echartsData = objs
                 } else {
