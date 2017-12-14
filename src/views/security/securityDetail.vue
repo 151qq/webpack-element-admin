@@ -65,18 +65,23 @@
               border
               style="width: 100%">
               <el-table-column
-                prop="layered"
+                prop="fundLevelType"
                 label="分层"
                 width="80">
+              </el-table-column>
+              <el-table-column
+                prop="fundLevelCname"
+                label="产品名称"
+                width="180">
+              </el-table-column>
+              <el-table-column
+                prop="fundLevelSku"
+                label="产品代码">
               </el-table-column>
               <el-table-column
                 prop="fundLevelRatio"
                 label="比例"
                 width="80">
-              </el-table-column>
-              <el-table-column
-                prop="fundLevelCode"
-                label="证券代码">
               </el-table-column>
               <el-table-column
                 prop="fundLevelResidualPrincipal"
@@ -94,6 +99,7 @@
               </el-table-column>
               <el-table-column
                 prop="fundLevelForcastPayback"
+                width="160"
                 label="证券预期收益率(%)">
               </el-table-column>
               <el-table-column
@@ -149,31 +155,31 @@
                   style="width: 100%">
                   <el-table-column
                     prop="year"
-                    label="年(现金流 万)">
+                    label="年">
                   </el-table-column>
                   <el-table-column
                     prop="houseForcastCashflow"
-                    label="预测">
+                    label="预测现金流(万)">
                   </el-table-column>
                   <el-table-column
                     prop="houseGuaranteeCashflow"
-                    label="保底">
+                    label="保底现金流(万)">
                   </el-table-column>
                   <el-table-column
                     prop="houseRealCashflow"
-                    label="真实">
+                    label="真实现金流(万)">
                   </el-table-column>
                   <el-table-column
                     prop="fundPriorityLevelPayback"
-                    label="优先级">
+                    label="优先级回报(万)">
                   </el-table-column>
                   <el-table-column
                     prop="fundMiddleLevelPayback"
-                    label="夹层">
+                    label="夹层回报(万)">
                   </el-table-column>
                   <el-table-column
                     prop="fundLastLevelPayback"
-                    label="劣后">
+                    label="劣后回报(万)">
                   </el-table-column>
               </el-table>
           </template>
@@ -217,8 +223,9 @@ export default {
       publicList: [
         {
           id: '',
-          layered: '优先级',
-          fundLevelCode: '',
+          fundLevelType: '优先级',
+          fundLevelCname: '',
+          fundLevelSku: '',
           fundLevelRatio: '',
           financeProductCode: '',
           fundLevelResidualPrincipal: '',
@@ -229,8 +236,9 @@ export default {
         },
         {
           id: '',
-          layered: '夹层',
-          fundLevelCode: '',
+          fundLevelType: '夹层',
+          fundLevelCname: '',
+          fundLevelSku: '',
           fundLevelRatio: '',
           financeProductCode: '',
           fundLevelResidualPrincipal: '',
@@ -241,8 +249,9 @@ export default {
         },
         {
           id: '',
-          layered: '劣后级',
-          fundLevelCode: '',
+          fundLevelType: '劣后级',
+          fundLevelCname: '',
+          fundLevelSku: '',
           fundLevelRatio: '',
           financeProductCode: '',
           fundLevelResidualPrincipal: '',
@@ -329,11 +338,14 @@ export default {
         if (res.success == '1') {
           var arr = this.publicList.concat([])
           res.result.forEach((item) => {
-              if (item.fundLevelCode == this.base.productMarketCode + '1') {
+              if (item.fundLevelType == 'fund_level_1') {
+                  item.fundLevelType = '优先级'
                   arr[0] = Object.assign(arr[0], item)
-              } else if (item.fundLevelCode == this.base.productMarketCode + '2') {
+              } else if (item.fundLevelType == 'fund_level_2') {
+                  item.fundLevelType = '夹层'
                   arr[1] = Object.assign(arr[1], item)
-              } else if (item.fundLevelCode == this.base.productMarketCode + '3') {
+              } else if (item.fundLevelType == 'fund_level_3') {
+                  item.fundLevelType = '劣后级'
                   arr[2] = Object.assign(arr[2], item)
               }
           })

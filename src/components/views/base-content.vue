@@ -3,7 +3,7 @@
         <div class="out-box">
             <p class="base-b">
                 <span class="title">楼盘名字：</span>
-                <span class="base-content">{{base.name}}</span>
+                <span class="base-content">{{base.housesCname}}</span>
             </p>
             <p class="base-b">
                 <span class="title">所在城市：</span>
