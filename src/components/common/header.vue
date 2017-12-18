@@ -2,7 +2,7 @@
   <section class="header">
     <router-link class="logo-box" to="index/business"><img src="../../assets/images/logo.png"></router-link>
   
-    <div class="nav-box" v-if="$route.name == 'invest'">
+    <div class="nav-box" v-if="$route.name == 'invest' || $route.name == 'invest-detail'">
       <router-link :to="{ name: 'invest', params: {type: 'finance_org_type_1'}}">物业投资机构</router-link>
       <router-link :to="{ name: 'invest', params: {type: 'propertys_agent_type_4'}}">物业管理机构</router-link>
       <router-link
@@ -11,13 +11,13 @@
       </router-link>
     </div>
 
-    <div class="nav-box" v-if="$route.name == 'security'">
+    <div class="nav-box" v-if="$route.name == 'security' || $route.name == 'security-detail'">
       <router-link :to="{ name: 'security', params: {type: 'finance_product_type_1'}}">类REITs证券</router-link>
       <router-link :to="{ name: 'security', params: {type: 'finance_product_type_2'}}">股权REITs证券</router-link>
       <router-link :to="{ name: 'security', params: {type: 'finance_product_type_3'}}">CMBS证券</router-link>
     </div>
 
-    <div class="nav-box" v-if="$route.name != 'invest' && $route.name != 'security'">
+    <div class="nav-box" v-if="$route.name != 'invest' && $route.name != 'security' && $route.name != 'invest-detail' && $route.name != 'security-detail'">
       <router-link :to="{ name: 'index', params: { type: 'business' }}">写字楼</router-link>
       <router-link :to="{ name: 'index', params: { type: 'mall' }}">购物中心</router-link>
       <router-link :to="{ name: 'index', params: { type: 'apartment' }}">租赁公寓</router-link>

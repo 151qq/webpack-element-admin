@@ -71,20 +71,20 @@
               </el-table-column>
               <el-table-column
                 prop="fundLevelCname"
-                label="产品名称"
-                width="180">
+                label="证券名称"
+                width="160">
               </el-table-column>
               <el-table-column
                 prop="fundLevelSku"
-                label="产品代码">
+                label="证券代码">
               </el-table-column>
               <el-table-column
                 prop="fundLevelRatio"
-                label="比例"
-                width="80">
+                label="比例">
               </el-table-column>
               <el-table-column
                 prop="fundLevelResidualPrincipal"
+                width="160"
                 label="剩余本金面额(元)">
               </el-table-column>
               <el-table-column
@@ -105,7 +105,7 @@
               <el-table-column
                 prop="fundLevelWeightingPeriod"
                 label="加权年限"
-                width="120">
+                width="110">
               </el-table-column>
             </el-table>
           </div>

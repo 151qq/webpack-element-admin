@@ -28,7 +28,7 @@
             </p>
             <p class="base-b">
                 <span class="title">组织机构代码：</span>
-                <span class="base-content">{{base.enterpriseCode}}</span>
+                <span class="base-content">{{base.enterpriseLincenseCode}}</span>
             </p>
             <p class="base-b">
                 <span class="title">成立时间：</span>
