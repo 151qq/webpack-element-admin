@@ -158,6 +158,10 @@
                     label="年">
                   </el-table-column>
                   <el-table-column
+                    prop="fundEvaluation"
+                    label="估值(万)">
+                  </el-table-column>
+                  <el-table-column
                     prop="houseForcastCashflow"
                     label="预测现金流(万)">
                   </el-table-column>
